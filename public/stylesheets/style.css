@@ -1,4 +1,4 @@
-body {
+.bodylogin {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
   background: linear-gradient(90deg, #ffff 66%, #9300ff 34%);
@@ -86,3 +86,201 @@ input::placeholder {
 .sign-up > a {
   margin-left: 20px;
 }
+
+
+
+
+/* homepage css */
+
+.headercss {
+  width: 100%;
+  height: 100px;
+  background-color:  #ffff;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.headercssbox1 {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.headercssbox2 {
+  width: 20%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  height: 100%;
+  margin-left: 50px;
+  margin-right: 50px;
+  font-size: 60px;
+  font-family: 'Brush Script MT', cursive;
+}
+.pagelink {
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+  font-family: Verdana, sans-serif;
+  margin-left:  40px;
+  margin-right: 40px;
+}
+.pagelink:hover{
+  color: #9300ff;
+  transition: 0.5s;
+}
+
+.loginbtn {
+  display: inline-flex;
+  justify-content: end;
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+  font-family: Verdana, sans-serif;
+  margin-left:  40px;
+  margin-right: 40px;
+}
+.loginbtn:hover {
+  color: #9300ff;
+  transition:  0.5s;
+}
+
+
+
+
+
+
+.bodyhomepage {
+  width: 100%;
+  height: 100%;
+  background-color: #9300ff;
+  border: 0px;
+  margin-left: 0px;
+  margin-top:  0px;
+
+}
+
+.specializebox{
+  width: 70%;
+  border: 1px;
+  border-radius: 300px;
+  height: min-content;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: #ffff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.specializelink{
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 2px 15px;
+  font-size: 20px;
+  font-family: cursive;
+  border-radius: 300px;
+  text-decoration: none;
+
+  color: black;
+}
+.specializelink:hover {
+  background-color: #9300ff;
+  color: white;
+  transition: 0.3s;
+}
+.specializetitle{
+  margin-left: 20px;
+  margin-right: 5px;
+  padding: 2px;
+  font-size: 20px;
+  font-family: cursive;
+  text-decoration: none;
+}
+.specializebox2{
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+
+
+.ulposts {
+  list-style-type: none;
+  padding: 0px;
+  margin-left: 0px;
+  margin-top:  0px;
+}
+.liposts {
+  width: 100%;
+  padding: 0px;
+  margin-left: 0px;
+  margin-top:  10px;
+  margin-bottom: 30px;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+}
+.post {
+  width: 50%;
+  height:min-content;
+  background-color: #ffff;
+  border-radius: 20px;
+}
+.imgpage {
+  width: max-content;
+  height: max-content;
+  margin: 0px 20px 20px 20px;
+  object-fit: cover;
+}
+.titlepost{
+  margin: 0px 20px 0px 20px;
+  display: flex;
+}
+.namepost {
+  width: 100%;
+  height: min-content;
+  display: flex;
+  justify-self: start;
+}
+.datepost {
+  width: max-content;
+  display: flex;
+  justify-self: end;
+}
+.authorpost{
+  margin: 0px 20px 30px 20px;
+}
+.descpost {
+  margin: 0px 20px 30px 20px;
+}
+.feedbackpost{
+  margin: 30px 20px 30px 20px;
+  padding: 6px 20px;
+  font-size: 20px;
+  font-family: cursive;
+  background-color: #00ffcd;
+  color: black;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  text-decoration: none;
+}
+.feedbackpost:hover{
+  color: #00ffcd;
+  background-color: black;
+  transition: 0.5s;
+}
+.feedbackbox{
+  padding-bottom: 30px;
+}
+
+
+
+
