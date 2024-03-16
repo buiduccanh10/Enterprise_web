@@ -232,12 +232,14 @@ input::placeholder {
   width: 50%;
   height:min-content;
   background-color: #ffff;
+  padding: 0px 20px 0px 20px;
   border-radius: 20px;
 }
 .imgpage {
-  width: max-content;
+  width: 95%;
   height: max-content;
   margin: 0px 20px 20px 20px;
+
   object-fit: cover;
 }
 .titlepost{
