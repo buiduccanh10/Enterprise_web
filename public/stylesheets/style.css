@@ -277,21 +277,21 @@ body {
 
 .ulreports-container {
   display: flex;
-  justify-content: center; /* Center the container horizontally */
-  margin-top: 20px; /* Add some top margin for spacing */
+  justify-content: center; 
+  margin-top: 20px; 
   flex-direction: row-reverse;
 }
 
 .ulreports1,
 .ulreports2 {
   list-style-type: none;
-  padding: 10px; /* Adjusted padding */
-  margin: 0; /* Removed margin */
-  width: 49%; /* Each ul takes up 45% of the container */
-  border: 2px solid #ddd; /* Add border for a friendly look */
-  border-radius: 10px; /* Rounded corners */
-  background-color: transparent; /* Set background color to transparent */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  padding: 10px; 
+  margin: 0; 
+  width: 49%; 
+  border: 2px solid #ddd; 
+  border-radius: 10px; 
+  background-color: transparent; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   border: none;
 }
 .ulreports2 .post {
@@ -299,29 +299,28 @@ body {
   margin-top: 70px;
 }
 .ulreports1 {
-  margin-right: 10px; /* Add some spacing between the ul elements */
+  margin-right: 10px; 
 }
 
 .textbox {
-  width: 90%; /* Adjusted width */
-  height: 200px; /* Adjusted height */
-  margin: 20px; /* Adjusted margin */
-  resize: none; /* Prevent resizing */
+  width: 90%;
+  height: 200px; 
+  margin: 20px; 
+  resize: none; 
 }
 
 .reportbox {
-  padding: 20px; /* Adjusted padding */
+  padding: 20px;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-around; /* Adjusted spacing */
-  margin-top: 20px; /* Adjusted margin */
+  justify-content: space-around; 
+  margin-top: 20px; 
 }
-
 .send-button,
 .cancel-button {
-  padding: 10px 20px; /* Adjusted padding */
+  padding: 10px 20px; 
   font-size: 16px;
   font-family: cursive;
   background-color: #00ffcd;
