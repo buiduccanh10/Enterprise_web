@@ -271,3 +271,79 @@ body {
 .feedbackbox {
   padding-bottom: 30px;
 }
+
+
+/* report pages */
+
+.ulreports-container {
+  display: flex;
+  justify-content: center; /* Center the container horizontally */
+  margin-top: 20px; /* Add some top margin for spacing */
+  flex-direction: row-reverse;
+}
+
+.ulreports1,
+.ulreports2 {
+  list-style-type: none;
+  padding: 10px; /* Adjusted padding */
+  margin: 0; /* Removed margin */
+  width: 49%; /* Each ul takes up 45% of the container */
+  border: 2px solid #ddd; /* Add border for a friendly look */
+  border-radius: 10px; /* Rounded corners */
+  background-color: transparent; /* Set background color to transparent */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  border: none;
+}
+.ulreports2 .post {
+  margin-left: 380px;
+  margin-top: 70px;
+}
+.ulreports1 {
+  margin-right: 10px; /* Add some spacing between the ul elements */
+}
+
+.textbox {
+  width: 90%; /* Adjusted width */
+  height: 200px; /* Adjusted height */
+  margin: 20px; /* Adjusted margin */
+  resize: none; /* Prevent resizing */
+}
+
+.reportbox {
+  padding: 20px; /* Adjusted padding */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around; /* Adjusted spacing */
+  margin-top: 20px; /* Adjusted margin */
+}
+
+.send-button,
+.cancel-button {
+  padding: 10px 20px; /* Adjusted padding */
+  font-size: 16px;
+  font-family: cursive;
+  background-color: #00ffcd;
+  color: black;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.send-button:hover,
+.cancel-button:hover {
+  color: #00ffcd;
+  background-color: black;
+  transition: 0.5s;
+}
+
+.cancel-button {
+  background-color: #ff6666;
+}
+
+.cancel-button:hover {
+  color: #ff6666;
+}
+
+/* end report pages */

@@ -10,4 +10,7 @@ router.get("/postCreate", function (req, res, next) {
   res.render("postCreate", { title: "postCreate" });
 });
 
+router.get("/report", function (req, res, next) {
+  res.render("report", { title: "Report page" });
+});
 module.exports = router;
