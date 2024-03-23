@@ -344,5 +344,30 @@ body {
 .cancel-button:hover {
   color: #ff6666;
 }
-
+.feedback-action {
+  display: flex;
+  align-items: center;
+}
+.action-btn {
+  margin: 30px 20px 30px 20px;
+  padding: 6px 20px;
+  font-size: 20px;
+  font-family: cursive;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  text-decoration: none;
+}
+.action-btn.edit {
+  background-color: #04b3ed;
+  color: black;
+}
+.action-btn.del {
+  background-color: #ed0404;
+  color: black;
+}
+.action-btn:hover {
+  color: #00ffcd;
+  background-color: black;
+  transition: 0.5s;
+}
 /* end report pages */
