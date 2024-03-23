@@ -13,4 +13,8 @@ router.get("/postCreate", function (req, res, next) {
 router.get("/report", function (req, res, next) {
   res.render("report", { title: "Report page" });
 });
+router.get("/feedback", function (req, res, next) {
+  res.render("feedback", { title: "feedback" });
+});
+
 module.exports = router;
