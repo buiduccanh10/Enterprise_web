@@ -3,12 +3,25 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var loginRouter = require("./routes/login");
+var adminRouter = require("./routes/admin");
+var authRouter = require("./routes/auth");
 
 var app = express();
+
+//import "express-session" library
+var session = require("express-session");
+//set session timeout
+const timeout = 10000 * 60 * 60 * 24; // 24 hours (in milliseconds)
+//config session parameters
+app.use(
+  session({
+    secret: "practice_makes_perfect", // Secret key for signing the session ID cookie
+    resave: false, // Forces a session that is "uninitialized" to be saved to the store
+    saveUninitialized: true, // Forces the session to be saved back to the session store
+    cookie: { maxAge: timeout },
+  })
+);
 
 //db
 var mongoose = require("mongoose");
@@ -18,6 +31,8 @@ mongoose
   .then(() => console.log("Connect db success"))
   .catch((error) => console.log(error));
 
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -28,9 +43,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+//make session value can be accessible in view (hbs)
+//IMPORTANT: place this code before setting router url
+app.use((req, res, next) => {
+  res.locals.email = req.session.email;
+  next();
+});
+
+//set user authorization for whole router
+//IMPORTANT: place this code before setting router url
+const { checkSingleSession } = require("./middlewares/auth");
+app.use("/admin", checkSingleSession);
+
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/login", loginRouter);
+app.use("/admin", adminRouter);
+app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

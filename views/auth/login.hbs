@@ -8,8 +8,8 @@
     <h1>Official Greenwich University newspaper website</h1>
     <div class="login-background">
       <div class="login-form-parent">
-        <img src="images/Designer.png" alt="" srcset="" />
-        <form class="login-form">
+        <img src="../images/Designer.png" alt="" srcset="" />
+        <form class="login-form" action="/auth/login" method="post">
           <h2>Greenwich University</h2>
           <div class="email-input">
             <svg
@@ -28,7 +28,12 @@
               />
             </svg>
             <label for="">Email:</label>
-            <input type="email" name="" id="" placeholder="example@gmail.com" />
+            <input
+              type="email"
+              name="email"
+              id=""
+              placeholder="example@gmail.com"
+            />
           </div>
           <div class="pass-input">
             <svg
@@ -45,11 +50,11 @@
               <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
             </svg>
             <label for="">Password:</label>
-            <input type="password" name="" id="" placeholder="" />
+            <input type="password" name="password" id="" placeholder="" />
           </div>
           <div class="sign-up">
             <h5>Don't you have account ?</h5>
-            <a href="">Sign up</a>
+            <a href="/auth/register">Sign up</a>
           </div>
           <div class="btn-login">
             <button type="submit">Login</button>

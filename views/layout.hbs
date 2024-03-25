@@ -1,9 +1,24 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
+  <header class="headercss">
+    <div class="headercssbox1">
+      <a href="/"><h1 class="logo">Logo</h1></a>
+      {{#if email}}
+        <a class="pagelink" href="/postCreate">Post</a>
+        <a class="pagelink" href="/feedback">Feedbacks</a>
+      {{/if}}
+    </div>
+    <h3>{{email}}</h3>
+    <div class="headercssbox2">
+      {{#if email}}
+        <a class="logoutbtn" href="/auth/logout">Log out</a>
+      {{else}}
+        <a class="loginbtn" href="/auth/login">Log in</a>
+      {{/if}}
+    </div>
+  </header>
   <body>
     {{{body}}}
   </body>
