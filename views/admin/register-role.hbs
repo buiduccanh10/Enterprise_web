@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Role Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #9300ff;
+            
+        }
+        .container {
+            background-color: white;
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/admin/register-role" method="POST">
+
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" class="form-control" required><br>
+
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email" class="form-control" required><br>
+            
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" class="form-control" required><br>
+
+            <label for="role">Role:</label><br>
+            <select id="role" name="role" class="form-control" required onchange="toggleSpecialized()">
+                <option value="">Select Role</option>
+                <option value="manager">Manager</option>
+                <option value="coordinator">Coordinator</option>
+            </select><br>
+            
+            <label for="specialized" id="specializedLabel" style="display: none;">Specialized:</label>
+            <select id="specializedName" name="specializedName" class="form-control" style="display: none;">
+                <option value="">Select Specialized</option>
+                {{#each data}}
+                <option value="{{this._id}}">{{this.specializedName}}</option>
+                {{/each}}
+            </select><br>
+            <input type="submit" value="Register" class="btn btn-primary">
+        </form>
+    </div>
+
+    <script>
+        function toggleSpecialized() {
+            var roleSelect = document.getElementById("role");
+            var specializedSelect = document.getElementById("specializedName");    
+            var specializedLabelSelect = document.getElementById("specializedLabel");       
+            if (roleSelect.value === "coordinator") {
+                specializedSelect.style.display = "block";
+                specializedLabelSelect.style.display ="block";
+            } else {
+                specializedSelect.style.display = "none";
+                specializedLabelSelect.style.display ="none";
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
