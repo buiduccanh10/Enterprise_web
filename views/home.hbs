@@ -7,86 +7,23 @@
   </div>
 </div>
 <ul class="ulposts">
+  {{#each data}}
   <li class="liposts">
     <div class="post">
       <div class="titlepost">
-        <h1 class="namepost">Title</h1>
-        <h3 class="datepost"> dd/mm/yyyy</h3>
+        <h1 class="namepost">{{this.title}}</h1>
+        <h3 class="datepost"> {{this.dateCreate}}</h3>
       </div>
       <div class="authorpost">
-        <h3>Author</h3>
+        <h3>{{this.email}}</h3>
       </div>
-      <img class="imgpage" src="images/GIHdZPia4AAR3RF.jpg" alt="" />
-      <p class="descpost">
-        Nature Benefit Collaboration Spokespersons Teaser #TeyvatDiscovery
-        #Genshin4Good #GenshinImpact Travelers, explore Teyvat and discover
-        nature side-by-side with five companions. Can you guess who they are? 50
-        Travelers who leave their guesses by sharing this post with the hashtags
-        #TeyvatDiscovery and #Genshin4Good will be randomly chosen to receive a
-        merchandise prize! View Details:
-        https://genshin.hoyoverse.com/en/news/detail/122763
-      </p>
+      <div class="content">
+        {{{this.body}}}
+      </div>
       <div class="feedbackbox">
         <a class="feedbackpost" href="/report">Feedback</a>
       </div>
     </div>
   </li>
-
-  <li class="liposts">
-    <div class="post">
-
-      <div class="titlepost">
-        <h1 class="namepost">Title</h1>
-        <h3 class="datepost"> dd/mm/yyyy</h3>
-      </div>
-
-      <div class="authorpost">
-        <h3>Author</h3>
-      </div>
-
-      <img class="imgpage" src="images/GIHdZPia4AAR3RF.jpg" alt="" />
-
-      <p class="descpost">
-        Nature Benefit Collaboration Spokespersons Teaser #TeyvatDiscovery
-        #Genshin4Good #GenshinImpact Travelers, explore Teyvat and discover
-        nature side-by-side with five companions. Can you guess who they are? 50
-        Travelers who leave their guesses by sharing this post with the hashtags
-        #TeyvatDiscovery and #Genshin4Good will be randomly chosen to receive a
-        merchandise prize! View Details:
-        https://genshin.hoyoverse.com/en/news/detail/122763
-      </p>
-      <div class="feedbackbox">
-        <a class="feedbackpost" href="">Feedback</a>
-      </div>
-    </div>
-  </li>
-
-  <li class="liposts">
-    <div class="post">
-
-      <div class="titlepost">
-        <h1 class="namepost">Title</h1>
-        <h3 class="datepost"> dd/mm/yyyy</h3>
-      </div>
-
-      <div class="authorpost">
-        <h3>Author</h3>
-      </div>
-
-      <img class="imgpage" src="images/GIHdZPia4AAR3RF.jpg" alt="" />
-
-      <p class="descpost">
-        Nature Benefit Collaboration Spokespersons Teaser #TeyvatDiscovery
-        #Genshin4Good #GenshinImpact Travelers, explore Teyvat and discover
-        nature side-by-side with five companions. Can you guess who they are? 50
-        Travelers who leave their guesses by sharing this post with the hashtags
-        #TeyvatDiscovery and #Genshin4Good will be randomly chosen to receive a
-        merchandise prize! View Details:
-        https://genshin.hoyoverse.com/en/news/detail/122763
-      </p>
-      <div class="feedbackbox">
-        <a class="feedbackpost" href="">Feedback</a>
-      </div>
-    </div>
-  </li>
+  {{/each}}
 </ul>
