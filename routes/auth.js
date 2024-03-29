@@ -4,6 +4,8 @@ var AdminModel = require("../model/admin");
 var RolesModel = require("../model/roles");
 var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
+var ManagerModel = require("../model/manager");
+var CoordinatorModel = require("../model/coordinator");
 
 router.get("/login", function (req, res, next) {
   res.render("auth/login", { layout: "auth_layout" });
@@ -23,14 +25,35 @@ router.post("/login", async (req, res) => {
       }
     }
 
+    var coordinator = await CoordinatorModel.findOne({
+      email: email,
+      password: password,
+    });
+    if (coordinator) {
+      var role = await RolesModel.findById(coordinator.roleID);
+      if (role && role.roleName == "coordinator") {
+        req.session.email = coordinator.email;
+        return res.redirect("/");
+      }
+    }
+
+    var manager = await ManagerModel.findOne({
+      email: email,
+      password: password,
+    });
+    if (manager) {
+      var role = await RolesModel.findById(manager.roleID);
+      if (role && role.roleName == "manager") {
+        req.session.email = manager.email;
+        return res.redirect("/");
+      }
+    }
+
     var student = await StudentModel.findOne({
       email: email,
       password: password,
     });
-    if (
-      student
-      // && student.isPending == false
-    ) {
+    if (student && student.isPending == false) {
       var role = await RolesModel.findById(student.roleID);
       if (role && role.roleName == "student") {
         req.session.email = student.email;

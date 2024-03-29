@@ -151,7 +151,7 @@ input::placeholder {
 body {
   width: 100%;
   height: 100%;
-  background-color: #9300ff;
+  /* background-color: #9300ff; */
   border: 0px;
   margin-left: 0px;
   margin-top: 0px;
@@ -165,7 +165,7 @@ body {
   display: flex;
   justify-content: start;
   align-items: center;
-  background-color: #ffff;
+  background-color: #9300ff;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -181,8 +181,8 @@ body {
   color: black;
 }
 .specializelink:hover {
-  background-color: #9300ff;
-  color: white;
+  background-color: white;
+  color: black;
   transition: 0.3s;
 }
 .specializetitle {
@@ -220,7 +220,7 @@ body {
 .post {
   width: 50%;
   height: min-content;
-  background-color: #ffff;
+  background-color: #9100ff;
   padding: 0px 20px 0px 20px;
   border-radius: 20px;
 }

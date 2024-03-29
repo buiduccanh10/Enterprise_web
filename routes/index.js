@@ -6,13 +6,16 @@ const multipartMiddleware = multipart();
 const fs = require("fs");
 const path = require("path");
 var PostModel = require("../model/post");
+var SpecializedModel = require("../model/specialized");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({});
+  const specialized = await SpecializedModel.find({});
   res.render("home", {
     layout: "layout",
     data: post,
+    specialized: specialized
   });
 });
 

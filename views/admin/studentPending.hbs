@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Student account</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      table, th, td { border: 1px solid black; border-collapse: collapse; }
+    </style>
+  </head>
+  <body>
+    <table style="width:100%">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Specialized</th>
+        <th>Pending status</th>
+        <th>Date create</th>
+        <th>Action</th>
+      </tr>
+      {{#each data}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{email}}</td>
+          <td>{{specialized.specializedName}}</td>
+          <td>{{isPending}}</td>
+          <td>{{dateCreate}}</td>
+          <td>
+            <form action="/admin/studentPending/{{this._id}}" method="POST">
+              <button type="submit" class="btn btn-success">Approve</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  </body>
+</html>

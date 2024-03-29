@@ -1,13 +1,16 @@
 <html>
   <head>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Admin</title>
   </head>
   <header class="headercss">
     <div class="headercssbox1">
-      <a href="/"><h1 class="logo">Logo</h1></a>
       {{#if email}}
-        <a class="pagelink" href="/postCreate">Post</a>
-        <a class="pagelink" href="/feedback">Feedbacks</a>
+        <a class="pagelink" href="/admin/studentAccount">Student account</a>
+        <a class="pagelink" href="/admin/managerAccount">Manager account</a>
+        <a class="pagelink" href="/admin/coordinatorAccount">Coordinator account</a>
+        <a class="pagelink" href="/admin/studentPending">Student pending</a>
+        <a class="pagelink" href="/admin/register-role">Register role</a>
       {{/if}}
     </div>
     <h3>{{email}}</h3>

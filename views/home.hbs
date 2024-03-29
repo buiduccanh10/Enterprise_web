@@ -1,29 +1,29 @@
 <div class="specializebox2">
   <div class="specializebox">
-    <p class="specializetitle">Specialize</p>
-    <a class="specializelink" href="">IT</a>
-    <a class="specializelink" href="">Business</a>
-    <a class="specializelink" href="">Design</a>
+    <p class="specializetitle">Specialize:</p>
+    {{#each specialized}}
+      <a class="specializelink" href="">{{specializedName}}</a>
+    {{/each}}
   </div>
 </div>
 <ul class="ulposts">
   {{#each data}}
-  <li class="liposts">
-    <div class="post">
-      <div class="titlepost">
-        <h1 class="namepost">{{this.title}}</h1>
-        <h3 class="datepost"> {{this.dateCreate}}</h3>
+    <li class="liposts">
+      <div class="post">
+        <div class="titlepost">
+          <h1 class="namepost">{{this.title}}</h1>
+          <h3 class="datepost"> {{this.dateCreate}}</h3>
+        </div>
+        <div class="authorpost">
+          <h3>{{this.email}}</h3>
+        </div>
+        <div class="content">
+          {{{this.body}}}
+        </div>
+        <div class="feedbackbox">
+          <a class="feedbackpost" href="/report">Feedback</a>
+        </div>
       </div>
-      <div class="authorpost">
-        <h3>{{this.email}}</h3>
-      </div>
-      <div class="content">
-        {{{this.body}}}
-      </div>
-      <div class="feedbackbox">
-        <a class="feedbackpost" href="/report">Feedback</a>
-      </div>
-    </div>
-  </li>
+    </li>
   {{/each}}
 </ul>

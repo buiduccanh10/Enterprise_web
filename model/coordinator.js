@@ -14,4 +14,3 @@ const Coordinator = mongoose.model(
   "coordinator"
 );
 module.exports = Coordinator;
-Coordinator

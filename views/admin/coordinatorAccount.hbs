@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>Student account</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      table, th, td { border: 1px solid black; border-collapse: collapse; }
+    </style>
+  </head>
+  <body>
+    <table style="width:100%">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Specialized</th>
+        <th>Action</th>
+      </tr>
+      {{#each data}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{email}}</td>
+          <td>{{specialized.specializedName}}</td>
+          <td>
+            <form action="" method="POST">
+              <button type="submit" class="btn btn-primary">Edit</button>
+            </form>
+            <form action="" method="POST">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  </body>
+</html>
