@@ -27,10 +27,10 @@
           <td>{{isPending}}</td>
           <td>{{dateCreate}}</td>
           <td>
-            <form action="" method="POST">
+            <form action="/admin/editStudent/{{_id}}">
               <button type="submit" class="btn btn-primary">Edit</button>
             </form>
-            <form action="" method="POST">
+            <form action="/admin/deleteStudent/{{_id}}" >
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>

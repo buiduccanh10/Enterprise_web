@@ -15,7 +15,7 @@ router.get("/", async function (req, res, next) {
   res.render("home", {
     layout: "layout",
     data: post,
-    specialized: specialized
+    specialized: specialized,
   });
 });
 

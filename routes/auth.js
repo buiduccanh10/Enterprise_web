@@ -83,10 +83,6 @@ router.post("/register", async (req, res) => {
     var specializedID = userRegistration.specializedName;
     var studentRole = await RolesModel.findOne({ roleName: "student" });
 
-    if (!studentRole) {
-      return res.status(400).send("Student role not found.");
-    }
-
     var user = {
       name: userRegistration.name,
       email: userRegistration.email,

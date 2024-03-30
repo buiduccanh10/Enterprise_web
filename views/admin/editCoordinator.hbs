@@ -1,0 +1,29 @@
+<form action="" method="post">
+  <h1>Edit coordinator</h1>
+  Email:
+  <input type="email" name="email" required value="{{editCoordinator.email}}" />
+  <br /><br />
+  Password:
+  <input
+    type="password"
+    name="password"
+    required
+    value="{{editCoordinator.password}}"
+  />
+  <br /><br />
+  Name:
+  <input type="text" name="name" required value="{{editCoordinator.name}}" />
+  <br /><br />
+  <div>
+    <label for="specializedName">Specialized Name:</label>
+    <select id="specializedName" name="specializedName" required>
+      <option
+        value="{{editspecialized._id}}" selected disabled hidden>{{editspecialized.specializedName}}</option>
+      {{#each specialized}}
+        <option value="{{this._id}}">{{this.specializedName}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <br /><br />
+  <input class="btn" type="submit" value="Edit" />
+</form>

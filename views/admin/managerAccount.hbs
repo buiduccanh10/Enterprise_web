@@ -21,10 +21,10 @@
           <td>{{name}}</td>
           <td>{{email}}</td>
           <td>
-            <form action="" method="POST">
+            <form action="/admin/editManager/{{_id}}">
               <button type="submit" class="btn btn-primary">Edit</button>
             </form>
-            <form action="" method="POST">
+            <form action="/admin/deleteManager/{{_id}}" >
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>

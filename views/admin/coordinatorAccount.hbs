@@ -23,10 +23,10 @@
           <td>{{email}}</td>
           <td>{{specialized.specializedName}}</td>
           <td>
-            <form action="" method="POST">
+            <form action="/admin/editCoordinator/{{_id}}">
               <button type="submit" class="btn btn-primary">Edit</button>
             </form>
-            <form action="" method="POST">
+            <form action="/admin/deleteCoordinator/{{_id}}" >
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>
