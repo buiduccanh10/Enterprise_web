@@ -26,7 +26,7 @@ app.use(
 //db
 var mongoose = require("mongoose");
 var uri =
-  "mongodb+srv://buiduccanh10:buiduccanh10@cluster0.rqr9q8a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/";
+  "mongodb+srv://buiduccanh10:buiduccanh10@cluster0.rqr9q8a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/enterprise_web";
 mongoose
   .connect(uri)
   .then(() => console.log("Connect db success"))
