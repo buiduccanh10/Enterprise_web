@@ -100,7 +100,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.session.destroy();
+  req.session = null;
   res.redirect("/auth/login");
 });
 

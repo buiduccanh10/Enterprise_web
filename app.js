@@ -10,7 +10,7 @@ var authRouter = require("./routes/auth");
 var app = express();
 
 //import "express-session" library
-var session = require("express-session");
+var session = require("cookie-session");
 //set session timeout
 const timeout = 10000 * 60 * 60 * 24; // 24 hours (in milliseconds)
 //config session parameters
