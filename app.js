@@ -28,9 +28,9 @@ app.use(
 
 //db
 var mongoose = require("mongoose");
-// var uri =
-//   "mongodb+srv://buiduccanh10:buiduccanh10@cluster0.rqr9q8a.mongodb.net/enterprise_web";
-var uri = "mongodb://localhost:27017/enterprise_web";
+var uri =
+  "mongodb+srv://buiduccanh10:buiduccanh10@cluster0.rqr9q8a.mongodb.net/enterprise_web";
+// var uri = "mongodb://localhost:27017/enterprise_web";
 mongoose
   .connect(uri)
   .then(() => console.log("Connect db success"))
