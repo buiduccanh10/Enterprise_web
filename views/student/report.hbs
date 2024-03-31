@@ -1,0 +1,29 @@
+<div class="ulreports-container">
+  <ul class="ulreports1">
+    <li class="post">
+      <div class="titlepost">
+        <h1 class="namepost">{{post.title}}</h1>
+        <h3 class="datepost"> {{post.dateCreate}}</h3>
+      </div>
+      <div class="authorpost">
+        <h3>{{post.email}}</h3>
+      </div>
+      <div class="content">{{{post.body}}}</div>
+    </li>
+  </ul>
+
+  <ul class="ulreports2">
+    <li class="post">
+      <div class="reportbox">
+        <form action="/student/report/{{post._id}}" method="post">
+          <textarea class="textbox" name="reporttext"></textarea>
+          <div class="button-container">
+            <button class="send-button" type="submit">Send</button>
+            <button class="cancel-button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </li>
+  </ul>
+
+</div>

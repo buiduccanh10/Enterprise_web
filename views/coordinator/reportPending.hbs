@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Student account</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      table, th, td { border: 1px solid black; border-collapse: collapse; }
+    </style>
+  </head>
+  <body>
+    <table style="width:100%">
+      <tr>
+        <th>Report by</th>
+        <th>Content</th>
+        <th>Pending status</th>
+        <th>Reported post</th>
+        <th>Date create</th>
+        <th>Comment</th>
+        <th>Action</th>
+      </tr>
+      {{#each data}}
+        <tr>
+          <td>{{email}}</td>
+          <td>{{content}}</td>
+          <td>{{isPending}}</td>
+          <td>{{{post.body}}}</td>
+          <td>{{dateCreate}}</td>
+          <td><input id="comment{{_id}}" type="text" name="comment" class="comment" placeholder="Enter comment..."></td>
+          <td>
+            <form id="approveForm{{_id}}" action="/coordinator/reportPending/approveReport/{{_id}}" method="get">
+              <button type="button" onclick="submitForm('{{_id}}')" class="btn btn-success">Approve</button>
+            </form>
+            <form action="/coordinator/reportPending/deletePost/{{_id}}">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  </body>
+</html>
+
+<script>
+      function submitForm(id) {
+        var comment = document.getElementById("comment" + id).value;
+        document.getElementById("approveForm" + id).innerHTML += '<input type="hidden" name="comment" value="' + comment + '">';
+        document.getElementById("approveForm" + id).submit();
+      }
+</script>
+

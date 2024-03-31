@@ -1,6 +1,8 @@
 var AdminModel = require("../model/admin");
 var RolesModel = require("../model/roles");
 var StudentModel = require("../model/student");
+var ManagerModel = require("../model/manager");
+var CoordinatorModel = require("../model/coordinator");
 //check login only
 const checkLoginSession = (req, res, next) => {
   if (req.session.email) {
@@ -10,8 +12,7 @@ const checkLoginSession = (req, res, next) => {
   }
 };
 
-//check single role
-const checkSingleSession = async (req, res, next) => {
+const checkAdminSession = async (req, res, next) => {
   var admin = await AdminModel.findOne({ email: req.session.email });
   if (admin) {
     var role = await RolesModel.findById(admin.roleID);
@@ -37,7 +38,32 @@ const checkStudentSession = async (req, res, next) => {
   }
 };
 
-//check multiple roles
+const checkCoordinatorSession = async (req, res, next) => {
+  var coordinator = await CoordinatorModel.findOne({ email: req.session.email });
+  if (coordinator) {
+    var role = await RolesModel.findById(coordinator.roleID);
+    if (req.session.email && role && role.roleName == "coordinator") {
+      next();
+    }
+  } else {
+    res.redirect("/auth/login");
+    return;
+  }
+};
+
+const checkManagerSession = async (req, res, next) => {
+  var manager = await ManagerModel.findOne({ email: req.session.email });
+  if (manager) {
+    var role = await RolesModel.findById(manager.roleID);
+    if (req.session.email && role && role.roleName == "manager") {
+      next();
+    }
+  } else {
+    res.redirect("/auth/login");
+    return;
+  }
+};
+
 const checkMultipleSession = (allowedRoles) => (req, res, next) => {
   if (req.session.email && allowedRoles.includes(req.session.role)) {
     next();
@@ -48,7 +74,9 @@ const checkMultipleSession = (allowedRoles) => (req, res, next) => {
 
 module.exports = {
   checkLoginSession,
-  checkSingleSession,
+  checkAdminSession,
   checkStudentSession,
+  checkCoordinatorSession,
+  checkManagerSession,
   checkMultipleSession,
 };

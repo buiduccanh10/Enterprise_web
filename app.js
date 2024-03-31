@@ -6,6 +6,9 @@ var logger = require("morgan");
 var indexRouter = require("./routes/index");
 var adminRouter = require("./routes/admin");
 var authRouter = require("./routes/auth");
+var studentRouter = require("./routes/student");
+var coordinatorRouter = require("./routes/coordinator");
+var managerRouter = require("./routes/manager");
 
 var app = express();
 
@@ -25,8 +28,9 @@ app.use(
 
 //db
 var mongoose = require("mongoose");
-var uri =
-  "mongodb+srv://buiduccanh10:buiduccanh10@cluster0.rqr9q8a.mongodb.net/enterprise_web";
+// var uri =
+//   "mongodb+srv://buiduccanh10:buiduccanh10@cluster0.rqr9q8a.mongodb.net/enterprise_web";
+var uri = "mongodb://localhost:27017/enterprise_web";
 mongoose
   .connect(uri)
   .then(() => console.log("Connect db success"))
@@ -55,12 +59,21 @@ app.use((req, res, next) => {
 
 //set user authorization for whole router
 //IMPORTANT: place this code before setting router url
-const { checkSingleSession } = require("./middlewares/auth");
-app.use("/admin", checkSingleSession);
+const { checkAdminSession } = require("./middlewares/auth");
+app.use("/admin", checkAdminSession);
+const { checkStudentSession } = require("./middlewares/auth");
+app.use("/student", checkStudentSession);
+const { checkCoordinatorSession } = require("./middlewares/auth");
+app.use("/coordinator", checkCoordinatorSession);
+const { checkManagerSession } = require("./middlewares/auth");
+app.use("/manager", checkManagerSession);
 
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
+app.use("/student", studentRouter);
+app.use("/coordinator", coordinatorRouter);
+app.use("/manager", managerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -75,7 +88,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", { layout: "error_layout" });
 });
 
 module.exports = app;

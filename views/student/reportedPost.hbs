@@ -1,0 +1,35 @@
+{{#each report}}
+  <div class="report-content">
+    <li class="liposts">
+      <div class="post">
+        <div class="titlepost">
+          <h1 class="namepost">{{post.title}}</h1>
+          <h3 class="datepost"> {{post.dateCreate}}</h3>
+        </div>
+        <div class="authorpost">
+          <h3>{{post.email}}</h3>
+        </div>
+        <div class="content">
+          {{{post.body}}}
+        </div>
+      </div>
+      <div class="feedback-action">
+        <button class="action-btn edit">Edit</button>
+        <button class="action-btn del">Delete</button>
+      </div>
+    </li>
+    <div class="report-body">
+      <h2>{{content}}</h2>
+      <h3>{{dateCreate}}</h3>
+      <h4>{{comment}}</h4>
+      <div class="status">
+          Approve status:
+          {{#if isPending}}
+            <h5>pending</h5>
+          {{else}}
+            <h5>approve</h5>
+          {{/if}}
+        </div>
+    </div>
+  </div>
+{{/each}}

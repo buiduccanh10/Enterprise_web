@@ -7,7 +7,10 @@ var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
 
 router.get("/home", function (req, res, next) {
-  res.render("admin/home", { layout: "admin_layout" });
+  res.render("admin/home", {
+    layout: "admin_layout",
+    admin: req.session.email,
+  });
 });
 
 router.get("/managerAccount", async (req, res) => {
@@ -15,6 +18,7 @@ router.get("/managerAccount", async (req, res) => {
   res.render("admin/managerAccount", {
     layout: "admin_layout",
     data: manager,
+    admin: req.session.email,
   });
 });
 
@@ -32,6 +36,7 @@ router.get("/coordinatorAccount", async (req, res) => {
     res.render("admin/coordinatorAccount", {
       layout: "admin_layout",
       data: coordinatorWithSpecialized,
+      admin: req.session.email,
     });
   }
 });
@@ -50,6 +55,7 @@ router.get("/studentAccount", async (req, res) => {
     res.render("admin/studentAccount", {
       layout: "admin_layout",
       data: studentsWithSpecialized,
+      admin: req.session.email,
     });
   }
 });
@@ -68,6 +74,7 @@ router.get("/studentPending", async (req, res) => {
     res.render("admin/studentPending", {
       layout: "admin_layout",
       data: studentsWithSpecialized,
+      admin: req.session.email,
     });
   }
 });
@@ -91,6 +98,7 @@ router.get("/editStudent/:id", async (req, res) => {
     layout: "admin_layout",
     editStudent: editStudent,
     specialized: specialized,
+    admin: req.session.email,
   });
 });
 
@@ -109,6 +117,7 @@ router.get("/editManager/:id", async (req, res) => {
   res.render("admin/editManager", {
     layout: "admin_layout",
     editManager: editManager,
+    admin: req.session.email,
   });
 });
 
@@ -133,6 +142,7 @@ router.get("/editCoordinator/:id", async (req, res) => {
     editCoordinator: editCoordinator,
     specialized: specialized,
     editspecialized: editspecialized,
+    admin: req.session.email,
   });
 });
 
@@ -170,6 +180,7 @@ router.get("/register-role", async (req, res) => {
   res.render("admin/register-role", {
     layout: "admin_layout",
     data: specialized,
+    admin: req.session.email,
   });
 });
 

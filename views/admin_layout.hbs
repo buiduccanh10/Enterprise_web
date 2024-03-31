@@ -5,7 +5,7 @@
   </head>
   <header class="headercss">
     <div class="headercssbox1">
-      {{#if email}}
+      {{#if admin}}
         <a class="pagelink" href="/admin/studentAccount">Student account</a>
         <a class="pagelink" href="/admin/managerAccount">Manager account</a>
         <a class="pagelink" href="/admin/coordinatorAccount">Coordinator account</a>
@@ -13,9 +13,9 @@
         <a class="pagelink" href="/admin/register-role">Register role</a>
       {{/if}}
     </div>
-    <h3>{{email}}</h3>
+    <h3>{{admin}}</h3>
     <div class="headercssbox2">
-      {{#if email}}
+      {{#if admin}}
         <a class="logoutbtn" href="/auth/logout">Log out</a>
       {{else}}
         <a class="loginbtn" href="/auth/login">Log in</a>

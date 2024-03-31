@@ -1,18 +1,29 @@
 <html>
   <head>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
   </head>
   <header class="headercss">
     <div class="headercssbox1">
-      <a href="/"><h1 class="logo">Logo</h1></a>
-      {{#if email}}
-        <a class="pagelink" href="/postCreate">Post</a>
-        <a class="pagelink" href="/feedback">Feedbacks</a>
+      {{#if student}}
+        <a href="/student"><h1 class="logo">Logo</h1></a>
+        {{else}}
+        <a href="/"><h1 class="logo">Logo</h1></a>
+      {{/if}}
+      
+      {{#if student}}
+        <a class="pagelink" href="/student/postCreate">Post</a>
+        <a class="pagelink" href="/student/reportedPost">Reported post</a>
+        <a class="pagelink" href="/student/myPost">My post</a>
       {{/if}}
     </div>
-    <h3>{{email}}</h3>
+    <h3>{{student}}</h3>
     <div class="headercssbox2">
-      {{#if email}}
+
+      {{#if student}}
         <a class="logoutbtn" href="/auth/logout">Log out</a>
       {{else}}
         <a class="loginbtn" href="/auth/login">Log in</a>

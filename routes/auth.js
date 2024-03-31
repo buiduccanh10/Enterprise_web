@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
       var role = await RolesModel.findById(coordinator.roleID);
       if (role && role.roleName == "coordinator") {
         req.session.email = coordinator.email;
-        return res.redirect("/");
+        return res.redirect("/coordinator/postPending");
       }
     }
 
@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
       var role = await RolesModel.findById(manager.roleID);
       if (role && role.roleName == "manager") {
         req.session.email = manager.email;
-        return res.redirect("/");
+        return res.redirect("/manager");
       }
     }
 
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
       var role = await RolesModel.findById(student.roleID);
       if (role && role.roleName == "student") {
         req.session.email = student.email;
-        return res.redirect("/");
+        return res.redirect("/student");
       }
     }
 

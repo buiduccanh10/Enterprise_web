@@ -1,0 +1,29 @@
+<ul class="ulposts">
+  {{#each post}}
+    <li class="liposts">
+      <div class="post">
+        <div class="titlepost">
+          <h1 class="namepost">{{title}}</h1>
+          <h3 class="datepost"> {{dateCreate}}</h3>
+        </div>
+        <div class="authorpost">
+          <h3>{{email}}</h3>
+        </div>
+        <div class="content">
+          {{{body}}}
+        </div>
+        <div class="status">
+          Approve status:
+          {{#if isPending}}
+            <h5>pending</h5>
+          {{else}}
+            <h5>approve</h5>
+          {{/if}}
+        </div>
+        <form action="">
+          <button type="submit" class="btn btn-secondary">Details</button>
+        </form>
+      </div>
+    </li>
+  {{/each}}
+</ul>

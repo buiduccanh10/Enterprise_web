@@ -2,7 +2,7 @@
   <div class="specializebox">
     <p class="specializetitle">Specialize:</p>
     {{#each specialized}}
-      <a class="specializelink" href="">{{specializedName}}</a>
+      <a class="specializelink" href="/{{_id}}">{{specializedName}}</a>
     {{/each}}
   </div>
 </div>
@@ -20,9 +20,15 @@
         <div class="content">
           {{{body}}}
         </div>
-        <div class="feedbackbox">
-          <a class="feedbackpost" href="/report">Feedback</a>
+        <div class="action" style="display: flex;">
+          <form action="home/detailPost/{{_id}}">
+            <button type="submit" class="btn btn-primary">View</button>
+          </form>
+          <form action="student/report/{{_id}}">
+            <button type="submit" class="btn btn-warning">Report</button>
+          </form>
         </div>
+
       </div>
     </li>
   {{/each}}
