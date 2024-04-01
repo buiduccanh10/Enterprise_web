@@ -6,7 +6,7 @@ var CoordinatorModel = require("../model/coordinator");
 var StudentModel = require("../model/student");
 var ReportModel = require("../model/report");
 
-router.get("/coordinator", async function (req, res, next) {
+router.get("/", async function (req, res, next) {
   res.render("coordinator/postPending", {
     layout: "coordinator_layout",
     coordinator: req.session.email,

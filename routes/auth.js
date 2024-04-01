@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
       var role = await RolesModel.findById(coordinator.roleID);
       if (role && role.roleName == "coordinator") {
         req.session.email = coordinator.email;
-        return res.redirect("/coordinator/postPending");
+        return res.redirect("/coordinator");
       }
     }
 

@@ -12,10 +12,11 @@ router.get("/", async function (req, res, next) {
     layout: "layout",
     data: post,
     specialized: specialized,
+    student: req.session.email,
   });
 });
 
-router.get("/:id", async function (req, res, next) {
+router.get("/specializedPost/:id", async function (req, res, next) {
   const specialized = await SpecializedModel.find({});
   const student = await StudentModel.find({ specializedID: req.params.id });
   const studentEmail = student.map((student) => student.email);
@@ -25,10 +26,11 @@ router.get("/:id", async function (req, res, next) {
     email: studentEmail,
   });
 
-  res.render("home/home", {
+  res.render("home/specializedPost", {
     layout: "layout",
     data: post,
     specialized: specialized,
+    student: req.session.email,
   });
 });
 
