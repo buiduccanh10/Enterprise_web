@@ -16,6 +16,16 @@ router.get("/", async function (req, res, next) {
   });
 });
 
+router.get("/readPost/:id", async (req, res) => {
+  const postId = req.params.id;
+  const post = await PostModel.find({ _id: postId });
+  res.render("home/readPost", {
+    layout: "layout",
+    post: post,
+    student: req.session.email,
+  });
+});
+
 router.get("/specializedPost/:id", async function (req, res, next) {
   const specialized = await SpecializedModel.find({});
   const student = await StudentModel.find({ specializedID: req.params.id });

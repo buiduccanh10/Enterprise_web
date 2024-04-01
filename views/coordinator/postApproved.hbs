@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Student account</title>
+    <title>Post approved</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -28,15 +28,18 @@
           <td>{{dateCreate}}</td>
           <td>
             <form
-              action="/coordinator/postPending/viewPost/{{_id}}"
+              action="/coordinator/readPost/{{_id}}"
               method="get"
             >
-              <button type="submit" class="btn btn-primary">View</button>
+              <button type="submit" class="btn btn-primary">Read</button>
             </form>
-            <form action="/admin/editStudent/{{_id}}">
+            <form
+              action="/coordinator/postApproved/unApprovePost/{{_id}}"
+              method="get"
+            >
               <button type="submit" class="btn btn-success">Unapprove</button>
             </form>
-            <form action="/admin/deleteStudent/{{_id}}">
+            <form action="/coordinator/postApproved/deletePost/{{_id}}">
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>

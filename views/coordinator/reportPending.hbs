@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Student account</title>
+    <title>Report pending</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -16,6 +16,7 @@
         <th>Content</th>
         <th>Pending status</th>
         <th>Reported post</th>
+        <th>Write by</th>
         <th>Date create</th>
         <th>Comment</th>
         <th>Action</th>
@@ -26,13 +27,20 @@
           <td>{{content}}</td>
           <td>{{isPending}}</td>
           <td>{{{post.body}}}</td>
+          <td>{{post.email}}</td>
           <td>{{dateCreate}}</td>
           <td><input id="comment{{_id}}" type="text" name="comment" class="comment" placeholder="Enter comment..."></td>
           <td>
+            <form
+              action="/coordinator/readPost/{{post._id}}"
+              method="get"
+            >
+              <button type="submit" class="btn btn-primary">Read</button>
+            </form>
             <form id="approveForm{{_id}}" action="/coordinator/reportPending/approveReport/{{_id}}" method="get">
               <button type="button" onclick="submitForm('{{_id}}')" class="btn btn-success">Approve</button>
             </form>
-            <form action="/coordinator/reportPending/deletePost/{{_id}}">
+            <form action="/coordinator/reportPending/deleteReport/{{_id}}">
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>

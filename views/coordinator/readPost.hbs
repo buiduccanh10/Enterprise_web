@@ -1,0 +1,18 @@
+<ul class="ulposts">
+  {{#each post}}
+    <li class="liposts">
+      <div class="post">
+        <div class="titlepost">
+          <h1 class="namepost">{{title}}</h1>
+          <h3 class="datepost"> {{dateCreate}}</h3>
+        </div>
+        <div class="authorpost">
+          <h3>{{email}}</h3>
+        </div>
+        <div class="content">
+          {{{body}}}
+        </div>
+      </div>
+    </li>
+  {{/each}}
+</ul>

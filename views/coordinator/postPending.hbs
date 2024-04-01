@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Student account</title>
+    <title>Post pending</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -28,10 +28,10 @@
           <td>{{dateCreate}}</td>
           <td>
             <form
-              action="/coordinator/postPending/viewPost/{{_id}}"
+              action="/coordinator/readPost/{{_id}}"
               method="get"
             >
-              <button type="submit" class="btn btn-primary">View</button>
+              <button type="submit" class="btn btn-primary">Read</button>
             </form>
             <form
               action="/coordinator/postPending/approvePost/{{_id}}"

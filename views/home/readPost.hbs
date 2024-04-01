@@ -1,13 +1,5 @@
-<div class="specializebox2">
-  <div class="specializebox">
-    <p class="specializetitle">Specialize:</p>
-    {{#each specialized}}
-      <a class="specializelink" href="/specializedPost/{{_id}}">{{specializedName}}</a>
-    {{/each}}
-  </div>
-</div>
 <ul class="ulposts">
-  {{#each data}}
+  {{#each post}}
     <li class="liposts">
       <div class="post">
         <div class="titlepost">
@@ -20,15 +12,11 @@
         <div class="content">
           {{{body}}}
         </div>
-        <div class="action" style="display: flex;">
-          <form action="/readPost/{{_id}}">
-            <button type="submit" class="btn btn-primary">Read</button>
-          </form>
-          <form action="student/report/{{_id}}">
+        <div class="action">
+          <form action="/student/report/{{_id}}">
             <button type="submit" class="btn btn-warning">Report</button>
           </form>
         </div>
-
       </div>
     </li>
   {{/each}}
