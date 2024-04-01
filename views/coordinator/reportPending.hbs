@@ -10,6 +10,7 @@
     </style>
   </head>
   <body>
+    <!--
     <table style="width:100%">
       <tr>
         <th>Report by</th>
@@ -26,7 +27,7 @@
           <td>{{email}}</td>
           <td>{{content}}</td>
           <td>{{isPending}}</td>
-          <td>{{{post.body}}}</td>
+          <td>{{post.title}}</td>
           <td>{{post.email}}</td>
           <td>{{dateCreate}}</td>
           <td><input id="comment{{_id}}" type="text" name="comment" class="comment" placeholder="Enter comment..."></td>
@@ -47,6 +48,55 @@
         </tr>
       {{/each}}
     </table>
+    -->
+
+
+    <div class="rpPendingBG">
+      <div class="rpPendingContainer">
+        {{#each data}}
+          <div class="rpPendingItems">
+              <h1>Report post: {{post.title}}</h1>
+              <div class="rpPendingItemsBox1">
+                <div class="rpPendingItemsBox1n1">
+                  <div class="rpPendingSourch">
+                    <h4>Post by:</h4>
+                    <h4>{{post.email}}</h4>
+                  </div>
+                  <div class="rpPendingRead">
+                    <a href="/coordinator/readPost/{{post._id}}">View post</a>
+                  </div>
+
+                  <div class="rpPendingSourch">
+                    <h4>Report by: </h4>
+                    <h4>{{email}}</h4>
+                  </div>
+                </div>
+                <div class="rpPendingItemsBox1n2">
+                  {{dateCreate}}
+                </div>
+              </div>
+              <p class="rpPendingContent">Report content: {{content}}</p>
+              <div class="rpPendingItemsBox2">
+                <input id="comment{{_id}}" type="text" name="comment" class="rpPendingComment" placeholder="Enter comment..."></td>
+                <button type="button"  class="rpPendingButton1">Send</button>
+              </div>
+              <div class="rpPendingItemsBox3">
+                <form id="approveForm{{_id}}" action="/coordinator/reportPending/approveReport/{{_id}}" method="get">
+                  <button type="button" onclick="submitForm('{{_id}}')" class="btn btn-success">Accept</button>
+                </form>
+                <form action="/coordinator/reportPending/deleteReport/{{_id}}">
+                  <button type="submit" class="btn btn-danger">Refuse</button>
+                </form>
+              </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+
+
+
+
   </body>
 </html>
 

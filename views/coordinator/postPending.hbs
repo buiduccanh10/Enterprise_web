@@ -10,6 +10,7 @@
     </style>
   </head>
   <body>
+    <!--
     <table style="width:100%">
       <tr>
         <th>Email</th>
@@ -46,5 +47,42 @@
         </tr>
       {{/each}}
     </table>
+    -->
+
+    <div class="pPendingBG">
+      <div class="pPendingContainer">
+        {{#each data}}
+          <div class="pPendingItems">
+            <div class="pPendingItemsBox1">
+              <div class="pPendingItemsBox1n1">
+                <h1>{{title}}</h1>
+                <h5>By: {{email}}</h5>
+              </div>
+              <div class="pPendingItemsBox1n2">
+                {{dateCreate}}
+              </div>
+            </div>
+            <div class="pPendingContent">
+              {{{body}}}
+            </div>
+            <div class="pPendingItemsBox3">
+              <a class="pPendingRead" href="/coordinator/readPost/{{_id}}">Read more</a>
+            </div>
+            
+            <div class="pPendingItemsBox2">
+
+              <form class="pPendingItemsForm1" action="/coordinator/postPending/approvePost/{{_id}}" method="get">
+                <button type="submit" class="pPendingItemsButton1 btn btn-success">Accept</button>
+              </form>
+              <form class="pPendingItemsForm1" action="/coordinator/postPending/deletePost/{{_id}}">
+                <button type="submit" class="pPendingItemsButton1 btn btn-danger">Refuse</button>
+              </form>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+
+
   </body>
 </html>
