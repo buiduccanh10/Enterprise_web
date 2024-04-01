@@ -29,7 +29,7 @@ router.get("/coordinatorAccount", async (req, res) => {
       coordinator.map(async (coordinator) => {
         const specialized = await SpecializedModel.findById(
           coordinator.specializedID
-        );
+        ).lean();
         return { ...coordinator, specialized: specialized };
       })
     );
@@ -48,7 +48,7 @@ router.get("/studentAccount", async (req, res) => {
       student.map(async (student) => {
         const specialized = await SpecializedModel.findById(
           student.specializedID
-        );
+        ).lean();
         return { ...student, specialized: specialized };
       })
     );
@@ -67,7 +67,7 @@ router.get("/studentPending", async (req, res) => {
       student.map(async (student) => {
         const specialized = await SpecializedModel.findById(
           student.specializedID
-        );
+        ).lean();
         return { ...student, specialized: specialized };
       })
     );
@@ -85,14 +85,14 @@ router.get("/studentPending/approve/:id", async (req, res) => {
     studentId,
     { isPending: false },
     { new: true }
-  );
+  ).lean();
   res.redirect("/admin/studentPending");
 });
 
 router.get("/editStudent/:id", async (req, res) => {
   const studentId = req.params.id;
-  const editStudent = await StudentModel.findById(studentId);
-  const specialized = await SpecializedModel.find({});
+  const editStudent = await StudentModel.findById(studentId).lean();
+  const specialized = await SpecializedModel.find({}).lean();
 
   res.render("admin/editStudent", {
     layout: "admin_layout",
@@ -105,14 +105,14 @@ router.get("/editStudent/:id", async (req, res) => {
 router.post("/editStudent/:id", async (req, res) => {
   const studentId = req.params.id;
   const data = req.body;
-  await StudentModel.findByIdAndUpdate(studentId, data);
+  await StudentModel.findByIdAndUpdate(studentId, data).lean();
 
   res.redirect("/admin/studentAccount");
 });
 
 router.get("/editManager/:id", async (req, res) => {
   const managerId = req.params.id;
-  const editManager = await ManagerModel.findById(managerId);
+  const editManager = await ManagerModel.findById(managerId).lean();
 
   res.render("admin/editManager", {
     layout: "admin_layout",
@@ -124,18 +124,18 @@ router.get("/editManager/:id", async (req, res) => {
 router.post("/editManager/:id", async (req, res) => {
   const managerId = req.params.id;
   const data = req.body;
-  await ManagerModel.findByIdAndUpdate(managerId, data);
+  await ManagerModel.findByIdAndUpdate(managerId, data).lean();
 
   res.redirect("/admin/managerAccount");
 });
 
 router.get("/editCoordinator/:id", async (req, res) => {
   const coordinatorId = req.params.id;
-  const editCoordinator = await CoordinatorModel.findById(coordinatorId);
-  const specialized = await SpecializedModel.find({});
+  const editCoordinator = await CoordinatorModel.findById(coordinatorId).lean();
+  const specialized = await SpecializedModel.find({}).lean();
   const editspecialized = await SpecializedModel.findById(
     editCoordinator.specializedID
-  );
+  ).lean();
 
   res.render("admin/editCoordinator", {
     layout: "admin_layout",
@@ -149,34 +149,34 @@ router.get("/editCoordinator/:id", async (req, res) => {
 router.post("/editCoordinator/:id", async (req, res) => {
   const coordinatorId = req.params.id;
   const data = req.body;
-  await CoordinatorModel.findByIdAndUpdate(coordinatorId, data);
+  await CoordinatorModel.findByIdAndUpdate(coordinatorId, data).lean();
 
   res.redirect("/admin/coordinatorAccount");
 });
 
 router.get("/deleteStudent/:id", async (req, res) => {
   const studentId = req.params.id;
-  await StudentModel.findByIdAndDelete(studentId);
+  await StudentModel.findByIdAndDelete(studentId).lean();
 
   res.redirect("/admin/studentAccount");
 });
 
 router.get("/deleteManager/:id", async (req, res) => {
   const managerId = req.params.id;
-  await ManagerModel.findByIdAndDelete(managerId);
+  await ManagerModel.findByIdAndDelete(managerId).lean();
 
   res.redirect("/admin/managerAccount");
 });
 
 router.get("/deleteCoordinator/:id", async (req, res) => {
   const coordinatorId = req.params.id;
-  await CoordinatorModel.findByIdAndDelete(coordinatorId);
+  await CoordinatorModel.findByIdAndDelete(coordinatorId).lean();
 
   res.redirect("/admin/coordinatorAccount");
 });
 
 router.get("/register-role", async (req, res) => {
-  const specialized = await SpecializedModel.find({});
+  const specialized = await SpecializedModel.find({}).lean();
   res.render("admin/register-role", {
     layout: "admin_layout",
     data: specialized,
@@ -189,8 +189,8 @@ router.post("/register-role", async (req, res) => {
     const controlRegistration = req.body;
     var roleType = controlRegistration.role;
     var specializedID = controlRegistration.specializedName;
-    var coordinatorRole = await RolesModel.findOne({ roleName: "coordinator" });
-    var managerRole = await RolesModel.findOne({ roleName: "coordinator" });
+    var coordinatorRole = await RolesModel.findOne({ roleName: "coordinator" }).lean();
+    var managerRole = await RolesModel.findOne({ roleName: "coordinator" }).lean();
     let user = {
       name: controlRegistration.name,
       email: controlRegistration.email,

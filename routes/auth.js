@@ -16,9 +16,9 @@ router.post("/login", async (req, res) => {
   var password = req.body.password;
 
   try {
-    var admin = await AdminModel.findOne({ email: email, password: password });
+    var admin = await AdminModel.findOne({ email: email, password: password }).lean();
     if (admin) {
-      var role = await RolesModel.findById(admin.roleID);
+      var role = await RolesModel.findById(admin.roleID).lean();
       if (role && role.roleName == "admin") {
         req.session.email = admin.email;
         return res.redirect("/admin/home");
@@ -28,9 +28,9 @@ router.post("/login", async (req, res) => {
     var coordinator = await CoordinatorModel.findOne({
       email: email,
       password: password,
-    });
+    }).lean();
     if (coordinator) {
-      var role = await RolesModel.findById(coordinator.roleID);
+      var role = await RolesModel.findById(coordinator.roleID).lean();
       if (role && role.roleName == "coordinator") {
         req.session.email = coordinator.email;
         return res.redirect("/coordinator");
@@ -40,9 +40,9 @@ router.post("/login", async (req, res) => {
     var manager = await ManagerModel.findOne({
       email: email,
       password: password,
-    });
+    }).lean();
     if (manager) {
-      var role = await RolesModel.findById(manager.roleID);
+      var role = await RolesModel.findById(manager.roleID).lean();
       if (role && role.roleName == "manager") {
         req.session.email = manager.email;
         return res.redirect("/manager");
@@ -52,9 +52,9 @@ router.post("/login", async (req, res) => {
     var student = await StudentModel.findOne({
       email: email,
       password: password,
-    });
+    }).lean();
     if (student && student.isPending == false) {
-      var role = await RolesModel.findById(student.roleID);
+      var role = await RolesModel.findById(student.roleID).lean();
       if (role && role.roleName == "student") {
         req.session.email = student.email;
         return res.redirect("/student");
@@ -68,7 +68,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/register", async (req, res) => {
-  const specialized = await SpecializedModel.find({});
+  const specialized = await SpecializedModel.find({}).lean();
   res.render("auth/register", {
     layout: "auth_layout",
     data: specialized,
@@ -81,7 +81,7 @@ router.post("/register", async (req, res) => {
     const currentDate = new Date();
     const localDateTime = new Date(currentDate.getTime() + 7 * 60 * 60 * 1000);
     var specializedID = userRegistration.specializedName;
-    var studentRole = await RolesModel.findOne({ roleName: "student" });
+    var studentRole = await RolesModel.findOne({ roleName: "student" }).lean();
 
     var user = {
       name: userRegistration.name,

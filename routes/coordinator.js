@@ -15,7 +15,7 @@ router.get("/", async function (req, res, next) {
 
 router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
-  const post = await PostModel.find({ _id: postId });
+  const post = await PostModel.find({ _id: postId }).lean();
   res.render("coordinator/readPost", {
     layout: "coordinator_layout",
     post: post,
@@ -64,7 +64,7 @@ router.get("/postPending", async function (req, res, next) {
 
 router.get("/postPending/readPost/:id", async (req, res) => {
   const postId = req.params.id;
-  const post = await PostModel.find({ _id: postId });
+  const post = await PostModel.find({ _id: postId }).lean();
   res.render("coordinator/readPost", {
     layout: "coordinator_layout",
     post: post,
@@ -78,13 +78,13 @@ router.get("/postPending/approvePost/:id", async (req, res) => {
     postId,
     { isPending: false },
     { new: true }
-  );
+  ).lean();
   res.redirect("/coordinator/postPending");
 });
 
 router.get("/postPending/deletePost/:id", async (req, res) => {
   const postId = req.params.id;
-  await PostModel.findByIdAndDelete(postId);
+  await PostModel.findByIdAndDelete(postId).lean();
   res.redirect("/coordinator/postPending");
 });
 
@@ -129,13 +129,13 @@ router.get("/postApproved", async function (req, res, next) {
 
 router.get("/postApproved/unApprovePost/:id", async (req, res) => {
   const postId = req.params.id;
-  await PostModel.findByIdAndUpdate(postId, { isPending: true }, { new: true });
+  await PostModel.findByIdAndUpdate(postId, { isPending: true }, { new: true }).lean();
   res.redirect("/coordinator/postApproved");
 });
 
 router.get("/postApproved/deletePost/:id", async (req, res) => {
   const postId = req.params.id;
-  await PostModel.findByIdAndDelete(postId);
+  await PostModel.findByIdAndDelete(postId).lean();
   res.redirect("/coordinator/postApproved");
 });
 
@@ -193,14 +193,14 @@ router.get("/reportPending/approveReport/:id", async (req, res) => {
     reportId,
     { isPending: false, comment: comment },
     { new: true }
-  );
+  ).lean();
   res.redirect("/coordinator/reportPending");
 });
 
 router.get("/reportPending/deleteReport/:id", async (req, res) => {
   const reportId = req.params.id;
 
-  await ReportModel.findByIdAndDelete(reportId);
+  await ReportModel.findByIdAndDelete(reportId).lean();
   res.redirect("/coordinator/reportPending");
 });
 
@@ -257,14 +257,14 @@ router.get("/reportApproved/unApproveReport/:id", async (req, res) => {
     reportId,
     { isPending: true, comment: null },
     { new: true }
-  );
+  ).lean();
   res.redirect("/coordinator/reportApproved");
 });
 
 router.get("/reportApproved/deleteReport/:id", async (req, res) => {
   const reportId = req.params.id;
 
-  await ReportModel.findByIdAndDelete(reportId);
+  await ReportModel.findByIdAndDelete(reportId).lean();
   res.redirect("/coordinator/reportApproved");
 });
 

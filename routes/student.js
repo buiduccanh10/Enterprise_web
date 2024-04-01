@@ -10,8 +10,8 @@ var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
 
 router.get("/", async function (req, res, next) {
-  const post = await PostModel.find({ isPending: false });
-  const specialized = await SpecializedModel.find({});
+  const post = await PostModel.find({ isPending: false }).lean();
+  const specialized = await SpecializedModel.find({}).lean();
 
   res.render("home/home", {
     layout: "layout",
@@ -80,14 +80,14 @@ router.get("/report/:id", async function (req, res, next) {
   const post = await PostModel.findById(req.params.id);
   const currentStudent = await StudentModel.findOne({
     email: req.session.email,
-  });
-  const postStudent = await StudentModel.findOne({ email: post.email });
+  }).lean();
+  const postStudent = await StudentModel.findOne({ email: post.email }).lean();
   const currentSpecialized = await SpecializedModel.findById(
     currentStudent.specializedID
-  );
+  ).lean();
   const postSpecialized = await SpecializedModel.findById(
     postStudent.specializedID
-  );
+  ).lean();
 
   if (
     post.email !== req.session.email &&
@@ -123,8 +123,8 @@ router.post("/report/:id", async function (req, res, next) {
 });
 
 router.get("/editReport/:id", async function (req, res, next) {
-  const report = await ReportModel.findById(req.params.id);
-  const post = await PostModel.findById(report.postID);
+  const report = await ReportModel.findById(req.params.id).lean();
+  const post = await PostModel.findById(report.postID).lean();
 
   res.render("student/editReport", {
     layout: "layout",
@@ -144,7 +144,7 @@ router.post("/editReport/:id", async function (req, res, next) {
     reportId,
     { content: contentrp, dateCreate: localDateTime },
     { new: true }
-  );
+  ).lean();
 
   res.redirect("/student/reportedPost");
 });
@@ -154,7 +154,7 @@ router.get("/reportedPost", async function (req, res, next) {
   if (report) {
     const reportWithPost = await Promise.all(
       report.map(async (report) => {
-        const post = await PostModel.findById(report.postID);
+        const post = await PostModel.findById(report.postID).lean();
         return { ...report, post: post };
       })
     );
@@ -167,7 +167,7 @@ router.get("/reportedPost", async function (req, res, next) {
 });
 
 router.get("/deleteReport/:id", async function (req, res, next) {
-  await ReportModel.findByIdAndDelete(req.params.id);
+  await ReportModel.findByIdAndDelete(req.params.id).lean();
   res.redirect("/student/reportedPost");
 });
 

@@ -5,7 +5,7 @@ var SpecializedModel = require("../model/specialized");
 const StudentModel = require("../model/student");
 
 router.get("/", async function (req, res, next) {
-  const post = await PostModel.find({ isPending: false });
+  const post = await PostModel.find({ isPending: false }).lean();
   const specialized = await SpecializedModel.find({});
 
   res.render("home/home", {
@@ -18,7 +18,7 @@ router.get("/", async function (req, res, next) {
 
 router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
-  const post = await PostModel.find({ _id: postId });
+  const post = await PostModel.find({ _id: postId }).lean();
   res.render("home/readPost", {
     layout: "layout",
     post: post,
@@ -27,14 +27,14 @@ router.get("/readPost/:id", async (req, res) => {
 });
 
 router.get("/specializedPost/:id", async function (req, res, next) {
-  const specialized = await SpecializedModel.find({});
+  const specialized = await SpecializedModel.find({}).lean();
   const student = await StudentModel.find({ specializedID: req.params.id });
   const studentEmail = student.map((student) => student.email);
 
   const post = await PostModel.find({
     isPending: false,
     email: studentEmail,
-  });
+  }).lean();
 
   res.render("home/specializedPost", {
     layout: "layout",
