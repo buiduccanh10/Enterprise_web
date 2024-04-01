@@ -10,6 +10,7 @@
     </style>
   </head>
   <body>
+    <!--
     <table style="width:100%">
       <tr>
         <th>Report by</th>
@@ -26,7 +27,7 @@
           <td>{{email}}</td>
           <td>{{content}}</td>
           <td>{{isPending}}</td>
-          <td>{{{post.body}}}</td>
+          <td>{{{post.title}}}</td>
           <td>{{{post.email}}}</td>
           <td>{{dateCreate}}</td>
           <td>{{comment}}</td>
@@ -47,5 +48,57 @@
         </tr>
       {{/each}}
     </table>
+    -->
+
+
+
+    <div class="pApprovedBG">
+      <table class="pApprovedTable " style="width:100%; ">
+        <tr>
+          <th>Report ID</th>
+          <th>Post's names</th>
+          <th>Reporters</th>
+          <th>Report Content</th>
+          <th>Action</th>
+        </tr>
+        {{#each data}}
+          <tr>
+
+            <td style="width:20% ">{{_id}}</td>
+            <td style="width:50% ">{{post.title}}</td>
+            <td style="width:50% ">{{content}}</td>
+            <td style="width:20% ">{{email}}</td>
+            <td style="width:10% ">
+              <div class="pApprovedBox1">
+                <form action="/coordinator/readPost/{{post._id}}" method="get">
+                  <button type="submit" class="pApprovedButton btn btn-primary">Read post</button>
+                </form>
+                <form
+                  action="/coordinator/reportApproved/unApproveReport/{{_id}}"
+                  method="get"
+                >
+                  <button type="submit" class="pApprovedButton btn btn-success">Unapprove</button>
+                </form>
+                <form action="/coordinator/reportApproved/deleteReport/{{_id}}">
+                  <button type="submit" class="pApprovedButton btn btn-danger">Delete</button>
+                </form>
+              </div>
+              
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
   </body>
 </html>

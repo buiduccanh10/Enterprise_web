@@ -371,3 +371,223 @@ body {
   transition: 0.5s;
 }
 /* end report pages */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+html, body {
+  background-color: antiquewhite;
+  height: 100%;
+}
+
+
+
+
+
+.rpPendingBG {
+  width: 100%;
+  height: 100%;
+  background-color: antiquewhite;
+  padding: 0px 0px 0px 0px;
+  display: flex;
+  justify-content: center;
+}
+.rpPendingContainer{
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0.30);
+  height: max-content;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content:start;
+  align-items: center;
+  padding: 10px 20px;
+}
+.rpPendingItems {
+  width: 100%;
+  height: max-content;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 10px;
+  border-radius: 25px;
+}
+.rpPendingSourch {
+  display: flex;
+  gap: 20px
+}
+.rpPendingItemsBox1{
+  display: flex;
+  justify-items: auto;
+}
+.rpPendingItemsBox1n1{
+  width: 80%;
+}
+.rpPendingItemsBox1n2{
+  width: 20%;
+}
+.rpPendingContent {
+  margin: 10px 0px;
+}
+
+.rpPendingItemsBox2{
+  display: flex;
+  justify-items: auto;
+  gap: 20px
+}
+.rpPendingComment {
+  padding: 10px;
+  height: 70px;
+  width: 85%;
+  border-radius: 15px;
+}
+.rpPendingButton1 {
+  height: 70px;
+  width: 11%;
+  border-radius: 15px;
+}
+.rpPendingItemsBox3{
+  display: flex;
+  gap: 20px;
+  margin: 10px 0px 0px 0px;
+}
+.rpPendingRead{
+  margin: 0px 0px 20px 0px;
+}
+
+
+
+
+
+
+.pPendingBG {
+  width: 100%;
+  height: 100%;
+  background-color: antiquewhite;
+  padding: 0px 0px 0px 0px;
+  display: flex;
+  justify-content: center;
+}
+.pPendingContainer{
+  width: 60%;
+  background-color: rgba(0, 0, 0, 0.30);
+  height: max-content;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 10px 20px;
+}
+.pPendingItems {
+  width: 100%;
+  height: max-content;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 10px;
+  border-radius: 25px;
+}
+.pPendingItemsBox1{
+  display: flex;
+  justify-items: auto;
+}
+.pPendingItemsBox1n1{
+  width: 80%;
+}
+.pPendingItemsBox1n2{
+  width: 20%;
+}
+.pPendingContent {
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: max-content;
+  margin: 10px 0px 10px 0px;
+}
+.pPendingContentFull {
+  height: max-content;
+  margin: 10px 0px 10px 0px;
+}
+.pPendingItemsBox3 {
+  height: max-content;
+  margin: 0px 0px 30px 0px; 
+}
+.pPendingRead {
+
+}
+.pPendingItemsBox2 {
+  margin-top: 30px;
+  height: max-content;
+  display: flex;
+  justify-items: auto;
+  gap: 8%;
+}
+.pPendingItemsForm1 {
+  width: 46%;
+  padding: 10px;
+}
+.pPendingItemsButton1 {
+  width: 100%;
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+.pApprovedBG{
+
+  width: 100%;
+  height: 100%;
+  background-color: antiquewhite;
+  padding:20px;
+  display: flex;
+  justify-content: center;
+}
+.pApprovedTable{
+  border-radius: 0px ;
+  border: solid 1px;
+  border-collapse: collapse;
+  border-color: rgba(0, 0, 0, 0.30);
+  background-color: rgba(255, 255, 255, 0.8);
+  height: max-content;
+}
+.pApprovedTable, th{
+  text-align: center;
+  border-radius: 0px ;
+  border: solid 1px;
+  border-collapse: collapse;
+  border-color: rgba(0, 0, 0, 0.30);
+
+  padding: 10px 20px;
+}
+.pApprovedTable, td{
+  border-radius: 0px ;
+  border: solid 1px;
+  border-collapse: collapse;
+  border-color: rgba(0, 0, 0, 0.30);
+  padding: 20px;
+}
+.pApprovedButton{
+  width: 100px;
+}
+.pApprovedBox1{
+  display:  flex;
+  flex-direction: column;
+  gap: 10px;
+}
