@@ -7,6 +7,7 @@ const path = require("path");
 var PostModel = require("../model/post");
 var ReportModel = require("../model/report");
 var SpecializedModel = require("../model/specialized");
+var StudentModel = require("../model/student");
 
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false });
@@ -77,7 +78,21 @@ router.post("/post", async function (req, res) {
 
 router.get("/report/:id", async function (req, res, next) {
   const post = await PostModel.findById(req.params.id);
-  if (post.email != req.session.email) {
+  const currentStudent = await StudentModel.findOne({
+    email: req.session.email,
+  });
+  const postStudent = await StudentModel.findOne({ email: post.email });
+  const currentSpecialized = await SpecializedModel.findById(
+    currentStudent.specializedID
+  );
+  const postSpecialized = await SpecializedModel.findById(
+    postStudent.specializedID
+  );
+
+  if (
+    post.email !== req.session.email &&
+    currentSpecialized.specializedName === postSpecialized.specializedName
+  ) {
     res.render("student/report", {
       layout: "layout",
       post: post,
