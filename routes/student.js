@@ -77,11 +77,15 @@ router.post("/post", async function (req, res) {
 
 router.get("/report/:id", async function (req, res, next) {
   const post = await PostModel.findById(req.params.id);
-  res.render("student/report", {
-    layout: "layout",
-    post: post,
-    student: req.session.email,
-  });
+  if (post.email != req.session.email) {
+    res.render("student/report", {
+      layout: "layout",
+      post: post,
+      student: req.session.email,
+    });
+  } else {
+    res.redirect("/student");
+  }
 });
 
 router.post("/report/:id", async function (req, res, next) {
@@ -103,6 +107,33 @@ router.post("/report/:id", async function (req, res, next) {
   res.redirect("/");
 });
 
+router.get("/editReport/:id", async function (req, res, next) {
+  const report = await ReportModel.findById(req.params.id);
+  const post = await PostModel.findById(report.postID);
+
+  res.render("student/editReport", {
+    layout: "layout",
+    post: post,
+    report: report,
+    student: req.session.email,
+  });
+});
+
+router.post("/editReport/:id", async function (req, res, next) {
+  const contentrp = req.body.reporttext;
+  const reportId = req.params.id;
+  const currentDate = new Date();
+  const localDateTime = new Date(currentDate.getTime() + 7 * 60 * 60 * 1000);
+
+  await ReportModel.findByIdAndUpdate(
+    reportId,
+    { content: contentrp, dateCreate: localDateTime },
+    { new: true }
+  );
+
+  res.redirect("/student/reportedPost");
+});
+
 router.get("/reportedPost", async function (req, res, next) {
   const report = await ReportModel.find({ email: req.session.email }).lean();
   if (report) {
@@ -118,6 +149,11 @@ router.get("/reportedPost", async function (req, res, next) {
       student: req.session.email,
     });
   }
+});
+
+router.get("/deleteReport/:id", async function (req, res, next) {
+  await ReportModel.findByIdAndDelete(req.params.id);
+  res.redirect("/student/reportedPost");
 });
 
 router.get("/myPost", async function (req, res, next) {

@@ -14,8 +14,17 @@
         </div>
       </div>
       <div class="feedback-action">
-        <button class="action-btn edit">Edit</button>
-        <button class="action-btn del">Delete</button>
+        {{#if isPending}}
+          <form action="/student/editReport/{{_id}}" method="get">
+            <button class="action-btn edit">Edit report</button>
+          </form>
+          <form action="/student/deleteReport/{{_id}}" method="get">
+            <button class="action-btn del">Delete report</button>
+          </form>
+        {{else}}
+          <button class="action-btn edit" disabled  style="opacity: 0.5;">Edit report</button>
+          <button class="action-btn del" disabled  style="opacity: 0.5;">Delete report</button>
+        {{/if}}
       </div>
     </li>
     <div class="report-body">
@@ -23,13 +32,13 @@
       <h3>{{dateCreate}}</h3>
       <h4>{{comment}}</h4>
       <div class="status">
-          Approve status:
-          {{#if isPending}}
-            <h5>pending</h5>
-          {{else}}
-            <h5>approve</h5>
-          {{/if}}
-        </div>
+        Approve status:
+        {{#if isPending}}
+          <h5>Pending</h5>
+        {{else}}
+          <h5>Approved</h5>
+        {{/if}}
+      </div>
     </div>
   </div>
 {{/each}}

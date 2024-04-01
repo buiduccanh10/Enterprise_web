@@ -15,14 +15,14 @@
         <div class="status">
           Approve status:
           {{#if isPending}}
-            <h5>pending</h5>
+            <h5>Pending</h5>
           {{else}}
-            <h5>approve</h5>
+            <h5>Approved</h5>
           {{/if}}
         </div>
-        <form action="">
-          <button type="submit" class="btn btn-secondary">Details</button>
-        </form>
+        <form action="/readPost/{{_id}}">
+            <button type="submit" class="btn btn-primary">Read</button>
+          </form>
       </div>
     </li>
   {{/each}}
