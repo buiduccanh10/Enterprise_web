@@ -78,21 +78,8 @@ router.post("/post", async function (req, res) {
 
 router.get("/report/:id", async function (req, res, next) {
   const post = await PostModel.findById(req.params.id);
-  const currentStudent = await StudentModel.findOne({
-    email: req.session.email,
-  }).lean();
-  const postStudent = await StudentModel.findOne({ email: post.email }).lean();
-  const currentSpecialized = await SpecializedModel.findById(
-    currentStudent.specializedID
-  ).lean();
-  const postSpecialized = await SpecializedModel.findById(
-    postStudent.specializedID
-  ).lean();
 
-  if (
-    post.email !== req.session.email &&
-    currentSpecialized.specializedName === postSpecialized.specializedName
-  ) {
+  if (post.email !== req.session.email) {
     res.render("student/report", {
       layout: "layout",
       post: post,
