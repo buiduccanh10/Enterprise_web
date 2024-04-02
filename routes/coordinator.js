@@ -62,16 +62,6 @@ router.get("/postPending", async function (req, res, next) {
   });
 });
 
-router.get("/postPending/readPost/:id", async (req, res) => {
-  const postId = req.params.id;
-  const post = await PostModel.find({ _id: postId }).lean();
-  res.render("coordinator/readPost", {
-    layout: "coordinator_layout",
-    post: post,
-    coordinator: req.session.email,
-  });
-});
-
 router.get("/postPending/approvePost/:id", async (req, res) => {
   const postId = req.params.id;
   await PostModel.findByIdAndUpdate(
@@ -129,7 +119,11 @@ router.get("/postApproved", async function (req, res, next) {
 
 router.get("/postApproved/unApprovePost/:id", async (req, res) => {
   const postId = req.params.id;
-  await PostModel.findByIdAndUpdate(postId, { isPending: true }, { new: true }).lean();
+  await PostModel.findByIdAndUpdate(
+    postId,
+    { isPending: true },
+    { new: true }
+  ).lean();
   res.redirect("/coordinator/postApproved");
 });
 
@@ -185,13 +179,24 @@ router.get("/reportPending", async function (req, res, next) {
   });
 });
 
-router.get("/reportPending/approveReport/:id", async (req, res) => {
+router.get("/reportPending/sendCommentReport/:id", async (req, res) => {
   const reportId = req.params.id;
   const comment = req.query.comment;
 
   await ReportModel.findByIdAndUpdate(
     reportId,
-    { isPending: false, comment: comment },
+    { comment: comment },
+    { new: true }
+  ).lean();
+  res.redirect("/coordinator/reportPending");
+});
+
+router.get("/reportPending/approveReport/:id", async (req, res) => {
+  const reportId = req.params.id;
+
+  await ReportModel.findByIdAndUpdate(
+    reportId,
+    { isPending: false },
     { new: true }
   ).lean();
   res.redirect("/coordinator/reportPending");
