@@ -189,8 +189,10 @@ router.post("/register-role", async (req, res) => {
     const controlRegistration = req.body;
     var roleType = controlRegistration.role;
     var specializedID = controlRegistration.specializedName;
-    var coordinatorRole = await RolesModel.findOne({ roleName: "coordinator" }).lean();
-    var managerRole = await RolesModel.findOne({ roleName: "coordinator" }).lean();
+    var coordinatorRole = await RolesModel.findOne({
+      roleName: "coordinator",
+    }).lean();
+    var managerRole = await RolesModel.findOne({ roleName: "manager" }).lean();
     let user = {
       name: controlRegistration.name,
       email: controlRegistration.email,
