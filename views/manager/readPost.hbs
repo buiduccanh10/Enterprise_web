@@ -19,11 +19,37 @@
           {{/each}}
         </div>
         <div class="action">
-          <form action="/manager/readPost/downloadPost/{{_id}}">
-            <button type="submit" class="btn btn-warning">Download</button>
+          <button class="btn btn-warning download-btn" data-post-id="{{_id}}">Download post (PDF)</button>
+          <form action="/manager/readPost/{{_id}}/downloadReport">
+            <button type="submit" class="btn btn-warning">Download report</button>
           </form>
         </div>
       </div>
     </li>
   {{/each}}
 </ul>
+
+
+<textarea name="content" id="editor" style="display: none;"></textarea>
+            
+
+
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+    
+
+     const downloadButtons = document.querySelectorAll('.download-btn');
+  downloadButtons.forEach(button => {
+    button.addEventListener('click', async function() {
+      document.querySelector('.ulposts').style.display = 'none';
+      CKEDITOR.replace('editor');
+
+      const postId = this.dataset.postId;
+      const response = await fetch(`/manager/readPost/${postId}/downloadPost`);
+      const htmlContent = await response.text();
+      
+      CKEDITOR.instances.editor.setData(htmlContent);
+    });
+  });
+</script>
+

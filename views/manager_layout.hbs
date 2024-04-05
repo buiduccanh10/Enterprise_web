@@ -15,16 +15,15 @@
         <a href="/manager"><h1 class="logo">Logo</h1></a>
       {{/if}}
 
-      {{!-- {{#if manager}}
-        <a class="pagelink" href="/coordinator/postPending">Post pending</a>
-        <a class="pagelink" href="/coordinator/reportPending">Report pending</a>
-        <a class="pagelink" href="/coordinator/postApproved">Post approved</a>
-        <a class="pagelink" href="/coordinator/reportApproved">Report approved</a>
-      {{/if}} --}}
+      {{#if manager}}
+        <a class="pagelink" href="/manager/home">Home</a>
+        <a class="pagelink" href="/manager/report">Report</a>
+      {{/if}}
     </div>
     <h3>{{manager}}</h3>
     <div class="headercssbox2">
-      {{#if mamager}}
+
+      {{#if manager}}
         <a class="logoutbtn" href="/auth/logout">Log out</a>
       {{else}}
         <a class="loginbtn" href="/auth/login">Log in</a>

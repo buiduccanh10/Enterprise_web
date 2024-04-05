@@ -5,11 +5,15 @@ var ManagerModel = require("../model/manager");
 var CoordinatorModel = require("../model/coordinator");
 var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
+var DeadlineModel = require("../model/deadline");
 
-router.get("/home", function (req, res, next) {
+router.get("/home", async function (req, res, next) {
+  const deadline = await DeadlineModel.findOne({}).lean();
+
   res.render("admin/home", {
     layout: "admin_layout",
     admin: req.session.email,
+    deadline: deadline,
   });
 });
 
@@ -217,5 +221,19 @@ router.post("/register-role", async (req, res) => {
   } catch (err) {
     res.send(err);
   }
+});
+
+router.post("/deadline", async (req, res) => {
+  const newdeadline = req.body.deadline;
+
+  const existingDeadline = await DeadlineModel.findOne({}).lean();
+
+  if (existingDeadline) {
+    await DeadlineModel.updateOne({}, { deadLine: newdeadline });
+  } else {
+    await DeadlineModel.create({ deadLine: newdeadline });
+  }
+
+  res.redirect("/admin/home");
 });
 module.exports = router;

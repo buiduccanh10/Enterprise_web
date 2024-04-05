@@ -7,7 +7,7 @@ const path = require("path");
 var PostModel = require("../model/post");
 var ReportModel = require("../model/report");
 var SpecializedModel = require("../model/specialized");
-var StudentModel = require("../model/student");
+var DeadlineModel = require("../model/deadline");
 
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
@@ -63,17 +63,22 @@ router.post("/upload", multipartMiddleware, (req, res) => {
 
 router.post("/post", async function (req, res) {
   const { title, content } = req.body;
+  const deadline = await DeadlineModel.findOne({}).lean();
 
-  var post = {
-    title: title,
-    body: content,
-    dateCreate: Date.now(),
-    isPending: true,
-    email: req.session.email,
-  };
-  await PostModel.create(post);
+  if (deadline && new Date() <= new Date(deadline.deadLine)) {
+    var post = {
+      title: title,
+      body: content,
+      dateCreate: Date.now(),
+      isPending: true,
+      email: req.session.email,
+    };
+    await PostModel.create(post);
 
-  res.redirect("/student/myPost");
+    res.redirect("/student/myPost");
+  }
+
+  res.redirect("/student");
 });
 
 router.get("/report/:id", async function (req, res, next) {
@@ -92,21 +97,24 @@ router.get("/report/:id", async function (req, res, next) {
 
 router.post("/report/:id", async function (req, res, next) {
   const contentrp = req.body.reporttext;
-  const currentDate = new Date();
-  const localDateTime = new Date(currentDate.getTime() + 7 * 60 * 60 * 1000);
 
-  const report = {
-    content: contentrp,
-    comment: null,
-    dateCreate: localDateTime,
-    isPending: true,
-    email: req.session.email,
-    postID: req.params.id,
-  };
+  const deadline = await DeadlineModel.findOne({}).lean();
 
-  await ReportModel.create(report);
+  if (deadline && new Date() <= new Date(deadline.deadLine)) {
+    const report = {
+      content: contentrp,
+      comment: null,
+      dateCreate: new Date(),
+      isPending: true,
+      email: req.session.email,
+      postID: req.params.id,
+    };
 
-  res.redirect("/");
+    await ReportModel.create(report);
+
+    res.redirect("/");
+  }
+  res.redirect("/student");
 });
 
 router.get("/editReport/:id", async function (req, res, next) {
@@ -124,16 +132,19 @@ router.get("/editReport/:id", async function (req, res, next) {
 router.post("/editReport/:id", async function (req, res, next) {
   const contentrp = req.body.reporttext;
   const reportId = req.params.id;
-  const currentDate = new Date();
-  const localDateTime = new Date(currentDate.getTime() + 7 * 60 * 60 * 1000);
 
-  await ReportModel.findByIdAndUpdate(
-    reportId,
-    { content: contentrp, dateCreate: localDateTime },
-    { new: true }
-  ).lean();
+  const deadline = await DeadlineModel.findOne({}).lean();
 
-  res.redirect("/student/reportedPost");
+  if (deadline && new Date() <= new Date(deadline.deadLine)) {
+    await ReportModel.findByIdAndUpdate(
+      reportId,
+      { content: contentrp, dateCreate: new Date() },
+      { new: true }
+    ).lean();
+
+    res.redirect("/student/reportedPost");
+  }
+  res.redirect("/student");
 });
 
 router.get("/reportedPost", async function (req, res, next) {

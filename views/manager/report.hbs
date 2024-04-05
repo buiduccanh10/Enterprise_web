@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Report approved</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      table, th, td { border: 1px solid black; border-collapse: collapse; }
+    </style>
+  </head>
+  <body>
+    <form action="/manager/downloadAllReport">
+      <button type="submit" class="btn btn-warning">Download all report</button>
+    </form>
+    <div class="pApprovedBG">
+      <table class="pApprovedTable" style="width:100%; ">
+        <tr>
+          <th>Report ID</th>
+          <th>Post's names</th>
+          <th>Reporters</th>
+          <th>Report Content</th>
+          <th>Action</th>
+        </tr>
+        {{#each data}}
+          <tr>
+
+            <td style="width:20% ">{{_id}}</td>
+            <td style="width:50% ">{{post.title}}</td>
+            <td style="width:20% ">{{email}}</td>
+            <td style="width:50% ">{{content}}</td>
+            <td style="width:10% ">
+              <div class="pApprovedBox1">
+                <form action="/manager/readPost/{{post._id}}" method="get">
+                  <button
+                    type="submit"
+                    class="pApprovedButton btn btn-primary"
+                  >Read post</button>
+                </form>
+                <form action="/manager/readPost/{{post._id}}/downloadReport">
+                  <button type="submit" class="btn btn-warning">Download report</button>
+                </form>
+              </div>
+
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+
+  </body>
+</html>

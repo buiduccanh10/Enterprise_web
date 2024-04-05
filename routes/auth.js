@@ -16,7 +16,10 @@ router.post("/login", async (req, res) => {
   var password = req.body.password;
 
   try {
-    var admin = await AdminModel.findOne({ email: email, password: password }).lean();
+    var admin = await AdminModel.findOne({
+      email: email,
+      password: password,
+    }).lean();
     if (admin) {
       var role = await RolesModel.findById(admin.roleID).lean();
       if (role && role.roleName == "admin") {
@@ -78,8 +81,6 @@ router.get("/register", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     var userRegistration = req.body;
-    const currentDate = new Date();
-    const localDateTime = new Date(currentDate.getTime() + 7 * 60 * 60 * 1000);
     var specializedID = userRegistration.specializedName;
     var studentRole = await RolesModel.findOne({ roleName: "student" }).lean();
 
@@ -88,7 +89,7 @@ router.post("/register", async (req, res) => {
       email: userRegistration.email,
       password: userRegistration.password,
       isPending: true,
-      dateCreate: localDateTime,
+      dateCreate: new Date(),
       roleID: studentRole._id,
       specializedID: specializedID,
     };
