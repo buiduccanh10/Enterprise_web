@@ -76,9 +76,9 @@ router.post("/post", async function (req, res) {
     await PostModel.create(post);
 
     res.redirect("/student/myPost");
+  } else {
+    res.redirect("/student");
   }
-
-  res.redirect("/student");
 });
 
 router.get("/report/:id", async function (req, res, next) {
