@@ -6,14 +6,17 @@ var CoordinatorModel = require("../model/coordinator");
 var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
 var DeadlineModel = require("../model/deadline");
-
+var PostModel = require("../model/post");
 router.get("/home", async function (req, res, next) {
   const deadline = await DeadlineModel.findOne({}).lean();
-
+  const totalStudents = await StudentModel.countDocuments();
+  const totalPosts = await PostModel.countDocuments();
   res.render("admin/home", {
     layout: "admin_layout",
     admin: req.session.email,
     deadline: deadline,
+    totalStudents: totalStudents,
+    totalPosts: totalPosts
   });
 });
 

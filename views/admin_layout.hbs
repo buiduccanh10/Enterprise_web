@@ -1,29 +1,75 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title>Admin</title>
-  </head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  <style>
+    .headercss {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #f0f0f0;
+    }
+    .headercssbox1 {
+      display: flex;
+      align-items: center;
+    }
+    .headercssbox1 .pagelink {
+      margin-right: 10px;
+    }
+
+    .dropdown-toggle::after {
+      display: none;
+    }
+    .dropdown-menu {
+      min-width: 130px;
+    }
+  </style>
+</head>
+<body>
   <header class="headercss">
     <div class="headercssbox1">
-      {{#if admin}}
-        <a class="pagelink" href="/admin/home">Home</a>
-        <a class="pagelink" href="/admin/studentAccount">Student account</a>
-        <a class="pagelink" href="/admin/managerAccount">Manager account</a>
-        <a class="pagelink" href="/admin/coordinatorAccount">Coordinator account</a>
-        <a class="pagelink" href="/admin/studentPending">Student pending</a>
-        <a class="pagelink" href="/admin/register-role">Register role</a>
+     {{#if admin}}
+      <a href="/"><h1 class="logo">Logo</h1></a>
+      <a class="pagelink" href="/admin/home">Home</a>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle pagelink" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Account Management
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="/admin/studentAccount">Student account</a></li>
+          <li><a class="dropdown-item" href="/admin/managerAccount">Manager account</a></li>
+          <li><a class="dropdown-item" href="/admin/coordinatorAccount">Coordinator account</a></li>
+        </ul>
+      </div>
+      <a class="pagelink" href="/admin/studentPending">Student pending</a>
+      <a class="pagelink" href="/admin/register-role">Register role</a>
       {{/if}}
     </div>
-    <h3>{{admin}}</h3>
+    <i>Welcome back, <b>{{admin}}</b></i>
     <div class="headercssbox2">
+
       {{#if admin}}
-        <a class="logoutbtn" href="/auth/logout">Log out</a>
+        <a href="/auth/logout"><button class="btn btn-danger">Log out</button></a>
       {{else}}
-        <a class="loginbtn" href="/auth/login">Log in</a>
+        <a href="/auth/login"><button class="btn btn-success">Log in</button></a>
       {{/if}}
     </div>
   </header>
-  <body>
+
+
+  <div class="container">
     {{{body}}}
-  </body>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
