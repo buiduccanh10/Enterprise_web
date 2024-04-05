@@ -113,8 +113,9 @@ router.post("/report/:id", async function (req, res, next) {
     await ReportModel.create(report);
 
     res.redirect("/");
+  } else {
+    res.redirect("/student");
   }
-  res.redirect("/student");
 });
 
 router.get("/editReport/:id", async function (req, res, next) {
@@ -143,8 +144,9 @@ router.post("/editReport/:id", async function (req, res, next) {
     ).lean();
 
     res.redirect("/student/reportedPost");
+  } else {
+    res.redirect("/student");
   }
-  res.redirect("/student");
 });
 
 router.get("/reportedPost", async function (req, res, next) {
