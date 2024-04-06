@@ -1,7 +1,11 @@
 .bodylogin {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
-  background: linear-gradient(90deg, #ffff 66%, #9300ff 34%);
+  /*background: linear-gradient(90deg, #ffff 66%, #9300ff 34%);*/
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 
 a {
@@ -15,53 +19,21 @@ a {
   margin-top: 250px;
 }
 
-.login-form {
-  background-color: white;
-  padding: 10px;
-  height: 370px;
-  width: 400px;
-  border: #9300ff solid 1px;
-  border-radius: 10px;
-}
 .login-form-parent {
   display: flex;
 }
-
 /* .login-form-parent > img {
   margin-top: 15px;
   margin-right: 300px;
   height: 650px;
 } */
-
 h2 {
   margin-left: 20px;
 }
-
 input::placeholder {
   font: 1rem/3 sans-serif;
 }
 
-.email-input > input {
-  padding: 5px;
-  width: 350px;
-  height: 30px;
-  border-radius: 5px;
-  border: black solid 1px;
-}
-.pass-input > input {
-  padding: 5px;
-  width: 350px;
-  height: 30px;
-  border-radius: 5px;
-  border: black solid 1px;
-}
-.email-input {
-  margin-left: 20px;
-}
-.pass-input {
-  margin-left: 20px;
-  margin-top: 10px;
-}
 
 .btn-login {
   margin-top: 30px;
@@ -87,8 +59,134 @@ input::placeholder {
   margin-left: 20px;
 }
 
-/* homepage css */
 
+
+/*new login*/
+.imgLoginBg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(8px);
+
+}
+.blurLoginBg{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.244);
+}
+.loginContainer{
+  width: max-content;
+  height: fit-content;
+  border-radius: 25px;
+  background-color: #ffffff;
+  display: flex;
+  border:#000000 solid 1px;
+}
+
+.loginImgLeft{
+  background-color: #ffffff;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  display: flex;
+  justify-content: start;
+  align-items: end;
+}
+.loginImgLeftItem{
+  height: 360px;
+  border-bottom-left-radius: 25px;
+}
+
+.loginform {
+  background-color: antiquewhite;
+  padding: 10px;
+  height: 100%;
+  width: 400px;
+  /*border:#000000 solid 1px;*/
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  display:flex;
+  flex-direction: column;
+}
+
+.loginBtn {
+  width: 320px;
+  height: 40px;
+  margin: 30px 0px 30px 0px;
+  font-size: 20px;
+  font-family: cursive;
+  margin-bottom: 10px;
+  text-decoration: none;
+
+}
+
+.loginBtn > button {
+  font-size: 16px;
+  font-weight: 300;
+  border-radius: 10px;
+  width: 320px;
+  border: solid 0px;
+  height: 40px;
+  background-color: rgb(95, 95, 95);
+  color: #ffffff;
+}
+.loginBtn > button:hover {
+  color: #ffffff;
+  background-color: rgb(26, 26, 26);
+  transition: 0.5s;
+}
+.emailInput > input {
+  padding: 5px;
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  border: black solid 1px;
+}
+.passInput > input {
+  padding: 5px;
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  border: black solid 1px;
+}
+.emailInput {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+.passInput {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.signUp{
+  margin-left: 20px;
+  font-size: 18;
+  font-weight: 300;
+}
+.signUp > a{
+  text-decoration: none;
+}
+.loginTitle{
+  margin-left: 20px;
+}
+.registerSpec{
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+
+
+/*end/
+
+
+
+
+
+
+/* homepage css */
 .headercss {
   width: 100%;
   height: 100px;
@@ -97,7 +195,6 @@ input::placeholder {
   justify-content: start;
   align-items: center;
 }
-
 .headercssbox1 {
   width: 100%;
   display: flex;
@@ -132,7 +229,6 @@ input::placeholder {
   color: #9300ff;
   transition: 0.5s;
 }
-
 .loginbtn {
   display: inline-flex;
   justify-content: end;
@@ -147,7 +243,6 @@ input::placeholder {
   color: #9300ff;
   transition: 0.5s;
 }
-
 body {
   width: 100%;
   height: 100%;
@@ -157,6 +252,101 @@ body {
   margin-top: 0px;
 }
 
+
+
+
+  .specBox{
+    padding: 0px;
+    width: 70%;
+    margin: 20px;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.50);
+    display: flex;
+    justify-items: start;
+    align-items: center;
+  }
+  .specializetitle {
+    height: fit-content;
+    margin-left: 20px;
+    margin-right: 5px;
+    padding: 13px 5px 5px 5px;
+    color: #ffffff;
+    font-size: 20px;
+    font-family: cursive;
+    text-decoration: none;
+    text-align: center;
+  }
+  .specializelink {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 2px 15px;
+    font-size: 20px;
+    font-family: cursive;
+    border-radius: 300px;
+    text-decoration: none;
+    color: #ffffff;
+  }
+  .specializelink:hover {
+    background-color: white;
+    color: black;
+    transition: 0.3s;
+    text-decoration: none;
+  }
+  .specBoxBG {
+    width: 100%;
+    height: max-content;
+    background-color: antiquewhite;
+    padding: 0px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+  }
+  .homeStudentContainer{
+    width: 60%;
+    background-color: rgba(0, 0, 0, 0.30);
+    border-radius: 20px;
+    height: max-content;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  .feedbackpost {
+    margin: 30px 0px 30px 0px;
+    padding: 6px 20px;
+    font-size: 20px;
+    font-family: cursive;
+    background-color: rgba(0, 0, 0, 0.30);
+    color: #ffffff;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-decoration: none;
+  }
+  .feedbackpost:hover {
+    color: black;
+    background-color: antiquewhite;
+    transition: 0.5s;
+  }
+  .feedbackbox {
+    padding-bottom: 0px;
+  }
+/*end*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*old css
 .specializebox {
   width: 70%;
   border: 1px;
@@ -168,30 +358,6 @@ body {
   background-color: #9300ff;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-.specializelink {
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 2px 15px;
-  font-size: 20px;
-  font-family: cursive;
-  border-radius: 300px;
-  text-decoration: none;
-
-  color: black;
-}
-.specializelink:hover {
-  background-color: white;
-  color: black;
-  transition: 0.3s;
-}
-.specializetitle {
-  margin-left: 20px;
-  margin-right: 5px;
-  padding: 2px;
-  font-size: 20px;
-  font-family: cursive;
-  text-decoration: none;
 }
 .specializebox2 {
   width: 100%;
@@ -252,25 +418,20 @@ body {
 .descpost {
   margin: 0px 20px 30px 20px;
 }
-.feedbackpost {
-  margin: 30px 20px 30px 20px;
-  padding: 6px 20px;
-  font-size: 20px;
-  font-family: cursive;
-  background-color: #00ffcd;
-  color: black;
-  border-radius: 10px;
-  margin-bottom: 50px;
-  text-decoration: none;
-}
-.feedbackpost:hover {
-  color: #00ffcd;
-  background-color: black;
-  transition: 0.5s;
-}
-.feedbackbox {
-  padding-bottom: 30px;
-}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* report pages */
@@ -394,6 +555,22 @@ html, body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*coordinator*/
 .rpPendingBG {
   width: 100%;
   height: 100%;
@@ -463,9 +640,6 @@ html, body {
 .rpPendingRead{
   margin: 0px 0px 20px 0px;
 }
-
-
-
 
 
 
@@ -540,8 +714,13 @@ html, body {
   width: 100%;
   padding: 10px;
 }
+/*end*/
 
 
+
+
+
+/*home css*/
 
 
 
