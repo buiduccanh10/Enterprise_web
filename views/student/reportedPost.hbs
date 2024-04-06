@@ -9,11 +9,11 @@
         <div class="authorpost">
           <h3>{{post.email}}</h3>
         </div>
-        <div class="content">
-          {{{post.body}}}
-        </div>
       </div>
       <div class="feedback-action">
+          <form action="/readPost/{{post._id}}" method="get">
+            <button class="action-btn edit">Read</button>
+          </form>
         {{#if isPending}}
           <form action="/student/editReport/{{_id}}" method="get">
             <button class="action-btn edit">Edit report</button>
