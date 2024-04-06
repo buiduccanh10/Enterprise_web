@@ -5,6 +5,7 @@ var SpecializedModel = require("../model/specialized");
 var CoordinatorModel = require("../model/coordinator");
 var StudentModel = require("../model/student");
 var ReportModel = require("../model/report");
+var DeadlineModel = require("../model/deadline");
 
 router.get("/", async function (req, res, next) {
   res.render("coordinator/postPending", {
@@ -182,13 +183,18 @@ router.get("/reportPending", async function (req, res, next) {
 router.get("/reportPending/sendCommentReport/:id", async (req, res) => {
   const reportId = req.params.id;
   const comment = req.query.comment;
+  const deadline = await DeadlineModel.findOne({}).lean();
 
-  await ReportModel.findByIdAndUpdate(
-    reportId,
-    { comment: comment },
-    { new: true }
-  ).lean();
-  res.redirect("/coordinator/reportPending");
+  if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
+    await ReportModel.findByIdAndUpdate(
+      reportId,
+      { comment: comment },
+      { new: true }
+    ).lean();
+    res.redirect("/coordinator/reportPending");
+  } else {
+    res.redirect("/coordinator/reportPending");
+  }
 });
 
 router.get("/reportPending/approveReport/:id", async (req, res) => {

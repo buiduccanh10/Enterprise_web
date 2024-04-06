@@ -9,11 +9,38 @@ var authRouter = require("./routes/auth");
 var studentRouter = require("./routes/student");
 var coordinatorRouter = require("./routes/coordinator");
 var managerRouter = require("./routes/manager");
+const cron = require("node-cron");
+var session = require("cookie-session");
+var ReportModel = require("./model/report");
 
 var app = express();
 
-//import "express-session" library
-var session = require("cookie-session");
+// Hàm này kiểm tra và cập nhật các report quá hạn
+async function checkAndUpdateOverdueReports() {
+  const fourteenDaysAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+
+  // Tìm tất cả các report chưa được xử lý và quá 14 ngày
+  const overdueReports = await ReportModel.find({
+    isPending: true,
+    dateCreate: { $lte: fourteenDaysAgo },
+  }).lean();
+
+  // Cập nhật trạng thái của các report quá hạn
+  const updatePromises = overdueReports.map((report) =>
+    ReportModel.updateOne({ _id: report._id }, { isPending: false })
+  );
+
+  await Promise.all(updatePromises);
+}
+
+// Lập lịch cron job để chạy mỗi ngày vào lúc 00:00 (nửa đêm)
+cron.schedule("0 0 * * *", () => {
+  console.log(
+    "Running a daily check for overdue reports at " + new Date().toString()
+  );
+  checkAndUpdateOverdueReports();
+});
+
 //set session timeout
 const timeout = 10000 * 60 * 60 * 24; // 24 hours (in milliseconds)
 //config session parameters

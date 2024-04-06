@@ -24,22 +24,28 @@
 </ul>
 -->
 <div class="pPendingBG">
-      <div class="homeStudentContainer">
-        {{#each post}}
-          <div class="pPendingItems">
-            <div class="pPendingItemsBox1">
-              <div class="pPendingItemsBox1n1">
-                <h1>{{title}}</h1>
-                <h5>By: {{email}}</h5>
-              </div>
-              <div class="pPendingItemsBox1n2">
-                {{dateCreate}}
-              </div>
-            </div>
-            <div class="pPendingContentFull">
-              {{{body}}}
-            </div>
+  <div class="homeStudentContainer">
+    {{#each post}}
+      <div class="pPendingItems">
+        <div class="pPendingItemsBox1">
+          <div class="pPendingItemsBox1n1">
+            <h1>{{title}}</h1>
+            <h5>By: {{email}}</h5>
           </div>
-        {{/each}}
+          <div class="pPendingItemsBox1n2">
+            {{dateCreate}}
+          </div>
+        </div>
+        <div class="pPendingContentFull">
+          {{{body}}}
+        </div>
+        <div class="report-content">
+          {{#each report}}
+            <h5>{{email}}:</h5>
+            <h7>{{content}}</h7>
+          {{/each}}
+        </div>
       </div>
+    {{/each}}
+  </div>
 </div>

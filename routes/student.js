@@ -5,9 +5,12 @@ const multipartMiddleware = multipart();
 const fs = require("fs");
 const path = require("path");
 var PostModel = require("../model/post");
+var StudentModel = require("../model/student");
+var CoordinatorModel = require("../model/coordinator");
 var ReportModel = require("../model/report");
 var SpecializedModel = require("../model/specialized");
 var DeadlineModel = require("../model/deadline");
+const nodemailer = require("nodemailer");
 
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
@@ -65,19 +68,53 @@ router.post("/post", async function (req, res) {
   const { title, content } = req.body;
   const deadline = await DeadlineModel.findOne({}).lean();
 
-  if (deadline && new Date() <= new Date(deadline.deadLine)) {
-    var post = {
-      title: title,
-      body: content,
-      dateCreate: Date.now(),
-      isPending: true,
-      email: req.session.email,
-    };
-    await PostModel.create(post);
+  const student = await StudentModel.findOne({
+    email: req.session.email,
+  }).lean();
+  const coordinator = await CoordinatorModel.findOne({
+    specializedID: student.specializedID,
+  }).lean();
 
-    res.redirect("/student/myPost");
-  } else {
-    res.redirect("/student");
+  if (student.specializedID == coordinator.specializedID) {
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.example.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "buiduccanh10@gmail.com",
+        pass: "aqeh djpx fsqv xpxp",
+      },
+    });
+
+    let mailOptions = {
+      from: '"Coordinator system notification" <buiduccanh10@gmail.com>', // Sender address
+      to: coordinator.email,
+      subject: "You have new post pending!!!",
+      text: "New post pending",
+      html: content,
+    };
+
+    if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
+      var post = {
+        title: title,
+        body: content,
+        dateCreate: Date.now(),
+        isPending: true,
+        email: req.session.email,
+      };
+      await PostModel.create(post);
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+      });
+
+      res.redirect("/student/myPost");
+    } else {
+      res.redirect("/student");
+    }
   }
 });
 
@@ -100,7 +137,7 @@ router.post("/report/:id", async function (req, res, next) {
 
   const deadline = await DeadlineModel.findOne({}).lean();
 
-  if (deadline && new Date() <= new Date(deadline.deadLine)) {
+  if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
     const report = {
       content: contentrp,
       comment: null,
@@ -136,7 +173,7 @@ router.post("/editReport/:id", async function (req, res, next) {
 
   const deadline = await DeadlineModel.findOne({}).lean();
 
-  if (deadline && new Date() <= new Date(deadline.deadLine)) {
+  if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
     await ReportModel.findByIdAndUpdate(
       reportId,
       { content: contentrp, dateCreate: new Date() },

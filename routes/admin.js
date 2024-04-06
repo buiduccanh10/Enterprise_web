@@ -16,7 +16,7 @@ router.get("/home", async function (req, res, next) {
     admin: req.session.email,
     deadline: deadline,
     totalStudents: totalStudents,
-    totalPosts: totalPosts
+    totalPosts: totalPosts,
   });
 });
 
@@ -227,14 +227,25 @@ router.post("/register-role", async (req, res) => {
 });
 
 router.post("/deadline", async (req, res) => {
-  const newdeadline = req.body.deadline;
+  const firstDeadlineDate = new Date(req.body.deadline);
+
+  const finalDeadlineDate = new Date(
+    firstDeadlineDate.getTime() + 14 * 24 * 60 * 60 * 1000
+    // 14 days in milliseconds
+  );
 
   const existingDeadline = await DeadlineModel.findOne({}).lean();
 
   if (existingDeadline) {
-    await DeadlineModel.updateOne({}, { deadLine: newdeadline });
+    await DeadlineModel.updateOne(
+      {},
+      { firstDeadLine: firstDeadlineDate, finalDeadLine: finalDeadlineDate }
+    );
   } else {
-    await DeadlineModel.create({ deadLine: newdeadline });
+    await DeadlineModel.create({
+      firstDeadLine: firstDeadlineDate,
+      finalDeadLine: finalDeadlineDate,
+    });
   }
 
   res.redirect("/admin/home");
