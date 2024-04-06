@@ -28,26 +28,24 @@
 
 <script>
     document.getElementById('postForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        const title = document.querySelector('input[name="title"]').value; 
-        const content = CKEDITOR.instances.editor.getData();
+    const title = document.querySelector('input[name="title"]').value; 
+    const content = CKEDITOR.instances.editor.getData();
 
-        fetch('/student/post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({title, content })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Post saved:', data);
-            // Optionally, redirect or show a success message
-        })
-        .catch(error => {
-            console.error('Error saving post:', error);
-            // Handle error
-        });
+    fetch('/student/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title, content })
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        } else {
+            return response.json();
+        }
     });
+});
 </script>

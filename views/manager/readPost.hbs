@@ -36,20 +36,21 @@
 
 <script src="/ckeditor/ckeditor.js"></script>
 <script>
-    
+  const downloadButtons = document.querySelectorAll('.download-btn');
+downloadButtons.forEach(button => {
+  button.addEventListener('click', async function() {
+    document.querySelector('.ulposts').style.display = 'none';
 
-     const downloadButtons = document.querySelectorAll('.download-btn');
-  downloadButtons.forEach(button => {
-    button.addEventListener('click', async function() {
-      document.querySelector('.ulposts').style.display = 'none';
-      CKEDITOR.replace('editor');
-
-      const postId = this.dataset.postId;
+    CKEDITOR.replace('editor');
+    CKEDITOR.on('instanceReady', async function(event) {
+      const editorInstance = event.editor;
+      const postId = button.dataset.postId;
       const response = await fetch(`/manager/readPost/${postId}/downloadPost`);
       const htmlContent = await response.text();
       
-      CKEDITOR.instances.editor.setData(htmlContent);
+      editorInstance.setData(htmlContent);
     });
   });
+});
 </script>
 
