@@ -107,7 +107,8 @@
           <form class="" action="/auth/register" method="post">
             <h1 class="loginTitle">Register</h1>
             <div class="emailInput">
-              <svg
+              <div class="icon-label-container">
+                <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -123,10 +124,13 @@
                 />
               </svg>
               <label for="">Name:</label>
-              <input type="text" name="name" id="" placeholder="" />
+              </div>
+              
+              <input type="text" name="name" id="" placeholder="" required/>
             </div>
             <div class="emailInput">
-              <svg
+              <div class="icon-label-container">
+                <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -142,15 +146,19 @@
                 />
               </svg>
               <label for="">Email:</label>
+              </div>
+              
               <input
                 type="email"
                 name="email"
                 id=""
                 placeholder="example@gmail.com"
+                required
               />
             </div>
             <div class="passInput">
-              <svg
+              <div class="icon-label-container">
+                <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -164,7 +172,9 @@
                 <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
               </svg>
               <label for="">Password:</label>
-              <input type="password" name="password" id="" placeholder="" />
+              </div>
+              
+              <input type="password" name="password" id="" placeholder="" required/>
             </div>
 
             <div class="registerSpec">

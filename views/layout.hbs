@@ -5,6 +5,84 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    <style>
+            body {
+        background-color: #f4f4f4;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 15px;
+    }
+
+    .card {
+        background: #fff;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h1, .card h5 {
+        margin: 0;
+        padding-bottom: 10px;
+    }
+
+    .card h1 {
+        font-size: 24px;
+    }
+
+    .card h5 {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .card .content {
+        padding-top: 10px;
+        height: 200px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        text-overflow: ellipsis;
+    }
+
+    .card .content p {
+        margin: 0;
+    }
+
+    .actions {
+        text-align: right;
+    }
+
+    .btn {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: #fff;
+        background: #007BFF;
+        transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #0056b3;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 20px;
+    }
+
+    @media screen and (max-width: 600px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+  
+    </style>
   </head>
   <header class="headercss">
     <div class="headercssbox1">
@@ -18,9 +96,27 @@
         <a class="pagelink" href="/student/postCreate">Post</a>
         <a class="pagelink" href="/student/reportedPost">Reported post</a>
         <a class="pagelink" href="/student/myPost">My post</a>
+        <div class="deadline">First deadline: {{deadline.firstDeadLine}}</div>
+        <div div class="deadline">Final deadline: {{deadline.finalDeadLine}}</div>
       {{/if}}
     </div>
+    <div class="icon-label-container">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-person-circle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+              />
+            </svg>
     <h3>{{student}}</h3>
+    </div>
     <div class="headercssbox2">
 
       {{#if student}}

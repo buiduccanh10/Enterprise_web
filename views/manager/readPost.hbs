@@ -41,7 +41,10 @@ downloadButtons.forEach(button => {
   button.addEventListener('click', async function() {
     document.querySelector('.ulposts').style.display = 'none';
 
-    CKEDITOR.replace('editor');
+    CKEDITOR.replace('editor',{
+      width: '100%',
+      height:'70%'
+    });
     CKEDITOR.on('instanceReady', async function(event) {
       const editorInstance = event.editor;
       const postId = button.dataset.postId;

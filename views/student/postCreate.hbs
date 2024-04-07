@@ -4,48 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post create</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        #postForm {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #postForm input[type=text] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #postForm button {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        #postForm button:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .text-success {
+            margin-bottom: 20px;
+        }
+        .ck-editor__editable {
+            min-height: 400px;
+        }
+        #postButton{
+            width: 49%;
+        }
+        #cancelButton{
+            margin-left: 2%;
+            width: 49%;
+        }
+        #actionButton{
+            margin-top: 15px;
+            display: flex;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-success">Post create</h1>
+        <h1 class="text-success">New Post</h1>
         <form id="postForm" action="/student/post" method="POST" enctype="multipart/form-data">
-            <input type="text" name="title" placeholder="Title..."> 
+            <input type="text" name="title" placeholder="Title..." required> 
             <textarea name="content" id="editor"></textarea>
-            <button type="submit" class="btn btn-primary">Post</button>
+            <div class="action" id="actionButton">
+                <button type="submit" id="postButton" class="btn btn-primary">Post</button>
+                <button type="button" id="cancelButton" class="btn btn-danger" onclick="window.location.href='/';">Cancel</button>
+            </div>
         </form>
     </div>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor',{
+            extraPlugins:'filebrowser',
+            filebrowserUploadMethod:'form',
+            filebrowserUploadUrl:'/student/upload',//route
+            width: '100%', 
+            height: '400px', 
+        })
+    </script>
+    <script>
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const title = document.querySelector('input[name="title"]').value; 
+        const content = CKEDITOR.instances.editor.getData();
+
+        fetch('/student/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ title, content })
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                return response.json();
+            }
+        });
+    });
+    </script>
 </body>
 </html>
-<script src="/ckeditor/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('editor',{
-        extraPlugins:'filebrowser',
-        filebrowserUploadMethod:'form',
-        filebrowserUploadUrl:'/student/upload'//route
-    })
-</script>
-
-<script>
-    document.getElementById('postForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const title = document.querySelector('input[name="title"]').value; 
-    const content = CKEDITOR.instances.editor.getData();
-
-    fetch('/student/post', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ title, content })
-    })
-    .then(response => {
-        if (response.redirected) {
-            window.location.href = response.url;
-        } else {
-            return response.json();
-        }
-    });
-});
-</script>

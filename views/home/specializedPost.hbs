@@ -38,41 +38,28 @@
 
 
 
-<div>
-  <div class="specBoxBG">
+<div class="container">
     <div class="specBox">
         <h3 class="specializetitle">Specialize:</h3>
         {{#each specialized}}
           <a class="specializelink" href="/specializedPost/{{_id}}">{{specializedName}}</a>
         {{/each}}
     </div>
-  </div>
-  <div class="pPendingBG">
-      <div class="homeStudentContainer">
+    <div class="grid">
         {{#each data}}
-          <div class="pPendingItems">
-            <div class="pPendingItemsBox1">
-              <div class="pPendingItemsBox1n1">
+        <div class="card">
+            <div class="header">
                 <h1>{{title}}</h1>
                 <h5>By: {{email}}</h5>
-              </div>
-              <div class="pPendingItemsBox1n2">
-                {{dateCreate}}
-              </div>
+                <h5>At: {{dateCreate}}</h5>
             </div>
-            <div class="pPendingContent">
-              {{{body}}}
+            <div class="content">
+                {{{body}}}
             </div>
-            <div class="pPendingItemsBox3">
-              <a class="pPendingRead" href="/readPost/{{_id}}">Read more</a>
+            <div class="actions">
+                <a class="pPendingRead" href="/readPost/{{_id}}">Read more</a>
             </div>
-            
-            <div class="action" style="display: flex;">
-              <form action="/student/report/{{_id}}">
-                <button type="submit" class="feedbackpost">Feedback</button>
-              </form>
-            </div>
-          </div>
+        </div>
         {{/each}}
-      </div>
+    </div>
 </div>

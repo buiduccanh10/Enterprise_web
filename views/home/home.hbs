@@ -36,7 +36,46 @@
 </ul>
 -->
 
-<div>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home page</title>
+</head>
+<body>
+  
+<div class="container">
+    <div class="specBox">
+        <h3 class="specializetitle">Specialize:</h3>
+        {{#each specialized}}
+          <a class="specializelink" href="/specializedPost/{{_id}}">{{specializedName}}</a>
+        {{/each}}
+    </div>
+    <div class="grid">
+        {{#each data}}
+        <div class="card">
+            <div class="header">
+                <h1>{{title}}</h1>
+                <h5>By: {{email}}</h5>
+                <h5>At: {{dateCreate}}</h5>
+            </div>
+            <div class="content">
+                {{{body}}}
+            </div>
+            <div class="actions">
+                <a class="pPendingRead" href="/readPost/{{_id}}">Read more</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+
+{{!-- <div>
   <div class="specBoxBG">
     <div class="specBox">
         <h3 class="specializetitle">Specialize:</h3>
@@ -73,4 +112,6 @@
           </div>
         {{/each}}
       </div>
-</div>
+</div> --}}
+</body>
+</html>

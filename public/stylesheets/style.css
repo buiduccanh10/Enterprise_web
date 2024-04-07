@@ -140,16 +140,16 @@ input::placeholder {
   transition: 0.5s;
 }
 .emailInput > input {
-  padding: 5px;
+  padding: 10px;
   width: 350px;
-  height: 30px;
+  height: 40px;
   border-radius: 5px;
   border: black solid 1px;
 }
 .passInput > input {
-  padding: 5px;
+  padding: 10px;
   width: 350px;
-  height: 30px;
+  height: 40px;
   border-radius: 5px;
   border: black solid 1px;
 }
@@ -163,8 +163,8 @@ input::placeholder {
 }
 .signUp{
   margin-left: 20px;
-  font-size: 18;
-  font-weight: 300;
+  font-size: 14;
+  font-weight:normal;
 }
 .signUp > a{
   text-decoration: none;
@@ -177,6 +177,13 @@ input::placeholder {
   margin-left: 20px;
 }
 
+.icon-label-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 5px;
+}
+
 
 
 /*end/
@@ -187,6 +194,13 @@ input::placeholder {
 
 
 /* homepage css */
+.deadline {
+  max-width: 350px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  display: block;
+}
 .headercss {
   width: 100%;
   height: 100px;
@@ -202,7 +216,7 @@ input::placeholder {
   align-items: center;
 }
 .headercssbox2 {
-  width: 20%;
+  width: 10%;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -252,13 +266,11 @@ body {
   margin-top: 0px;
 }
 
-
-
-
   .specBox{
-    padding: 0px;
-    width: 70%;
-    margin: 20px;
+    padding: 3px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 50px;
     background-color: rgba(0, 0, 0, 0.50);
     display: flex;
@@ -292,26 +304,8 @@ body {
     transition: 0.3s;
     text-decoration: none;
   }
-  .specBoxBG {
-    width: 100%;
-    height: max-content;
-    background-color: antiquewhite;
-    padding: 0px 0px 0px 0px;
-    display: flex;
-    justify-content: center;
-  }
-  .homeStudentContainer{
-    width: 60%;
-    background-color: rgba(0, 0, 0, 0.30);
-    border-radius: 20px;
-    height: max-content;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    padding: 10px 20px;
-  }
+  
+ 
   .feedbackpost {
     margin: 30px 0px 30px 0px;
     padding: 6px 20px;
@@ -547,7 +541,7 @@ body {
 
 
 html, body {
-  background-color: antiquewhite;
+  background-color: #f4f4f4;
   height: 100%;
 }
 
@@ -574,7 +568,7 @@ html, body {
 .rpPendingBG {
   width: 100%;
   height: 100%;
-  background-color: antiquewhite;
+  background-color: #f4f4f4;
   padding: 0px 0px 0px 0px;
   display: flex;
   justify-content: center;
@@ -645,30 +639,22 @@ html, body {
 
 .pPendingBG {
   width: 100%;
-  height: 100%;
-  background-color: antiquewhite;
   padding: 0px 0px 0px 0px;
+  background-color: #f4f4f4;
   display: flex;
   justify-content: center;
-}
-.pPendingContainer{
-  width: 60%;
-  background-color: rgba(0, 0, 0, 0.30);
-  height: max-content;
-  min-height: 100%;
-  display: flex;
   flex-direction: column;
-  justify-content: start;
   align-items: center;
-  padding: 10px 20px;
 }
+
 .pPendingItems {
-  width: 100%;
-  height: max-content;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 1);
-  margin: 10px;
-  border-radius: 25px;
+  width: 60%;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 20px;
 }
 .pPendingItemsBox1{
   display: flex;
@@ -677,9 +663,7 @@ html, body {
 .pPendingItemsBox1n1{
   width: 80%;
 }
-.pPendingItemsBox1n2{
-  width: 20%;
-}
+
 .pPendingContent {
   display: -webkit-box;
   -webkit-line-clamp: 10;
@@ -769,4 +753,72 @@ html, body {
   display:  flex;
   flex-direction: column;
   gap: 10px;
+}
+
+
+.headercss {
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  position: -webkit-sticky; 
+  position: sticky;
+  top: 0; 
+  z-index: 1000; 
+}
+
+.headercss h1.logo {
+  color: #007bff; 
+}
+
+.headercss a.pagelink, .headercss a.logoutbtn, .headercss a.loginbtn {
+  margin-left: 15px;
+  color: #333; 
+  padding: 8px 15px;
+  border-radius: 4px; 
+  text-transform: uppercase; 
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.headercss a.logoutbtn {
+  background-color: #e64848; 
+  color: #fff;
+}
+
+.headercss a.logoutbtn:hover {
+  background-color: #d51f1f; 
+}
+
+.headercss a.loginbtn {
+  border: 2px solid #e64848;
+}
+
+.headercss a.loginbtn:hover {
+  background-color: #e64848; 
+  color: white;
+}
+
+.headercss h3 {
+  margin: 0;
+  font-size: 16px; 
+}
+
+
+.headercss h1.logo:hover {
+  opacity: 0.8; 
+}
+
+
+@media screen and (max-width: 768px) {
+  .headercss {
+      padding: 10px; 
+  }
+  .headercss .headercssbox1, .headercss .headercssbox2 {
+      flex-direction: column; 
+      align-items: flex-start; 
+  }
+  .headercss a.pagelink, .headercss a.logoutbtn, .headercss a.loginbtn {
+      margin-left: 0;
+      margin-top: 5px; 
+  }
 }

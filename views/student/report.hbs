@@ -1,29 +1,105 @@
-<div class="ulreports-container">
-  <ul class="ulreports1">
-    <li class="post">
-      <div class="titlepost">
-        <h1 class="namepost">{{post.title}}</h1>
-        <h3 class="datepost"> {{post.dateCreate}}</h3>
-      </div>
-      <div class="authorpost">
-        <h3>{{post.email}}</h3>
-      </div>
-      <div class="content">{{{post.body}}}</div>
-    </li>
-  </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report</title>
+  <style>
+    .container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1200px; 
+}
 
-  <ul class="ulreports2">
-    <li class="post">
-      <div class="reportbox">
-        <form action="/student/report/{{post._id}}" method="post">
-          <textarea class="textbox" name="reporttext"></textarea>
-          <div class="button-container">
-            <button class="send-button" type="submit">Send</button>
-            <button class="cancel-button">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </li>
-  </ul>
+.blog-content, .report-section {
+  padding: 20px;
+  width: 50%;
+}
 
+.blog-content {
+  border-right: 1px solid #ddd; 
+}
+
+.post-title {
+  font-size: 2em;
+}
+
+.post-date, .post-author {
+  color: #777;
+  font-style: italic;
+}
+
+.post-body {
+  margin-top: 20px; 
+}
+
+.report-heading {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.report-textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 150px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.report-submit, .report-cancel {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.report-submit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.report-cancel {
+  background-color: #F44336;
+  color: white;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .blog-content, .report-section {
+    width: 100%;
+    border: none;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+  <div class="blog-content">
+    <h1 class="post-title">{{post.title}}</h1>
+    <p class="post-date">{{post.dateCreate}}</p>
+    <p class="post-author">By {{post.email}}</p>
+    <div class="post-body">{{{post.body}}}</div>
+  </div>
+  
+  <div class="report-section">
+    <h2 class="report-heading">Report this Post</h2>
+    <form action="/student/report/{{post._id}}" method="post">
+      <textarea name="reporttext" class="report-textarea" placeholder="Your concerns..."></textarea>
+      <div class="form-actions">
+        <button type="submit" class="report-submit">Send Report</button>
+        <button type="button" class="report-cancel" onclick="window.location.href='/';">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
+</body>
+</html>

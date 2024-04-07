@@ -135,49 +135,35 @@ router.get("/postApproved/deletePost/:id", async (req, res) => {
 });
 
 router.get("/reportPending", async function (req, res, next) {
-  const coordinator = await CoordinatorModel.findOne({
-    email: req.session.email,
-  }).lean();
+    const coordinator = await CoordinatorModel.findOne({
+      email: req.session.email,
+    }).lean();
 
-  if (!coordinator) {
-    return res.status(404).send("Coordinator not found");
-  }
+    const pendingReports = await ReportModel.find({ isPending: true }).lean();
 
-  const specialized = await SpecializedModel.findById(
-    coordinator.specializedID
-  ).lean();
-
-  if (!specialized) {
-    return res.status(404).send("Specialized area not found");
-  }
-
-  const students = await StudentModel.find({
-    specializedID: specialized._id,
-  }).lean();
-
-  if (students.length === 0) {
-    return res
-      .status(404)
-      .send("No students found under this specialized area");
-  }
-
-  const report = await ReportModel.find({
-    email: { $in: students.map((student) => student.email) },
-    isPending: true,
-  }).lean();
-
-  const reportData = await Promise.all(
-    report.map(async (report) => {
+    const reportsWithDetails = await Promise.all(pendingReports.map(async (report) => {
       const post = await PostModel.findById(report.postID).lean();
-      return { ...report, post: post };
-    })
-  );
+      if (!post) return null;
 
-  res.render("coordinator/reportPending", {
-    layout: "coordinator_layout",
-    data: reportData,
-    coordinator: req.session.email,
-  });
+      const student = await StudentModel.findOne({ email: post.email }).lean();
+      if (!student || String(student.specializedID) !== String(coordinator.specializedID)) {
+        return null; 
+      }
+
+      return { ...report, post };
+    }));
+
+    const filteredReports = reportsWithDetails.filter(report => report !== null);
+
+    if (filteredReports.length === 0) {
+      return res.status(404).send("No pending reports found for this specialized area");
+    }
+
+    res.render("coordinator/reportPending", {
+      layout: "coordinator_layout",
+      data: filteredReports,
+      coordinator: req.session.email,
+    });
 });
 
 router.get("/reportPending/sendCommentReport/:id", async (req, res) => {

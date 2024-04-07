@@ -15,19 +15,23 @@ const nodemailer = require("nodemailer");
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
   const specialized = await SpecializedModel.find({}).lean();
+  const deadline = await DeadlineModel.findOne({}).lean();
 
   res.render("home/home", {
     layout: "layout",
     data: post,
     specialized: specialized,
     student: req.session.email,
+    deadline: deadline,
   });
 });
 
-router.get("/postCreate", function (req, res, next) {
+router.get("/postCreate", async function (req, res, next) {
+  const deadline = await DeadlineModel.findOne({}).lean();
   res.render("student/postCreate", {
     layout: "layout",
     student: req.session.email,
+    deadline: deadline,
   });
 });
 
@@ -120,12 +124,14 @@ router.post("/post", async function (req, res) {
 
 router.get("/report/:id", async function (req, res, next) {
   const post = await PostModel.findById(req.params.id);
+  const deadline = await DeadlineModel.findOne({}).lean();
 
   if (post.email !== req.session.email) {
     res.render("student/report", {
       layout: "layout",
       post: post,
       student: req.session.email,
+      deadline: deadline,
     });
   } else {
     res.redirect("/student");
@@ -188,6 +194,8 @@ router.post("/editReport/:id", async function (req, res, next) {
 
 router.get("/reportedPost", async function (req, res, next) {
   const report = await ReportModel.find({ email: req.session.email }).lean();
+  const deadline = await DeadlineModel.findOne({}).lean();
+
   if (report) {
     const reportWithPost = await Promise.all(
       report.map(async (report) => {
@@ -199,6 +207,7 @@ router.get("/reportedPost", async function (req, res, next) {
       layout: "layout",
       report: reportWithPost,
       student: req.session.email,
+      deadline: deadline,
     });
   }
 });
@@ -210,11 +219,13 @@ router.get("/deleteReport/:id", async function (req, res, next) {
 
 router.get("/myPost", async function (req, res, next) {
   const myPost = await PostModel.find({ email: req.session.email }).lean();
+  const deadline = await DeadlineModel.findOne({}).lean();
 
   res.render("student/myPost", {
     layout: "layout",
     post: myPost,
     student: req.session.email,
+    deadline: deadline,
   });
 });
 
