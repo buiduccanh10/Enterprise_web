@@ -4,6 +4,7 @@ var PostModel = require("../model/post");
 var ReportModel = require("../model/report");
 var SpecializedModel = require("../model/specialized");
 const StudentModel = require("../model/student");
+var DeadlineModel = require("../model/deadline");
 
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
@@ -20,6 +21,7 @@ router.get("/", async function (req, res, next) {
 router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
   const post = await PostModel.find({ _id: postId }).lean();
+  const deadline = await DeadlineModel.findOne({}).lean();
 
   const postData = await Promise.all(
     post.map(async (post) => {
@@ -34,6 +36,7 @@ router.get("/readPost/:id", async (req, res) => {
     layout: "layout",
     post: postData,
     student: req.session.email,
+    deadline: deadline,
   });
 });
 
@@ -41,6 +44,7 @@ router.get("/specializedPost/:id", async function (req, res, next) {
   const specialized = await SpecializedModel.find({}).lean();
   const student = await StudentModel.find({ specializedID: req.params.id });
   const studentEmail = student.map((student) => student.email);
+  const deadline = await DeadlineModel.findOne({}).lean();
 
   const post = await PostModel.find({
     isPending: false,
@@ -52,6 +56,7 @@ router.get("/specializedPost/:id", async function (req, res, next) {
     data: post,
     specialized: specialized,
     student: req.session.email,
+    deadline: deadline,
   });
 });
 
