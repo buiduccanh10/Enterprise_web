@@ -1,54 +1,8 @@
 <html>
   <head>
     <title>Post pending</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <style>
-      table, th, td { border: 1px solid black; border-collapse: collapse; }
-    </style>
   </head>
   <body>
-    <!--
-    <table style="width:100%">
-      <tr>
-        <th>Email</th>
-        <th>Title</th>
-        <th>Content</th>
-        <th>Pending status</th>
-        <th>Date create</th>
-        <th>Action</th>
-      </tr>
-      {{#each data}}
-        <tr>
-          <td>{{email}}</td>
-          <td>{{title}}</td>
-          <td>{{{body}}}</td>
-          <td>{{isPending}}</td>
-          <td>{{dateCreate}}</td>
-          <td>
-            <form
-              action="/coordinator/readPost/{{_id}}"
-              method="get"
-            >
-              <button type="submit" class="btn btn-primary">Read</button>
-            </form>
-            <form
-              action="/coordinator/postPending/approvePost/{{_id}}"
-              method="get"
-            >
-              <button type="submit" class="btn btn-success">Approve</button>
-            </form>
-            <form action="/coordinator/postPending/deletePost/{{_id}}">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-          </td>
-        </tr>
-      {{/each}}
-    </table>
-    -->
-
     <div class="pPendingBG">
       <div class="pPendingContainer">
         {{#each data}}

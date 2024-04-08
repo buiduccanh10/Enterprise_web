@@ -156,7 +156,7 @@ router.get("/reportPending", async function (req, res, next) {
     const filteredReports = reportsWithDetails.filter(report => report !== null);
 
     if (filteredReports.length === 0) {
-      return res.status(404).send("No pending reports found for this specialized area");
+      
     }
 
     res.render("coordinator/reportPending", {

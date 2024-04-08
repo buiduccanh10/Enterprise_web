@@ -1,24 +1,158 @@
-<ul class="ulposts">
-  {{#each data}}
-    <li class="liposts">
-      <div class="post">
-        <div class="titlepost">
-          <h1 class="namepost">{{title}}</h1>
-          <h3 class="datepost"> {{dateCreate}}</h3>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manager Home Page</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row" style="margin-top:20px; justify-content:center;">
+        <!-- Total Students -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div
+                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                  >
+                    Total Students
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                  >{{totalStudents}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="authorpost">
-          <h3>{{email}}</h3>
+         <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div
+                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                  >
+                    Total Students
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                  >{{totalStudents}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="content">
-          {{{body}}}
+         <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div
+                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                  >
+                    Total Students
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                  >{{totalStudents}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div class="action" style="display: flex;">
-          <form action="/manager/readPost/{{_id}}">
-            <button type="submit" class="btn btn-primary">Read</button>
-          </form>
+         <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div
+                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                  >
+                    Total Students
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                  >{{totalStudents}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+         <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div
+                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                  >
+                    Total Students
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                  >{{totalStudents}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div
+                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                  >
+                    Total Students
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                  >{{totalStudents}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- More widgets can be added here -->
       </div>
-    </li>
-  {{/each}}
-</ul>
+    </div>
+    <!-- Other HTML content can go here -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </body>
+</html>

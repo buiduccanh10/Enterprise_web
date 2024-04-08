@@ -5,20 +5,38 @@ var ReportModel = require("../model/report");
 const HTMLtoDOCX = require("html-to-docx");
 const sanitizeHtml = require("sanitize-html");
 const archiver = require("archiver");
+var StudentModel = require("../model/student");
 
 router.get("/", async function (req, res, next) {
+  const totalStudents = await StudentModel.countDocuments();
+  const totalStudentsPending = await StudentModel.countDocuments({
+    isPending: true,
+  });
+  const totalPosts = await PostModel.countDocuments();
+  const totalPostsPending = await PostModel.countDocuments({ isPending: true });
+  const totalReports = await ReportModel.countDocuments();
+  const totalReportsPending = await ReportModel.countDocuments({
+    isPending: true,
+  });
+
   res.render("manager/home", {
     layout: "manager_layout",
     manager: req.session.email,
+    totalStudents: totalStudents,
+    totalStudentsPending: totalStudentsPending,
+    totalPosts: totalPosts,
+    totalPostsPending: totalPostsPending,
+    totalReports: totalReports,
+    totalReportsPending: totalReportsPending,
   });
 });
 
-router.get("/home", async function (req, res, next) {
+router.get("/post", async function (req, res, next) {
   const post = await PostModel.find({
     isPending: false,
   }).lean();
 
-  res.render("manager/home", {
+  res.render("manager/post", {
     layout: "manager_layout",
     manager: req.session.email,
     data: post,
@@ -69,7 +87,7 @@ router.get("/downloadAllReport", async (req, res) => {
     for (const post of posts) {
       const reports = await ReportModel.find({
         postID: post._id,
-        isPending: false, 
+        isPending: false,
       }).lean();
 
       if (reports.length > 0) {

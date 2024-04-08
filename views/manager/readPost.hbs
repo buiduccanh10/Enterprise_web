@@ -1,4 +1,102 @@
-<ul class="ulposts">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read post</title>
+  <style>
+    /* Reset một số styles cơ bản */
+ul, li, h1, h3, h5, button, form {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set up some spacing and a max-width for your content */
+.ulposts {
+  list-style: none;
+  max-width: 800px; /* Giá trị này thay đổi tùy vào bố cục của bạn */
+  margin: auto;
+  padding: 20px;
+}
+
+.liposts + .liposts {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.post {
+  padding: 10px;
+  background-color: #f9f9f9; /* Một màu nền nhẹ cho mỗi post */
+  border-radius: 8px; /* Góc bo tròn */
+  margin-bottom: 20px; /* Khoảng cách giữa các post */
+}
+
+.titlepost {
+  margin-bottom: 10px;
+}
+
+.namepost {
+  color: #333; /* Một màu đậm cho tiêu đề */
+  font-size: 1.5em;
+}
+
+.datepost {
+  color: #666;
+  font-size: .9em;
+}
+
+.authorpost {
+  margin-bottom: 10px;
+  font-size: .8em;
+  color: #777;
+}
+
+.content, .report-content h5, .report-content h7 {
+  color: #333; /* Màu chữ cho nội dung và báo cáo */
+  font-size: 1em;
+  line-height: 1.6; /* Khoảng cách giữa các dòng */
+  margin-bottom: 10px;
+}
+
+.action {
+  display: flex;
+  justify-content: space-between; /* Căn chỉnh nút bên trái và bên phải */
+}
+
+.btn {
+  background-color: #f0ad4e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ec971f; /* Màu khi hover */
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+  .action {
+    flex-direction: column;
+  }
+
+  .action button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .titlepost h1 {
+    font-size: 1.2em;
+  }
+}
+  </style>
+</head>
+<body>
+  <ul class="ulposts">
   {{#each post}}
     <li class="liposts">
       <div class="post">
@@ -12,10 +110,28 @@
         <div class="content">
           {{{body}}}
         </div>
-        <div class="report-content" >
+        <div class="report-content" style="border-top: 1px solid;">
           {{#each report}}
-            <h5>{{email}}:</h5>
+            <div style="display: flex; margin-top:10px">
+              <div class="icon-email">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-person-circle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+              />
+            </svg>
+            <h7 style="font-weight: bold;">{{email}}:</h7>
+          </div>
             <h7>{{content}}</h7>
+            </div>
           {{/each}}
         </div>
         <div class="action">
@@ -31,8 +147,8 @@
 
 
 <textarea name="content" id="editor" style="display: none;"></textarea>
-            
-
+</body>
+</html>  
 
 <script src="/ckeditor/ckeditor.js"></script>
 <script>

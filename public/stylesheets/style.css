@@ -565,80 +565,13 @@ html, body {
 
 
 /*coordinator*/
-.rpPendingBG {
-  width: 100%;
-  height: 100%;
-  background-color: #f4f4f4;
-  padding: 0px 0px 0px 0px;
+.pPendingContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  flex-wrap:wrap;
 }
-.rpPendingContainer{
-  width: 80%;
-  background-color: rgba(0, 0, 0, 0.30);
-  height: max-content;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content:start;
-  align-items: center;
-  padding: 10px 20px;
-}
-.rpPendingItems {
-  width: 100%;
-  height: max-content;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 1);
-  margin: 10px;
-  border-radius: 25px;
-}
-.rpPendingSourch {
-  display: flex;
-  gap: 20px
-}
-.rpPendingItemsBox1{
-  display: flex;
-  justify-items: auto;
-}
-.rpPendingItemsBox1n1{
-  width: 80%;
-}
-.rpPendingItemsBox1n2{
-  width: 20%;
-}
-.rpPendingContent {
-  margin: 10px 0px;
-}
-
-.rpPendingItemsBox2{
-  display: flex;
-  justify-items: auto;
-  gap: 20px
-}
-.rpPendingComment {
-  padding: 10px;
-  height: 70px;
-  width: 85%;
-  border-radius: 15px;
-}
-.rpPendingButton1 {
-  height: 70px;
-  width: 11%;
-  border-radius: 15px;
-}
-.rpPendingItemsBox3{
-  display: flex;
-  gap: 20px;
-  margin: 10px 0px 0px 0px;
-}
-.rpPendingRead{
-  margin: 0px 0px 20px 0px;
-}
-
-
 
 .pPendingBG {
-  width: 100%;
   padding: 0px 0px 0px 0px;
   background-color: #f4f4f4;
   display: flex;
@@ -680,9 +613,7 @@ html, body {
   height: max-content;
   margin: 0px 0px 30px 0px; 
 }
-.pPendingRead {
 
-}
 .pPendingItemsBox2 {
   margin-top: 30px;
   height: max-content;
