@@ -11,24 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
-<div class="row">
-{{!-- Total student --}}
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-cent er">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Student</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalStudents}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row" style="margin-top:20px; justify-content:center;">
 {{!-- Total Post --}}
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
@@ -36,8 +19,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Total Post</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalPosts}}</div>
+                                Total students</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalStudents}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -76,8 +59,7 @@
                       <input type="datetime-local" id="deadline" name="deadline" required />
                       <button type="submit">Submit</button>
                     </form> --}}
-</div>
-<div class="col-xl-3 col-md-6 mb-4">
+                    <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -106,6 +88,8 @@
                       <button type="submit">Submit</button>
                     </form> --}}
 </div>
+</div>
+
                     <div class="card shadow mb-4">
                                 <!-- Card Header - Accordion -->
                             <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
