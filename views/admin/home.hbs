@@ -11,6 +11,87 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
+  <style>
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.overlay {
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-y: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay {overflow-y: auto;}
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+</style>
+
+
+      {{!-- Submit Deadline --}}
+      <div id="myNav" class="overlay">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="overlay-content">
+        {{!-- <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a> --}}
+        {{!--  submit deadline --}}
+        <div class="card shadow mb-4">
+            <div class="collapse show" id="collapseCardExample">
+                <div class="card-body">
+                    <form action="/admin/deadline" method="post">
+                        <label for="deadline">Deadline:</label>
+                        <input type="datetime-local" id="deadline" name="deadline" required />
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+   </div>
+      </div>
+      {{!-- End submit deadline --}}
 <div class="row" style="margin-top:20px; justify-content:center;">
 {{!-- Total Post --}}
         <div class="col-xl-3 col-md-6 mb-4">
@@ -45,6 +126,9 @@
                                                   <p>No deadline set</p>
                                                 {{/if}}
                                             </div>
+                                            <button onclick="openNav()" type="btnCreateDeadline" class="btn btn-primary btn-sm">
+                                              Submit Deadline
+                                            </button>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -86,27 +170,9 @@
                       <label for="deadline">Deadline:</label>
                       <input type="datetime-local" id="deadline" name="deadline" required />
                       <button type="submit">Submit</button>
-                    </form> --}}
-</div>
+                    </form> --}}                  
 </div>
 
-                    <div class="card shadow mb-4">
-                                <!-- Card Header - Accordion -->
-                            <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold text-primary">Submit Deadline</h6>
-                                </a>
-                                <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body">
-                                        <form action="/admin/deadline" method="post">
-                                        <label for="deadline">Deadline:</label>
-                                        <input type="datetime-local" id="deadline" name="deadline" required />
-                                        <button type="submit">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
 {{!-- Image slide --}}
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -135,3 +201,14 @@
     </a>
   </div>
 </html>
+
+<script>
+  function openNav() {
+  document.getElementById("myNav").style.height = "100%";
+}
+
+/* Close */
+function closeNav() {
+  document.getElementById("myNav").style.height = "0%";
+}
+</script>

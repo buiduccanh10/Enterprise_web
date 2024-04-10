@@ -93,6 +93,15 @@
       specializedLabelSelect.style.display ="block"; } else {
       specializedSelect.style.display = "none";
       specializedLabelSelect.style.display ="none"; } }
+      window.onload = function() {
+      // Find the overlay-content element
+      var overlayContent = document.querySelector('.overlay');
+
+      // Hide the overlay-content element
+      if (overlayContent) {
+        overlayContent.style.display = 'none';
+      }
+    };
     </script>
 
   </body>

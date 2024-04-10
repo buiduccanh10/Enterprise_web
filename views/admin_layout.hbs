@@ -31,6 +31,7 @@
     .dropdown-menu {
       min-width: 130px;
     }
+
   </style>
 </head>
 <body>
@@ -51,6 +52,31 @@
       </div>
       <a class="pagelink" href="/admin/studentPending">Student pending</a>
       <a class="pagelink" href="/admin/register-role">Register role</a>
+      <div id="myNav" class="overlay">
+
+      {{!-- Submit Deadline --}}
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="overlay-content">
+        {{!-- <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a> --}}
+        {{!--  submit deadline --}}
+        <div class="card shadow mb-4">
+            <div class="collapse show" id="collapseCardExample">
+                <div class="card-body">
+                    <form action="/admin/deadline" method="post">
+                        <label for="deadline">Deadline:</label>
+                        <input type="datetime-local" id="deadline" name="deadline" required />
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+      </div>
+   </div>
+      </div>
+      {{!-- End submit deadline --}}
+</div>
       {{/if}}
     </div>
     <i>Welcome back, <b>{{admin}}</b></i>
@@ -67,9 +93,11 @@
 
   <div class="container">
     {{{body}}}
+    
   </div>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
