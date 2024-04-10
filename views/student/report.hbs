@@ -91,10 +91,10 @@
   </div>
   
   <div class="report-section">
-    <h2 class="report-heading">Report this Post</h2>
-    <form action="/student/report/{{post._id}}" method="post">
-      <textarea name="reporttext" class="report-textarea" placeholder="Your concerns..."></textarea>
-      <div class="form-actions">
+    <h2 class="report-heading"  style="width: 100%; margin-left: 0; height: 5%;">Report this Post</h2>
+    <form action="/student/report/{{post._id}}" method="post"  style="width: 100%; height: 100%">
+      <textarea style="height: 80%;" name="reporttext" class="report-textarea" placeholder="Your concerns..."></textarea>
+      <div class="form-actions"style="height: 10%;">
         <button type="submit" class="report-submit">Send Report</button>
         <button type="button" class="report-cancel" onclick="window.location.href='/';">Cancel</button>
       </div>
