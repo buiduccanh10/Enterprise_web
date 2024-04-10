@@ -1,4 +1,3 @@
-
 <div class="rpPendingBG">
   <div class="rpPendingContainer">
       <div class="rpPendingItems">
@@ -14,50 +13,61 @@
 <div class="rpPendingContainer">
 {{#each report}}
 <div class="rpPendingItems">
-  <div class="report-content">
-    <li class="liposts">
-      <div class="post">
-        <div class="titlepost">
-          <h1 class="namepost">{{post.title}}</h1>
-          <h3 class="datepost"> {{post.dateCreate}}</h3>
+  <h1>Report post: {{post.title}}</h1>
+
+    <div class="rpPendingItemsBox1">
+      <div class="rpPendingItemsBox1n1">
+        <div class="rpPendingSourch">
+          <h4>Post by:</h4>
+          <h4>{{post.email}}</h4>
         </div>
-        <div class="authorpost">
-          <h3>{{post.email}}</h3>
+        <div class="rpPendingRead">
+          <a href="/readPost/{{post._id}}">View post</a>
+        </div>
+
+        <div class="rpPendingSourch">
+          <h4>Report by: </h4>
+          <h4>{{email}}</h4>
         </div>
       </div>
-      <div class="feedback-action">
-          <form action="/readPost/{{post._id}}" method="get">
-            <button class="action-btn edit">Read</button>
-          </form>
-        {{#if isPending}}
-          <form action="/student/editReport/{{_id}}" method="get">
-            <button class="action-btn edit">Edit report</button>
-          </form>
-          <form action="/student/deleteReport/{{_id}}" method="get">
-            <button class="action-btn del">Delete report</button>
-          </form>
-        {{else}}
-          <button class="action-btn edit" disabled  style="opacity: 0.5;">Edit report</button>
-          <button class="action-btn del" disabled  style="opacity: 0.5;">Delete report</button>
-        {{/if}}
-      </div>
-    </li>
-    <div class="report-body">
-      <h2>{{content}}</h2>
-      <h3>{{dateCreate}}</h3>
-      <h4>{{comment}}</h4>
-      <div class="status">
-        Approve status:
-        {{#if isPending}}
-          <h5>Pending</h5>
-        {{else}}
-          <h5>Approved</h5>
-        {{/if}}
+      <div class="rpPendingItemsBox1n2">
+        {{dateCreate}}
       </div>
     </div>
-  </div>
-{{/each}}
+    <p class="rpPendingContent">Report content: {{content}}</p>
+    <div class="status">
+        
+        {{#if isPending}}
+          <h5>Approve status: Pending</h5>
+          <div style="margin-top: 20px;">
+            <h5>Comment from coordinator:  </h5>
+            <p> {{comment}}</p>
+
+          </div>
+        {{else}}
+          <h5>Approve status: Approved</h5>
+        {{/if}}
+    </div>
+    
+    <div class="rpPendingItemsBox2">
+              {{#if isPending}}
+                <form action="/student/editReport/{{_id}}" method="get">
+                  <button class="action-btn edit">Edit report</button>
+                </form>
+                <form action="/student/deleteReport/{{_id}}" method="get">
+                  <button class="action-btn del">Delete report</button>
+                </form>
+              {{else}}
+                <button class="action-btn edit" disabled  style="opacity: 0.5;">Edit report</button>
+                <button class="action-btn del" disabled  style="opacity: 0.5;">Delete report</button>
+              {{/if}}
+    </div>
+    
+
 </div>
+{{/each}}
+
+
 </div>
 </div>
 
