@@ -65,17 +65,23 @@
           <h7>{{content}}</h7>
         </div>
       {{/each}}
-    </div>
-    <div class="action" style="display: flex; justify-content: center;">
-      <form action="/student/report/{{_id}}">
-        <button type="submit" style="width: 500px;" class="btn btn-primary">Feedback</button>
+
+    <div class="fixbtnbox1">
+      <div class="action" style="display: flex; justify-content: center;">
+      <form action="/student/report/{{_id}}"  style="width: 50%;">
+        <button type="submit" style="width: 100%;" class="btn btn-primary">Feedback</button>
       </form>
       <button
         type="button"
-        style="margin-left: 5px; width: 500px; height: 50%;"
-        class="btn btn-primary"
+        style="margin-left: 5px; width: 500px; height: 50%; width: 50%;"
+        class="btn btn-primary "
         onclick="window.location.href='/';"
       >Cancel</button>
     </div>
+    
+    </div>
+
+    
+  </div>
   {{/each}}
 </div>
