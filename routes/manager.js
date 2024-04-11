@@ -6,6 +6,7 @@ const HTMLtoDOCX = require("html-to-docx");
 const sanitizeHtml = require("sanitize-html");
 const archiver = require("archiver");
 var StudentModel = require("../model/student");
+var ManagerModel = require("../model/manager");
 
 router.get("/", async function (req, res, next) {
   const totalStudents = await StudentModel.countDocuments();
@@ -18,10 +19,12 @@ router.get("/", async function (req, res, next) {
   const totalReportsPending = await ReportModel.countDocuments({
     isPending: true,
   });
+  const user = await ManagerModel.findOne({ email: req.session.email }).lean();
+
 
   res.render("manager/home", {
     layout: "manager_layout",
-    manager: req.session.email,
+    manager: user.name,
     totalStudents: totalStudents,
     totalStudentsPending: totalStudentsPending,
     totalPosts: totalPosts,
