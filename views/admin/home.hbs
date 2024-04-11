@@ -7,9 +7,10 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
   </head>
   <style>
 body {
@@ -67,31 +68,6 @@ body {
   }
 }
 </style>
-
-
-      {{!-- Submit Deadline --}}
-      <div id="myNav" class="overlay">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <div class="overlay-content">
-        {{!-- <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a> --}}
-        {{!--  submit deadline --}}
-        <div class="card shadow mb-4">
-            <div class="collapse show" id="collapseCardExample">
-                <div class="card-body">
-                    <form action="/admin/deadline" method="post">
-                        <label for="deadline">Deadline:</label>
-                        <input type="datetime-local" id="deadline" name="deadline" required />
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-   </div>
-      </div>
-      {{!-- End submit deadline --}}
 <div class="row" style="margin-top:20px; justify-content:center;">
 {{!-- Total Post --}}
         <div class="col-xl-3 col-md-6 mb-4">
@@ -126,9 +102,10 @@ body {
                                                   <p>No deadline set</p>
                                                 {{/if}}
                                             </div>
-                                            <button onclick="openNav()" type="btnCreateDeadline" class="btn btn-primary btn-sm">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btnModal">
                                               Submit Deadline
                                             </button>
+                                            
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -137,12 +114,7 @@ body {
                                 </div>
                             </div>
                         </div>
-                    {{!-- <h1>Submit Deadline</h1>
-                    <form action="/admin/deadline" method="post">
-                      <label for="deadline">Deadline:</label>
-                      <input type="datetime-local" id="deadline" name="deadline" required />
-                      <button type="submit">Submit</button>
-                    </form> --}}
+                    
                     <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
@@ -165,12 +137,7 @@ body {
                                 </div>
                             </div>
                         </div>
-                    {{!-- <h1>Submit Deadline</h1>
-                    <form action="/admin/deadline" method="post">
-                      <label for="deadline">Deadline:</label>
-                      <input type="datetime-local" id="deadline" name="deadline" required />
-                      <button type="submit">Submit</button>
-                    </form> --}}                  
+                                    
 </div>
 
 {{!-- Image slide --}}
@@ -201,14 +168,31 @@ body {
     </a>
   </div>
 </html>
-
+<!-- Modal -->
+          <div class="modal fade" id="btnModal" tabindex="-1" role="dialog" aria-labelledby="btnModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="btnModalLabel">Submit Deadline</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/admin/deadline" method="post">
+                        <b><label for="deadline">Deadline:</label></b>
+                        <input type="datetime-local" id="deadline" name="deadline" required />
+                        <button type="submit" class="btn btn-primary ">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 <script>
-  function openNav() {
-  document.getElementById("myNav").style.height = "100%";
-}
-
-/* Close */
-function closeNav() {
-  document.getElementById("myNav").style.height = "0%";
-}
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
 </script>
