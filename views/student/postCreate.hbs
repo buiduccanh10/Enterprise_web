@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post create</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
+        }
+        #txtMessage {
+            color: red;
+            font-size: 20px;
         }
         .container {
             margin-top: 20px;
@@ -55,14 +66,56 @@
     <div class="container">
         <h1 class="text-success">New Post</h1>
         <form id="postForm" action="/student/post" method="POST" enctype="multipart/form-data">
-            <input type="text" name="title" placeholder="Title..." required> 
-            <textarea name="content" id="editor"></textarea>
+            <input type="text" name="title" id="postTitle" placeholder="Title..." required> 
+            <textarea name="content" id="editor" required></textarea>
             <div class="action" id="actionButton">
-                <button type="submit" id="postButton" class="btn btn-primary">Post</button>
+                <button type="button" id="postButton" class="btn btn-primary">Post</button>
                 <button type="button" id="cancelButton" class="btn btn-danger" onclick="window.location.href='/';">Cancel</button>
+            </div>   
+
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <b id="txtMessage" class="text-monospace">{{message}}</b> 
+                    <br>
+                    <b>The student need to accept the rules before post:</b>
+                    <p>
+                        <ul>
+                            <li>You can not post any post if the time is up</li>
+                            <li>From <b>First deadline</b> and <b>Final deadline</b>, you just can update your report</li>
+                            <li>If <b>Final deadline</b> is up, you can not do any activities</li>
+                        </ul>
+                    </p>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Agree</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
             </div>
         </form>
-    </div>
+        
+    </div>              
+    <script src="/ckeditor/ckeditor.js"></script>
+        <script>
+            document.getElementById('postButton').addEventListener('click', function() {
+                if (document.getElementById('postForm').checkValidity()) {
+                    $('#confirmationModal').modal('show');
+                } else {
+                    document.getElementById('postTitle').reportValidity();
+                    document.getElementById('editor').reportValidity();
+                }
+            });  
+    </script>
     <script src="/ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('editor',{
