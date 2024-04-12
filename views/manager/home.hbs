@@ -20,6 +20,15 @@
     ></script>
   </head>
   <body>
+    {{!-- your-template.hbs --}}
+
+{{#each totalPostSpecialized}}
+  <div>
+    <p>Specialized ID: {{this.specializedID}}</p>
+    <p>Specialized Name: {{this.specializedName}}</p>
+    <p>Total Posts: {{this.totalPosts}}</p>
+  </div>
+{{/each}}
     <div class="container">
       <div class="row" style="margin-top:20px; justify-content:center;">
         <!-- Total Students -->

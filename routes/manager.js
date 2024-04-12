@@ -6,6 +6,7 @@ const HTMLtoDOCX = require("html-to-docx");
 const sanitizeHtml = require("sanitize-html");
 const archiver = require("archiver");
 var StudentModel = require("../model/student");
+var SpecializedModel = require("../model/specialized");
 
 router.get("/", async function (req, res, next) {
   const totalStudents = await StudentModel.countDocuments();
@@ -19,6 +20,34 @@ router.get("/", async function (req, res, next) {
     isPending: true,
   });
 
+  const specializations = await SpecializedModel.find({});
+
+  const totalPostSpecialized = await Promise.all(
+    specializations.map(async (specialized) => {
+      const students = await StudentModel.find({
+        specializedID: specialized._id,
+      });
+      const totalPosts = await Promise.all(
+        students.map(async (student) => {
+          return PostModel.countDocuments({ email: student.email });
+        })
+      );
+
+      const totalPostsForSpecialized = totalPosts.reduce(
+        (acc, val) => acc + val,
+        0
+      );
+
+      return {
+        specializedID: specialized._id,
+        specializedName: specialized.specializedName,
+        totalPosts: totalPostsForSpecialized,
+      };
+    })
+  );
+
+  console.log(totalPostSpecialized);
+
   res.render("manager/home", {
     layout: "manager_layout",
     manager: req.session.email,
@@ -28,6 +57,7 @@ router.get("/", async function (req, res, next) {
     totalPostsPending: totalPostsPending,
     totalReports: totalReports,
     totalReportsPending: totalReportsPending,
+    totalPostSpecialized: totalPostSpecialized,
   });
 });
 
