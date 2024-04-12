@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Report</title>
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
     .container {
   display: flex;
@@ -92,13 +99,43 @@
   
   <div class="report-section">
     <h2 class="report-heading"  style="width: 100%; margin-left: 0; height: 5%;">Report this Post</h2>
-    <form action="/student/report/{{post._id}}" method="post"  style="width: 100%; height: 100%">
-      <textarea style="height: 80%;" name="reporttext" class="report-textarea" placeholder="Your concerns..."></textarea>
+    <form id="reportForm" action="/student/report/{{post._id}}" method="post"  style="width: 100%; height: 100%">
+      <textarea id="reportContent" style="height: 80%;" name="reporttext" class="report-textarea" placeholder="Your concerns..." required></textarea>
       <div class="form-actions"style="height: 10%;">
-        <button type="submit" class="report-submit">Send Report</button>
+        <button type="button" id="reportButton" class="report-submit">Send Report</button>
         <button type="button" class="report-cancel" onclick="window.location.href='/';">Cancel</button>
       </div>
+
+    {{!-- Modal --}}
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Report</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <b style="color: red; font-size: 16px">Are you sure want to report this post?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Report</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>
     </form>
+    <script>
+            document.getElementById('reportButton').addEventListener('click', function() {
+                if (document.getElementById('reportForm').checkValidity()) {
+                    $('#confirmationModal').modal('show');
+                } else {
+                    document.getElementById('reportContent').reportValidity();
+                }
+            });  
+    </script>
   </div>
 </div>
 </body>

@@ -38,14 +38,14 @@
     <div class="status">
         
         {{#if isPending}}
-          <h5>Approve status: Pending</h5>
+          <h5>Approve status: <b style="font-size: 30px"><span style="color: red;">Pending</span></b></h5>
           <div style="margin-top: 20px;">
             <h5>Comment from coordinator:  </h5>
             <p> {{comment}}</p>
 
           </div>
         {{else}}
-          <h5>Approve status: Approved</h5>
+          <h5>Approve status: <b style="font-size: 30px"><span style="color: green;">Approved</span></b></h5>
         {{/if}}
     </div>
     

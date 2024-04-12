@@ -32,7 +32,7 @@ router.get("/postCreate", async function (req, res, next) {
   const user = await StudentModel.findOne({ email: req.session.email }).lean();
   if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
     //Logic code to let the hbs get that deadline is valid
-    const message = "Read the rules before POST";
+    const message = "Post submittion deadline is valid, please follow the rules ⚔";
     res.render("student/postCreate", {
       layout: "layout",
       student: user.name,
