@@ -16,8 +16,8 @@ router.get("/", async function (req, res, next) {
     layout: "layout",
     data: post,
     specialized: specialized,
-    student: user.name,
-    deadline: deadline
+    student: req.session.email,
+    deadline: deadline,
   });
 });
 
