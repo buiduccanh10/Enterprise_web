@@ -753,3 +753,28 @@ html, body {
       margin-top: 5px; 
   }
 }
+
+
+
+
+
+
+
+
+
+/*----manager--*/
+.MMtest{
+  display: flex;
+  flex-direction: column;
+}
+.chartPostContainer{
+  width: 100%;
+  
+  height: fit-content;
+}
+.chartPostbox{
+  display: flex;
+  justify-items: baseline;
+  align-items: center;
+  width: 100%;
+}

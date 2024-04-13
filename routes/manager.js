@@ -15,15 +15,18 @@ router.get("/", async function (req, res, next) {
   });
   const totalPosts = await PostModel.countDocuments();
   const totalPostsPending = await PostModel.countDocuments({ isPending: true });
+  const totalPostsApproved = await PostModel.countDocuments({ isPending: false });
   const totalReports = await ReportModel.countDocuments();
-  const totalReportsPending = await ReportModel.countDocuments({
-    isPending: true,
-  });
+  const totalReportsPending = await ReportModel.countDocuments({ isPending: true });
+  const totalReportsApproved = await ReportModel.countDocuments({ isPending: false });
+  console.log(totalPosts,totalPostsPending,totalPostsApproved);
+
 
   const specializations = await SpecializedModel.find({});
 
   const totalPostSpecialized = await Promise.all(
     specializations.map(async (specialized) => {
+
       const students = await StudentModel.find({
         specializedID: specialized._id,
       });
@@ -37,16 +40,32 @@ router.get("/", async function (req, res, next) {
         (acc, val) => acc + val,
         0
       );
+      console.log(totalPostsForSpecialized);
+
+
+      //check//
+      const percent= ((100/totalPosts)* totalPostsForSpecialized);
+      //
 
       return {
+        //check//
         specializedID: specialized._id,
-        specializedName: specialized.specializedName,
+        specializedName1: specialized.specializedName,
+        //
+
         totalPosts: totalPostsForSpecialized,
+
+        //check//
+        percent: percent,
+        //
       };
     })
   );
 
   console.log(totalPostSpecialized);
+
+
+
 
   res.render("manager/home", {
     layout: "manager_layout",
@@ -55,9 +74,13 @@ router.get("/", async function (req, res, next) {
     totalStudentsPending: totalStudentsPending,
     totalPosts: totalPosts,
     totalPostsPending: totalPostsPending,
+    totalPostsApproved:totalPostsApproved,
     totalReports: totalReports,
-    totalReportsPending: totalReportsPending,
+    totalReportsPending:totalReportsPending,
+    totalReportsApproved: totalReportsApproved,
     totalPostSpecialized: totalPostSpecialized,
+
+    
   });
 });
 
