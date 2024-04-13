@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 <div class="container" style="margin-top: 20px;">
@@ -28,3 +29,77 @@
         {{/each}}
     </div>
 </div>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .center {
+            margin: 0 auto;
+            width: 80%; /* Adjust width as needed */
+        }
+        .center table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .center th, .center td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .center th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="center">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Content</th>
+                    <th>Status</th>
+                    <th>Read</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each post}}
+                <tr>
+                    <td>{{title}}</td>
+                    <td>{{dateCreate}}</td>
+                    <td>{{email}}</td>
+                    <td>{{{body}}}</td>
+                    <td>
+                        {{#if isPending}}
+                            <span style="color: red;">Pending</span>
+                        {{else}}
+                            <span style="color: green;">Approved</span>
+                        {{/if}}
+                    </td>
+                    <td>
+                        <form action="/readPost/{{_id}}">
+                            <button type="submit" class="btn btn-primary">Read</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+>>>>>>> 002de0fb452543b5361a01df690fbcfae18d13ba

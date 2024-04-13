@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post create</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <style>
         body {
             background-color: #f8f9fa;
+        }
+        #txtMessage {
+            color: red;
+            font-size: 20px;
         }
         .container {
             margin-top: 20px;
@@ -58,11 +70,71 @@
             <input type="text" name="title" placeholder="Title..." required> 
             <textarea name="content" id="editor"></textarea>
             <div class="action" id="actionButton">
-                <button type="submit" id="postButton" class="btn btn-primary">Post</button>
+                <button type="button" id="postButton" class="btn btn-primary">Post</button>
                 <button type="button" id="cancelButton" class="btn btn-danger" onclick="window.location.href='/';">Cancel</button>
-            </div>
-        </form>
+            </div>   
+{{!--  --}}
+
+{{!--  --}}
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirmation Box</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <i><strong style="font-size: 20px;">Notification:</strong></i> <br>
+        
+        <b id="txtMessage" class="text-monospace">{{message}}</b> 
+            <br>
+            <h1>The student need to accept the rules before <strong>POST</strong>:</h1>
+            <li><strong>No Violent Content:</strong> Posts containing violence, threats, or any form of physical harm are strictly prohibited.</li>
+            <li><strong>No Sexual Content:</strong> Any posts containing explicit sexual content, nudity, or sexually suggestive material are not allowed.</li>
+            <li><strong>Respect Others:</strong> Respect the opinions, beliefs, and identities of fellow students. Harassment, discrimination, or bullying of any kind will not be tolerated.</li>
+            <li><strong>No Hate Speech:</strong> Posts that promote hatred or intolerance towards individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or any other characteristic are not permitted.</li>
+            <li><strong>No Illegal Activities:</strong> Discussion or promotion of illegal activities such as drug use, underage drinking, or any other unlawful behavior is prohibited.</li>
+            <li><strong>Keep it Civil:</strong> Engage in constructive and respectful dialogue. Avoid inflammatory language, personal attacks, or any behavior that disrupts the learning environment.</li>
+            <li><strong>Respect Privacy:</strong> Do not share personal information about yourself or others without permission. This includes contact information, addresses, or any other sensitive details.</li>
+            <li><strong>Stay On Topic:</strong> Keep discussions relevant to the purpose of the platform or forum. Off-topic posts may be removed to maintain focus and productivity.</li>
+            <li><strong>No Spamming:</strong> Avoid excessive posting of repetitive or irrelevant content. Spamming, including advertisements or promotional material, is not allowed.</li>
+            <li><strong>Follow Community Guidelines:</strong> Adhere to the specific guidelines outlined by the platform or forum. Failure to comply may result in disciplinary action, including removal of posts or suspension of account privileges.</li>
+      </div>
+      <div class="form-check text-center">
+            <input class="form-check-input" type="checkbox" id="agreeCheckbox">
+            <label class="form-check-label" for="agreeCheckbox">
+            I agree with terms and conditions
+            </label>
+        </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="agreeButton" disabled>Agree</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
+</div>
+</form>
+        
+    </div>     
+    <script>
+  document.getElementById('agreeCheckbox').addEventListener('change', function () {
+    var agreeButton = document.getElementById('agreeButton');
+    agreeButton.disabled = !this.checked;
+  });
+</script>         
+    <script src="/ckeditor/ckeditor.js"></script>
+        <script>
+            document.getElementById('postButton').addEventListener('click', function() {
+                if (document.getElementById('postForm').checkValidity()) {
+                    $('#confirmationModal').modal('show');
+                } else {
+                    document.getElementById('postTitle').reportValidity();
+                    document.getElementById('editor').reportValidity();
+                }
+            });  
+    </script>
     <script src="/ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('editor',{

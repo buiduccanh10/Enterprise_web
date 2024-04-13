@@ -16,23 +16,38 @@ router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
   const specialized = await SpecializedModel.find({}).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
+  const user = await StudentModel.findOne({ email: req.session.email }).lean();
 
   res.render("home/home", {
     layout: "layout",
     data: post,
     specialized: specialized,
-    student: req.session.email,
+    student: user.name,
     deadline: deadline,
   });
 });
 
 router.get("/postCreate", async function (req, res, next) {
   const deadline = await DeadlineModel.findOne({}).lean();
-  res.render("student/postCreate", {
-    layout: "layout",
-    student: req.session.email,
-    deadline: deadline,
-  });
+  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+  if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
+    //Logic code to let the hbs get that deadline is valid
+    const message = "Post submittion deadline is valid, please follow the rules ⚔";
+    res.render("student/postCreate", {
+      layout: "layout",
+      student: user.name,
+      deadline: deadline,
+      message: message
+    });
+  } else {   
+    const message = "The submittion is closed, please visit post posted. Thank you 🎈";
+    res.render("student/postCreate", {
+      layout: "layout",
+      student: user.name,
+      deadline: deadline,
+      message: message
+    });
+  }
 });
 
 router.post("/upload", multipartMiddleware, (req, res) => {
@@ -155,7 +170,7 @@ router.post("/report/:id", async function (req, res, next) {
 
     await ReportModel.create(report);
 
-    res.redirect("/");
+    res.redirect("/student");
   } else {
     res.redirect("/student");
   }
