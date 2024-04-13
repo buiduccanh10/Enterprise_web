@@ -10,13 +10,13 @@ router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
   const specialized = await SpecializedModel.find({});
   const deadline = await DeadlineModel.findOne({}).lean();
-  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+  // const user = await StudentModel.findOne({ email: req.session.email }).lean();
 
   res.render("home/home", {
     layout: "layout",
     data: post,
     specialized: specialized,
-    student: user.name,
+    
     deadline: deadline
   });
 });
