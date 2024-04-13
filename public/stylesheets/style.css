@@ -542,7 +542,7 @@ body {
 
 html, body {
   background-color: #f4f4f4;
-  height: screen;
+  height: 100%;
 }
 
 
@@ -565,103 +565,19 @@ html, body {
 
 
 /*coordinator*/
-.rpPendingBGfix{
-  display: flex;
-  flex-direction: column;
-}
-.rpPendingBG {
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  flex-wrap:wrap;
-  height: max-content;
-  align-items: start;
-  margin-left: 0px;
-
-}
-.rpPendingContainer{
-  padding: 0px 0px 0px 0px;
-  background-color: #f4f4f4;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  height: max-content;
-  width: 90%;
-}
-.rpPendingItems {
-  width: 100%;
-  height: max-content;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 1);
-  margin: 10px;
-  border-radius: 25px;
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-}
-.rpPendingSourch {
-  display: flex;
-  gap: 20px
-}
-.rpPendingItemsBox1{
-  display: flex;
-  justify-items: auto;
-}
-.rpPendingItemsBox1n1{
-  width: 80%;
-}
-.rpPendingItemsBox1n2{
-  width: 20%;
-}
-.rpPendingContent {
-  margin: 10px 0px;
-}
-
-.rpPendingItemsBox2{
-  display: flex;
-  justify-items: auto;
-  gap: 20px
-}
-.rpPendingComment {
-  padding: 10px;
-  height: 70px;
-  width: 85%;
-  border-radius: 15px;
-}
-.rpPendingButton1 {
-  height: 70px;
-  width: 11%;
-  border-radius: 15px;
-}
-.rpPendingItemsBox3{
-  display: flex;
-  gap: 20px;
-  margin: 10px 0px 0px 0px;
-}
-.rpPendingRead{
-  margin: 0px 0px 20px 0px;
-}
-
-
-
-
 .pPendingContainer {
-  background-color: #f4f4f4;
   display: flex;
   justify-content: space-around;
   flex-wrap:wrap;
-  height: max-content;
-  align-items: start;
-  flex-direction: column;
 }
+
 .pPendingBG {
   padding: 0px 0px 0px 0px;
   background-color: #f4f4f4;
   display: flex;
   justify-content: center;
-  align-items: start;
-  height: max-content;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pPendingItems {
@@ -713,20 +629,26 @@ html, body {
   width: 100%;
   padding: 10px;
 }
-
-
 /*end*/
 
 
 
 
 
-
 /*home css*/
+
+
+
+
+
+
+
+
 .pApprovedBG{
+
   width: 100%;
   height: 100%;
-  background-color: #f4f4f4;
+  background-color: antiquewhite;
   padding:20px;
   display: flex;
   justify-content: center;
@@ -745,6 +667,7 @@ html, body {
   border: solid 1px;
   border-collapse: collapse;
   border-color: rgba(0, 0, 0, 0.30);
+
   padding: 10px 20px;
 }
 .pApprovedTable, td{
@@ -762,6 +685,7 @@ html, body {
   flex-direction: column;
   gap: 10px;
 }
+
 
 .headercss {
   background-color: #fff; 
@@ -790,8 +714,6 @@ html, body {
 .headercss a.logoutbtn {
   background-color: #e64848; 
   color: #fff;
-  height: max-content;
-  width: max-content;
 }
 
 .headercss a.logoutbtn:hover {
@@ -800,9 +722,8 @@ html, body {
 
 .headercss a.loginbtn {
   border: 2px solid #e64848;
-  height: max-content;
-  width: max-content;
 }
+
 .headercss a.loginbtn:hover {
   background-color: #e64848; 
   color: white;
@@ -812,6 +733,7 @@ html, body {
   margin: 0;
   font-size: 16px; 
 }
+
 
 .headercss h1.logo:hover {
   opacity: 0.8; 
@@ -831,10 +753,28 @@ html, body {
       margin-top: 5px; 
   }
 }
-.deadlinebox{
-  width: auto;
+
+
+
+
+
+
+
+
+
+/*----manager--*/
+.MMtest{
+  display: flex;
+  flex-direction: column;
 }
-.fixbtnbox1 {
-  margin-top: 20px;
+.chartPostContainer{
+  width: 100%;
+  
+  height: fit-content;
+}
+.chartPostbox{
+  display: flex;
+  justify-items: baseline;
+  align-items: center;
   width: 100%;
 }

@@ -18,11 +18,34 @@
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body>
+
+    {{!-- your-template.hbs --}}
+    <!--
+    {{#each totalPostSpecialized}}
+      <div>
+        <p>Specialized ID: {{this.specializedID}}</p>
+        <p>Specialized Name: {{this.specializedName1}}</p>
+        <console class="lo">{{this.specializedName}}</console>
+        <p>Total Posts: {{this.totalPosts}}</p>
+        <p>percent: {{this.percent}}</p>
+      </div>
+    {{/each}}-->
+    <!--
+    <div class="MMtest">
+      <p>totalPosts{{totalPosts}}</p>
+      <p>totalPostsPending{{totalPostsPending}}</p>
+      <p>totalPostsApproved{{totalPostsApproved}}</p>
+      <p>totalReports{{totalReports}}</p>
+      <p>totalReportsPending{{totalReportsPending}}</p>
+      <p>totalReportsApproved{{totalReportsApproved}}</p>
+    </div>-->
+
     <div class="container">
+
       <div class="row" style="margin-top:20px; justify-content:center;">
-        <!-- Total Students -->
         <div class="col-xl-3 col-md-6 mb-4">
           <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
@@ -31,11 +54,11 @@
                   <div
                     class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                   >
-                    Total Students
+                    Total Posts
                   </div>
                   <div
                     class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalStudents}}</div>
+                  >{{totalPosts}}</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
@@ -44,7 +67,12 @@
             </div>
           </div>
         </div>
-         <div class="col-xl-3 col-md-6 mb-4">
+
+
+
+
+
+        <div class="col-xl-3 col-md-6 mb-4">
           <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
@@ -52,11 +80,11 @@
                   <div
                     class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                   >
-                    Total Students
+                    Total Posts Pending
                   </div>
                   <div
                     class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalStudents}}</div>
+                  >{{totalPostsPending}}</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
@@ -65,7 +93,9 @@
             </div>
           </div>
         </div>
-         <div class="col-xl-3 col-md-6 mb-4">
+
+
+        <div class="col-xl-3 col-md-6 mb-4">
           <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
@@ -73,11 +103,11 @@
                   <div
                     class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                   >
-                    Total Students
+                    Total Reports
                   </div>
                   <div
                     class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalStudents}}</div>
+                  >{{totalReports}}</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
@@ -86,7 +116,8 @@
             </div>
           </div>
         </div>
-         <div class="col-xl-3 col-md-6 mb-4">
+
+        <div class="col-xl-3 col-md-6 mb-4">
           <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
@@ -94,11 +125,11 @@
                   <div
                     class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                   >
-                    Total Students
+                    Total Reports Pending
                   </div>
                   <div
                     class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalStudents}}</div>
+                  >{{totalReportsPending}}</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
@@ -107,52 +138,248 @@
             </div>
           </div>
         </div>
-         <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                  >
-                    Total Students
-                  </div>
-                  <div
-                    class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalStudents}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-         <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                  >
-                    Total Students
-                  </div>
-                  <div
-                    class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalStudents}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+
+
+
+
+        
+
+
+
+
+      
+
+
+
+        
+
+
+
+
+
+
+              
+
+              <div class="chartPostContainer">
+                <h1>Article statistics</h1>
+                <div class="chartPostbox">
+                  <div style="width: 65%; " id="chart"></div>
+                  <div style="width: 35%; " id="percentPostChart"></div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- More widgets can be added here -->
-      </div>
+        
     </div>
     <!-- Other HTML content can go here -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="../../routes/manager.js"></script>
+
+    <script>
+        var post = [];
+          {{#each totalPostSpecialized}}
+            post.push({{this.totalPosts}});
+            
+          {{/each}}
+          console.log(post)
+
+        var nameSpec =  [''];
+          {{#each totalPostSpecialized}}
+            nameSpec.push({{this.specializedName1}});
+          {{/each}}
+          console.log(nameSpec)
+
+
+        var percent = [];
+          {{#each totalPostSpecialized}}
+            percent.push({{this.percent}});
+          {{/each}}
+          console.log(percent)
+
+
+
+        var x = {{totalPosts}};
+        var xP = {{totalPostsPending}};
+        var xA;
+        xA = x - xP;
+        var pXPA, pXP;
+        pXA = (100/x)*xA;
+        pXP = 100-pXA;
+        console.log(pXA+'%',pXP+'%');
+
+        var y = {{totalPosts}};
+        var yP = {{totalPostsPending}};
+        var yA;
+        yA = y - yP;
+        var pYPA, pYP;
+        pYA = (100/y)*yA;
+        pYP = 100-pYA;
+        console.log(pYA+'%',pYP+'%');
+
+
+
+
+        //////////////////////////////////////////////////////
+        var options = {
+          series: [{
+          name: 'Servings',
+          data: post//[44, 55, 41]
+        }],
+          annotations: {
+          points: [{
+            x: 'Bananas',
+            seriesIndex: 0,
+            label: {
+              borderColor: '#775DD0',
+              offsetY: 0,
+              style: {
+                color: '#fff',
+                background: '#775DD0',
+              },
+              text: 'Bananas are good',
+            }
+          }]
+        },
+        chart: {
+          height: 350,
+          type: 'bar',
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            columnWidth: '50%',
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 2
+        },
+        
+        grid: {
+          row: {
+            colors: ['#fff', '#f2f2f2']
+          }
+        },
+        xaxis: {
+          labels: {
+            rotate: -45
+          },
+          categories: ['Marketing', 'It', 'Design'],
+          tickPlacement: 'on'
+        },
+        yaxis: {
+          title: {
+            text: 'Servings',
+          },
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'light',
+            type: "horizontal",
+            shadeIntensity: 0.25,
+            gradientToColors: undefined,
+            inverseColors: true,
+            opacityFrom: 0.85,
+            opacityTo: 0.85,
+            stops: [50, 0, 100]
+          },
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+
+
+        //////////////////////////////////////////////////////
+         var percentPostOptions = {
+          series: [29, 57, 14],
+          chart: {
+          type: 'donut',
+        },
+        labels: ['Marketing', 'It', 'Design'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var percentPostChart = new ApexCharts(document.querySelector("#percentPostChart"), percentPostOptions);
+        percentPostChart.render();
+
+
+
+
+
+        //////////////////////////////////////////////////////
+        var percentOptions1 = {
+          series: [29, 57, 14],
+        chart: {
+          width: 380,
+          type: 'pie',
+        },
+        labels: ['Marketing', 'It', 'Design'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+
+        };
+        var percentChart1 = new ApexCharts(document.querySelector("#piechart"), percentOptions1);
+        percentChart1.render();
+
+
+
+
+        //////////////////////////////////////////////////////
+        var percentOptions2 = {
+          series: [29, 57, 14],
+        chart: {
+          width: 380,
+          type: 'pie',
+        },
+        labels: ['Marketing', 'It', 'Design'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+
+        };
+
+        var percentChart2 = new ApexCharts(document.querySelector("#piechart"), percentOptions2);
+        percentChart2.render();
+
+
+
+
+
+
+
+    </script>
+
+
   </body>
 </html>

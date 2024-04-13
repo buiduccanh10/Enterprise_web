@@ -38,14 +38,14 @@
                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
               />
             </svg>
-    <i>Welcome back, <b>{{coordinator}}</b></i>
+    <h3>{{coordinator}}</h3>
     </div>
     <div class="headercssbox2">
 
       {{#if coordinator}}
-        <a class="logoutbtn" href="/auth/logout">Log out</a>
+        <a class="logoutbtn" href="/auth/logout">LogOut</a>
       {{else}}
-        <a class="loginbtn" href="/auth/login">Log in</a>
+        <a class="loginbtn" href="/auth/login">LogIn</a>
       {{/if}}
     </div>
   </header>

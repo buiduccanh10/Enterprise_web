@@ -77,7 +77,7 @@
               </div>
               <p class="rpPendingContent">Report content: {{content}}</p>
               <div class="rpPendingItemsBox2">
-                <form style="width: 100%;" action="/coordinator/reportPending/sendCommentReport/{{_id}}?comment={{comment}}" method="get">
+                <form action="/coordinator/reportPending/sendCommentReport/{{_id}}?comment={{comment}}" method="get">
                   <input type="text" name="comment" class="rpPendingComment" placeholder="Enter comment..."></td>
                   <button type="submit"  class="rpPendingButton1">Send</button>
                 </form>

@@ -8,23 +8,19 @@ var ReportModel = require("../model/report");
 var DeadlineModel = require("../model/deadline");
 
 router.get("/", async function (req, res, next) {
-  const user = await CoordinatorModel.findOne({ email: req.session.email }).lean();
-
   res.render("coordinator/postPending", {
     layout: "coordinator_layout",
-    coordinator: user.name
+    coordinator: req.session.email,
   });
 });
 
 router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
   const post = await PostModel.find({ _id: postId }).lean();
-  const user = await CoordinatorModel.findOne({ email: req.session.email }).lean();
-
   res.render("coordinator/readPost", {
     layout: "coordinator_layout",
     post: post,
-    coordinator: user.name,
+    coordinator: req.session.email,
   });
 });
 

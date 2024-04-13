@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
   <style>
     .headercss {
       display: flex;
@@ -32,7 +31,6 @@
     .dropdown-menu {
       min-width: 130px;
     }
-
   </style>
 </head>
 <body>
@@ -53,27 +51,25 @@
       </div>
       <a class="pagelink" href="/admin/studentPending">Student pending</a>
       <a class="pagelink" href="/admin/register-role">Register role</a>
-      
-
-
-      {{!-- End submit deadline --}}
       {{/if}}
     </div>
     <i>Welcome back, <b>{{admin}}</b></i>
     <div class="headercssbox2">
 
       {{#if admin}}
-        <a href="/auth/logout"><button class="btn btn-danger">Log out</button></a>
+        <a href="/auth/logout"><button class="btn btn-danger">LogOut</button></a>
       {{else}}
-        <a href="/auth/login"><button class="btn btn-success">Log in</button></a>
+        <a href="/auth/login"><button class="btn btn-success">LogIn</button></a>
       {{/if}}
     </div>
   </header>
 
 
   <div class="container">
-    {{{body}}}   
+    {{{body}}}
   </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

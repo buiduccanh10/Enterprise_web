@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -66,10 +67,10 @@
     <div class="container">
         <h1 class="text-success">New Post</h1>
         <form id="postForm" action="/student/post" method="POST" enctype="multipart/form-data">
-            <input type="text" name="title" id="postTitle" placeholder="Title..." required> 
-            <textarea name="content" id="editor" required></textarea>
+            <input type="text" name="title" placeholder="Title..." required> 
+            <textarea name="content" id="editor"></textarea>
             <div class="action" id="actionButton">
-                <button type="button" id="postButton" class="btn btn-primary">Post</button>
+                <button type="submit" id="postButton" class="btn btn-primary">Post</button>
                 <button type="button" id="cancelButton" class="btn btn-danger" onclick="window.location.href='/';">Cancel</button>
             </div>   
 {{!--  --}}

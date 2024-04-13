@@ -7,67 +7,10 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
   </head>
-  <style>
-body {
-  font-family: 'Lato', sans-serif;
-}
-
-.overlay {
-  height: 0%;
-  width: 100%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.9);
-  overflow-y: hidden;
-  transition: 0.5s;
-}
-
-.overlay-content {
-  position: relative;
-  top: 25%;
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
-}
-
-.overlay a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.overlay a:hover, .overlay a:focus {
-  color: #f1f1f1;
-}
-
-.overlay .closebtn {
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-@media screen and (max-height: 450px) {
-  .overlay {overflow-y: auto;}
-  .overlay a {font-size: 20px}
-  .overlay .closebtn {
-  font-size: 40px;
-  top: 15px;
-  right: 35px;
-  }
-}
-</style>
 <div class="row" style="margin-top:20px; justify-content:center;">
 {{!-- Total Post --}}
         <div class="col-xl-3 col-md-6 mb-4">
@@ -102,10 +45,6 @@ body {
                                                   <p>No deadline set</p>
                                                 {{/if}}
                                             </div>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btnModal">
-                                              Submit Deadline
-                                            </button>
-                                            
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -114,7 +53,12 @@ body {
                                 </div>
                             </div>
                         </div>
-                    
+                    {{!-- <h1>Submit Deadline</h1>
+                    <form action="/admin/deadline" method="post">
+                      <label for="deadline">Deadline:</label>
+                      <input type="datetime-local" id="deadline" name="deadline" required />
+                      <button type="submit">Submit</button>
+                    </form> --}}
                     <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
@@ -137,9 +81,32 @@ body {
                                 </div>
                             </div>
                         </div>
-                                    
+                    {{!-- <h1>Submit Deadline</h1>
+                    <form action="/admin/deadline" method="post">
+                      <label for="deadline">Deadline:</label>
+                      <input type="datetime-local" id="deadline" name="deadline" required />
+                      <button type="submit">Submit</button>
+                    </form> --}}
+</div>
 </div>
 
+                    <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+                            <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-primary">Submit Deadline</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body">
+                                        <form action="/admin/deadline" method="post">
+                                        <label for="deadline">Deadline:</label>
+                                        <input type="datetime-local" id="deadline" name="deadline" required />
+                                        <button type="submit">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 {{!-- Image slide --}}
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -168,31 +135,3 @@ body {
     </a>
   </div>
 </html>
-<!-- Modal -->
-          <div class="modal fade" id="btnModal" tabindex="-1" role="dialog" aria-labelledby="btnModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="btnModalLabel">Submit Deadline</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form action="/admin/deadline" method="post">
-                        <b><label for="deadline">Deadline:</label></b>
-                        <input type="datetime-local" id="deadline" name="deadline" required />
-                        <button type="submit" class="btn btn-primary ">Submit</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-<script>
-  $('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-</script>

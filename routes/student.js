@@ -16,13 +16,12 @@ router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isPending: false }).lean();
   const specialized = await SpecializedModel.find({}).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
-  const user = await StudentModel.findOne({ email: req.session.email }).lean();
-  
+
   res.render("home/home", {
     layout: "layout",
     data: post,
     specialized: specialized,
-    student: user.name,
+    student: req.session.email,
     deadline: deadline,
   });
 });
@@ -123,14 +122,15 @@ router.post("/post", async function (req, res) {
         email: req.session.email,
       };
       await PostModel.create(post);
+
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           return console.log(error);
         }
       });
+
       res.redirect("/student/myPost");
     } else {
-      // Logic to alert the deadline is
       res.redirect("/student");
     }
   }
@@ -139,13 +139,12 @@ router.post("/post", async function (req, res) {
 router.get("/report/:id", async function (req, res, next) {
   const post = await PostModel.findById(req.params.id);
   const deadline = await DeadlineModel.findOne({}).lean();
-  const user = await StudentModel.findOne({ email: req.session.email }).lean();
 
   if (post.email !== req.session.email) {
     res.render("student/report", {
       layout: "layout",
       post: post,
-      student: user.name,
+      student: req.session.email,
       deadline: deadline,
     });
   } else {
@@ -179,13 +178,12 @@ router.post("/report/:id", async function (req, res, next) {
 router.get("/editReport/:id", async function (req, res, next) {
   const report = await ReportModel.findById(req.params.id).lean();
   const post = await PostModel.findById(report.postID).lean();
-  const user = await StudentModel.findOne({ email: req.session.email }).lean();
 
   res.render("student/editReport", {
     layout: "layout",
     post: post,
     report: report,
-    student: user.name,
+    student: req.session.email,
   });
 });
 
@@ -211,7 +209,7 @@ router.post("/editReport/:id", async function (req, res, next) {
 router.get("/reportedPost", async function (req, res, next) {
   const report = await ReportModel.find({ email: req.session.email }).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
-  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+
   if (report) {
     const reportWithPost = await Promise.all(
       report.map(async (report) => {
@@ -222,7 +220,7 @@ router.get("/reportedPost", async function (req, res, next) {
     res.render("student/reportedPost", {
       layout: "layout",
       report: reportWithPost,
-      student: user.name,
+      student: req.session.email,
       deadline: deadline,
     });
   }
@@ -236,11 +234,11 @@ router.get("/deleteReport/:id", async function (req, res, next) {
 router.get("/myPost", async function (req, res, next) {
   const myPost = await PostModel.find({ email: req.session.email }).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
-  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+
   res.render("student/myPost", {
     layout: "layout",
     post: myPost,
-    student: user.name,
+    student: req.session.email,
     deadline: deadline,
   });
 });
