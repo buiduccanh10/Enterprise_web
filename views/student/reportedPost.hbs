@@ -1,61 +1,26 @@
-
-
 <div class="rpPendingBG">
 <div class="rpPendingContainer">
 {{#each report}}
 <div class="rpPendingItems">
-  <h3>Report post: {{post.title}}</h3>
+  <h1>Report post: {{post.title}}</h1>
 
     <div class="rpPendingItemsBox1">
       <div class="rpPendingItemsBox1n1">
         <div class="rpPendingSourch">
-          <h5>Post by:</h5>
-          <h5>{{post.email}}</h5>
+          <h4>Post by:</h4>
+          <h4>{{post.email}}</h4>
         </div>
         <div class="rpPendingRead">
           <a href="/readPost/{{post._id}}">View post</a>
         </div>
 
         <div class="rpPendingSourch">
-          <h5>Report by: </h5>
-          <h5>{{email}}</h5>
+          <h4>Report by: </h4>
+          <h4>{{email}}</h4>
         </div>
       </div>
-<<<<<<< HEAD
       <div class="rpPendingItemsBox1n2">
         {{dateCreate}}
-=======
-      <div class="feedback-action">
-          <form action="/readPost/{{post._id}}" method="get">
-            <button class="action-btn edit">Read</button>
-          </form>
-        {{#if isPending}}
-          <form action="/student/editReport/{{_id}}" method="get">
-            <button class="action-btn edit">Edit report</button>
-          </form>
-          <form action="/student/deleteReport/{{_id}}" method="get">
-            <button class="action-btn del">Delete report</button>
-          </form>
-        {{else}}
-          <button class="action-btn edit" disabled  style="opacity: 0.5;">Edit report</button>
-          <button class="action-btn del" disabled  style="opacity: 0.5;">Delete report</button>
-        {{/if}}
-      </div>
-    </li>
-    <div class="report-body">
-      <h2>{{content}}</h2>
-      <h3>{{dateCreate}}</h3>
-      <h4>{{comment}}</h4>
-      <div class="status">
-        Approve status:
-        {{#if isPending}}
-          <span style="color: red;">Pending</span>
-
-        {{else}}
-          <span style="color: green;">Approved</span></b></h5>
-
-        {{/if}}
->>>>>>> 002de0fb452543b5361a01df690fbcfae18d13ba
       </div>
     </div>
     <p class="rpPendingContent">Report content: {{content}}</p>
@@ -90,7 +55,7 @@
               <div class="fixBtnBoxRPedPost">
 
                 <div class="fixBtnBoxRPedPost">
-                  
+
                   <div class="fixBtnBoxRPedPost_editF">
                     <button class="fixBtnBoxRPedPost_edit" disabled  style="opacity: 0.5;">Edit report</button>
                   </div>
@@ -112,4 +77,7 @@
 
 </div>
 </div>
+
+
+
 
