@@ -84,6 +84,12 @@ router.post("/register", async (req, res) => {
     var specializedID = userRegistration.specializedName;
     var studentRole = await RolesModel.findOne({ roleName: "student" }).lean();
 
+    const existingStudent = await StudentModel.findOne({ email: userRegistration.email });
+    if (existingStudent) {
+      console.log("Duplicate user");
+      return res.redirect("/auth/register");
+    }
+
     var user = {
       name: userRegistration.name,
       email: userRegistration.email,
