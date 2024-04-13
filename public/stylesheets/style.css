@@ -34,13 +34,11 @@ input::placeholder {
   font: 1rem/3 sans-serif;
 }
 
-
 .btn-login {
   margin-top: 30px;
   display: flex;
   justify-content: center;
 }
-
 .btn-login > button {
   font-size: 16px;
   font-weight: 300;
@@ -194,6 +192,9 @@ input::placeholder {
 
 
 /* homepage css */
+.deadlinebox{
+  width: auto;
+}
 .deadline {
   max-width: 350px; 
   white-space: nowrap; 
@@ -324,6 +325,12 @@ body {
   }
   .feedbackbox {
     padding-bottom: 0px;
+  }
+
+
+  .fixbtnbox1 {
+    margin-top: 20px;
+    width: 100%;
   }
 /*end*/
 
@@ -565,6 +572,88 @@ html, body {
 
 
 /*coordinator*/
+.rpPendingBGfix{
+  display: flex;
+  flex-direction: column;
+}
+.rpPendingBG {
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  height: max-content;
+  align-items: start;
+  margin-left: 0px;
+
+}
+.rpPendingContainer{
+  padding: 0px 0px 0px 0px;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  height: max-content;
+  width: 70%;
+}
+.rpPendingItems {
+  width: 100%;
+  height: max-content;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 10px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+.rpPendingSourch {
+  display: flex;
+  gap: 20px
+}
+.rpPendingItemsBox1{
+  display: flex;
+  justify-items: auto;
+}
+.rpPendingItemsBox1n1{
+  width: 80%;
+}
+.rpPendingItemsBox1n2{
+  width: 20%;
+}
+.rpPendingContent {
+  margin: 10px 0px;
+}
+
+.rpPendingItemsBox2{
+  display: flex;
+  justify-items: auto;
+  gap: 20px
+}
+.rpPendingComment {
+  padding: 10px;
+  height: 70px;
+  width: 85%;
+  border-radius: 15px;
+}
+.rpPendingButton1 {
+  height: 70px;
+  width: 11%;
+  border-radius: 15px;
+}
+.rpPendingItemsBox3{
+  display: flex;
+  gap: 20px;
+  margin: 10px 0px 0px 0px;
+}
+.rpPendingRead{
+  margin: 0px 0px 20px 0px;
+}
+
+
+
+
+
 .pPendingContainer {
   display: flex;
   justify-content: space-around;
@@ -636,14 +725,6 @@ html, body {
 
 
 /*home css*/
-
-
-
-
-
-
-
-
 .pApprovedBG{
 
   width: 100%;
@@ -755,8 +836,48 @@ html, body {
 }
 
 
+.fixBtnBoxRPedPost{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  justify-content: center;
+  gap: 10%;
+  
 
+}
+.fixBtnBoxRPedPost_editF{
+  width: 40%;
+}
+.fixBtnBoxRPedPost_edit{
+  width: 100%;
+  background-color: forestgreen;
+  border-radius: 20px;
+  padding: 5px 5px;
+  color: white;
+  border: 0px;
+}
+.fixBtnBoxRPedPost_edit:hover{
+  background-color: rgb(126, 188, 126);
+  transition: 0.3s;
+}
+.fixBtnBoxRPedPost_deleteF{
+  width: 40%;
+}
+.fixBtnBoxRPedPost_delete{
+  width: 100%;
+  background-color:#d51f1f;
+  border-radius: 20px;
+  padding: 5px 5px;
+  color: white;
+  border: 0px;
 
+}
+.fixBtnBoxRPedPost_delete:hover{
+  background-color:#d37676;
+  transition: 0.3s;
+}
+/*end*/
 
 
 

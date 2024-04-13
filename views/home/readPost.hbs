@@ -65,17 +65,93 @@
           <h7>{{content}}</h7>
         </div>
       {{/each}}
-    </div>
-    <div class="action" style="display: flex; justify-content: center;">
-      <form action="/student/report/{{_id}}">
-        <button type="submit" style="width: 500px;" class="btn btn-primary">Feedback</button>
+
+    <div class="fixbtnbox1">
+      <div class="action" style="display: flex; justify-content: center;">
+      <form action="/student/report/{{_id}}"  style="width: 50%;">
+        <button type="submit" style="width: 100%;" class="btn btn-primary">Feedback</button>
       </form>
       <button
         type="button"
-        style="margin-left: 5px; width: 500px; height: 50%;"
-        class="btn btn-primary"
+        style="margin-left: 5px; width: 500px; height: 50%; width: 50%;"
+        class="btn btn-primary "
         onclick="window.location.href='/';"
       >Cancel</button>
     </div>
+
+    </div>
+
+
+
+
+
+  {{/each}}
+</div>
+
+
+
+
+
+<!--
+<div class="pPendingBG">
+  {{#each post}}
+    <div class="pPendingItems">
+      <div class="pPendingItemsBox1">
+        <div class="pPendingItemsBox1n1">
+          <h1>{{title}}</h1>
+          <h5>By: {{email}}</h5>
+        </div>
+        <div class="pPendingItemsBox1n2">
+          {{dateCreate}}
+        </div>
+      </div>
+      <div class="pPendingContentFull">
+        {{{body}}}
+      </div>
+      <div style="border-top: 1px solid;"></div>
+      {{#each report}}
+        <div
+          class="report-content"
+          style="margin-top:10px; display:flex; flex-direction:column;"
+        >
+          <div class="icon-label-container">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-person-circle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+              />
+            </svg>
+            <h7 style="font-weight: bold;">{{email}}:</h7>
+          </div>
+
+          <h7>{{content}}</h7>
+        </div>
+      {{/each}}
+
+    <div class="fixbtnbox1">
+      <div class="action" style="display: flex; justify-content: center;">
+      <form action="/student/report/{{_id}}"  style="width: 50%;">
+        <button type="submit" style="width: 100%;" class="btn btn-primary">Feedback</button>
+      </form>
+      <button
+        type="button"
+        style="margin-left: 5px; width: 500px; height: 50%; width: 50%;"
+        class="btn btn-primary "
+        onclick="window.location.href='/';"
+      >Cancel</button>
+    </div>
+    
+    </div>
+
+    
+  </div>
   {{/each}}
 </div>

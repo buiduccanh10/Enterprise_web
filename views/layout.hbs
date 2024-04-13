@@ -102,8 +102,10 @@
         <a class="pagelink" href="/student/postCreate">Post</a>
         <a class="pagelink" href="/student/reportedPost">Reported post</a>
         <a class="pagelink" href="/student/myPost">My post</a>
-        <div class="deadline">First deadline: {{deadline.firstDeadLine}}</div>
-        <div div class="deadline">Final deadline: {{deadline.finalDeadLine}}</div>
+        <div class="deadlinebox">
+        <div class="deadline">Start at: {{deadline.firstDeadLine}}</div>
+        <div div class="deadline">Deadline: {{deadline.finalDeadLine}}</div>
+        </div>
       {{/if}}
     </div>
     {{#if student}}

@@ -1,29 +1,30 @@
-<ul class="ulposts">
-  {{#each post}}
-    <li class="liposts">
-      <div class="post">
-        <div class="titlepost">
-          <h1 class="namepost">{{title}}</h1>
-          <h3 class="datepost"> {{dateCreate}}</h3>
+
+
+<div class="container" style="margin-top: 20px;">
+    <div class="grid">
+        {{#each post}}
+        <div class="card">
+            <div class="header">
+                <h1>{{title}}</h1>
+                <!--
+                <h5>By: {{email}}</h5>
+                -->
+                <h5>At: {{dateCreate}}</h5>
+            </div>
+            <div class="content">
+                {{{body}}}
+            </div>
+            <div class="actions">
+                <a class="pPendingRead" href="/readPost/{{_id}}">Read more</a>
+            </div>
+          <div class="status">
+            {{#if isPending}}
+              <h5>Approve status: Pending</h5>
+            {{else}}
+              <h5>Approve status: Approved</h5>
+            {{/if}}
+          </div>
         </div>
-        <div class="authorpost">
-          <h3>{{email}}</h3>
-        </div>
-        <div class="content">
-          {{{body}}}
-        </div>
-        <div class="status">
-          Approve status:
-          {{#if isPending}}
-            <h5>Pending</h5>
-          {{else}}
-            <h5>Approved</h5>
-          {{/if}}
-        </div>
-        <form action="/readPost/{{_id}}">
-            <button type="submit" class="btn btn-primary">Read</button>
-          </form>
-      </div>
-    </li>
-  {{/each}}
-</ul>
+        {{/each}}
+    </div>
+</div>
