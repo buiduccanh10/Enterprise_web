@@ -549,7 +549,7 @@ body {
 
 html, body {
   background-color: #f4f4f4;
-  height: 100%;
+  height: screen;
 }
 
 
@@ -729,7 +729,7 @@ html, body {
 
   width: 100%;
   height: 100%;
-  background-color: antiquewhite;
+  background-color: #f4f4f4;
   padding:20px;
   display: flex;
   justify-content: center;
