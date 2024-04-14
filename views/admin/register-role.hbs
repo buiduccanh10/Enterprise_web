@@ -62,6 +62,8 @@
           <option value="">Select Role</option>
           <option value="manager">Manager</option>
           <option value="coordinator">Coordinator</option>
+          <option value="student">Student</option>
+          <option value="guest">Guest</option>
         </select><br />
 
         <label
@@ -89,7 +91,9 @@
       document.getElementById("role"); var specializedSelect =
       document.getElementById("specializedName"); var specializedLabelSelect =
       document.getElementById("specializedLabel"); if (roleSelect.value ===
-      "coordinator") { specializedSelect.style.display = "block";
+      "coordinator" || roleSelect.value ===
+      "student" || roleSelect.value ===
+      "guest") { specializedSelect.style.display = "block";
       specializedLabelSelect.style.display ="block"; } else {
       specializedSelect.style.display = "none";
       specializedLabelSelect.style.display ="none"; } }

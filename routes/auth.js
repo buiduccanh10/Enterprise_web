@@ -4,8 +4,10 @@ var AdminModel = require("../model/admin");
 var RolesModel = require("../model/roles");
 var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
+var GuestModel = require("../model/guest");
 var ManagerModel = require("../model/manager");
 var CoordinatorModel = require("../model/coordinator");
+const Guest = require("../model/guest");
 
 router.get("/login", function (req, res, next) {
   res.render("auth/login", { layout: "auth_layout" });
@@ -64,6 +66,18 @@ router.post("/login", async (req, res) => {
       }
     }
 
+    var guest = await GuestModel.findOne({
+      email: email,
+      password: password,
+    }).lean();
+    if (guest) {
+      var role = await RolesModel.findById(guest.roleID).lean();
+      if (role && role.roleName == "guest") {
+        req.session.email = guest.email;
+        return res.redirect("/");
+      }
+    }
+
     res.redirect("/auth/login");
   } catch (err) {
     res.redirect("/auth/login");
@@ -84,7 +98,9 @@ router.post("/register", async (req, res) => {
     var specializedID = userRegistration.specializedName;
     var studentRole = await RolesModel.findOne({ roleName: "student" }).lean();
 
-    const existingStudent = await StudentModel.findOne({ email: userRegistration.email });
+    const existingStudent = await StudentModel.findOne({
+      email: userRegistration.email,
+    });
     if (existingStudent) {
       console.log("Duplicate user");
       return res.redirect("/auth/register");

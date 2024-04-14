@@ -66,16 +66,18 @@
 <body>
     <div class="container">
         <h1 class="text-success">New Post</h1>
-        <form id="postForm" action="/student/post" method="POST" enctype="multipart/form-data">
-            <input type="text" name="title" placeholder="Title..." required> 
-            <textarea name="content" id="editor"></textarea>
-            <div class="action" id="actionButton">
-                <button type="button" id="postButton" class="btn btn-primary">Post</button>
-                <button type="button" id="cancelButton" class="btn btn-danger" onclick="window.location.href='/';">Cancel</button>
-            </div>   
-{{!--  --}}
 
-{{!--  --}}
+            <form action="/student/upload" method="post" enctype="multipart/form-data">
+                <input type="text" name="description" placeholder="Description..." required> 
+                <label for="">File Docx</label>
+                <input type="file" name="docs" multiple accept=".doc,.docx" />
+                <label for="">File Image</label>
+                <input type="file" name="images" multiple accept="image/*" />
+                <div class="action" id="actionButton">
+                    <button type="submit" id="postButton" class="btn btn-primary">Post</button>
+                    <button type="button" id="cancelButton" class="btn btn-danger" onclick="window.location.href='/';">Cancel</button>
+                </div>  
+
 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -114,8 +116,8 @@
       </div>
     </div>
   </div>
-</div>
-</form>
+</div> 
+            </form>
         
     </div>     
     <script>
@@ -123,50 +125,6 @@
     var agreeButton = document.getElementById('agreeButton');
     agreeButton.disabled = !this.checked;
   });
-</script>         
-    <script src="/ckeditor/ckeditor.js"></script>
-        <script>
-            document.getElementById('postButton').addEventListener('click', function() {
-                if (document.getElementById('postForm').checkValidity()) {
-                    $('#confirmationModal').modal('show');
-                } else {
-                    document.getElementById('postTitle').reportValidity();
-                    document.getElementById('editor').reportValidity();
-                }
-            });  
-    </script>
-    <script src="/ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('editor',{
-            extraPlugins:'filebrowser',
-            filebrowserUploadMethod:'form',
-            filebrowserUploadUrl:'/student/upload',//route
-            width: '100%', 
-            height: '400px', 
-        })
-    </script>
-    <script>
-        document.getElementById('postForm').addEventListener('submit', function(event) {
-        event.preventDefault();
 
-        const title = document.querySelector('input[name="title"]').value; 
-        const content = CKEDITOR.instances.editor.getData();
-
-        fetch('/student/post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title, content })
-        })
-        .then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
-            } else {
-                return response.json();
-            }
-        });
-    });
-    </script>
 </body>
 </html>

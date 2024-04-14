@@ -16,26 +16,40 @@
           <div class="pPendingItems">
             <div class="pPendingItemsBox1">
               <div class="pPendingItemsBox1n1">
-                <h1>{{title}}</h1>
-                <h5>By: {{email}}</h5>
+                <h1>{{post.description}}</h1>
+                <h5>By: {{post.email}}</h5>
               </div>
               <div class="pPendingItemsBox1n2">
-                {{dateCreate}}
+                {{post.dateCreate}}
               </div>
             </div>
             <div class="pPendingContent">
-              {{{body}}}
             </div>
             <div class="pPendingItemsBox3">
-              <a class="pPendingRead" href="/coordinator/readPost/{{_id}}">Read more</a>
+              <a class="pPendingRead" href="/coordinator/readPost/{{post._id}}">Read more</a>
             </div>
+
+            {{#if empty}}
+          <div class="comment">
+            <h1>No message</h1>
+          </div>
+         {{else}}
+          <div class="comment">
+              {{{breaklines post.message}}}
+          </div>
+
+          {{/if}}
+          <form action="/coordinator/postPending/message/{{post._id}}" method="post">
+              <input name="message" type="text" placeholder="Write message">
+              <button type="submit">Send</button>
+         </form>
             
             <div class="pPendingItemsBox2">
 
-              <form class="pPendingItemsForm1" action="/coordinator/postPending/approvePost/{{_id}}" method="get">
+              <form class="pPendingItemsForm1" action="/coordinator/postPending/approvePost/{{post._id}}" method="get">
                 <button type="submit" class="pPendingItemsButton1 btn btn-success">Accept</button>
               </form>
-              <form class="pPendingItemsForm1" action="/coordinator/postPending/deletePost/{{_id}}">
+              <form class="pPendingItemsForm1" action="/coordinator/postPending/deletePost/{{post._id}}">
                 <button type="submit" class="pPendingItemsButton1 btn btn-danger">Refuse</button>
               </form>
             </div>

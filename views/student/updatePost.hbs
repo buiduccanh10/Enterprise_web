@@ -1,0 +1,16 @@
+<form action="/student/updatePost/{{post._id}}" method="post" enctype="multipart/form-data">
+  <input value="{{post.description}}" type="text" name="description" placeholder="Description..." required />
+  <label for="">File Docx</label>
+  <input type="file" name="docs" multiple accept=".doc,.docx" />
+  <label for="">File Image</label>
+  <input type="file" name="images" multiple accept="image/*" />
+  <div class="action" id="actionButton">
+    <button type="submit" id="postButton" class="btn btn-primary">Update</button>
+    <button
+      type="button"
+      id="cancelButton"
+      class="btn btn-danger"
+      onclick="window.location.href='/';"
+    >Cancel</button>
+  </div>
+</form>

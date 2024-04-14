@@ -27,7 +27,7 @@
         {{#each data}}
           <tr>
 
-            <td style="width:50% ">{{title}}</td>
+            <td style="width:50% ">{{description}}</td>
             <td style="width:20% ">{{email}}</td>
             <td style="width:20% ">{{dateCreate}}</td>
             <td style="width:10% ">
@@ -44,6 +44,21 @@
                 >
                   <button type="submit" class="pApprovedButton btn btn-success">Unapprove</button>
                 </form>
+                {{#if isView}}
+                  <form
+                    action="/coordinator/postApproved/unShowPost/{{_id}}"
+                    method="get"
+                  >
+                    <button type="submit" class="pApprovedButton btn btn-success">Unshow post</button>
+                  </form>
+                {{else}}
+                <form
+                    action="/coordinator/postApproved/showPost/{{_id}}"
+                    method="get"
+                  >
+                    <button type="submit" class="pApprovedButton btn btn-success">Show post</button>
+                  </form>                 
+                {{/if}}
                 <form action="/coordinator/postApproved/deletePost/{{_id}}">
                   <button type="submit" class="pApprovedButton btn btn-danger">Delete</button>
                 </form>

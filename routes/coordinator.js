@@ -4,8 +4,9 @@ var PostModel = require("../model/post");
 var SpecializedModel = require("../model/specialized");
 var CoordinatorModel = require("../model/coordinator");
 var StudentModel = require("../model/student");
-var ReportModel = require("../model/report");
 var DeadlineModel = require("../model/deadline");
+const fs = require("fs");
+const path = require("path");
 
 router.get("/", async function (req, res, next) {
   res.render("coordinator/postPending", {
@@ -56,11 +57,32 @@ router.get("/postPending", async function (req, res, next) {
     isPending: true,
   }).lean();
 
+  const postWithComment = post.map((postItem) => {
+    const empty = postItem.comment === "";
+    return { post: postItem, empty: empty };
+  });
+
   res.render("coordinator/postPending", {
     layout: "coordinator_layout",
-    data: post,
+    data: postWithComment,
     coordinator: req.session.email,
   });
+});
+
+router.post("/postPending/message/:id", async (req, res) => {
+  const postId = req.params.id;
+  const message = req.body.message;
+  const time = new Date().toLocaleString();
+
+  const myPost = await PostModel.findById(postId);
+  const deadline = await DeadlineModel.findOne({}).lean();
+
+  if (myPost) {
+    myPost.message += `${req.session.email}\n${time}\n${message}\n\n`;
+    await myPost.save();
+  }
+
+  res.redirect("/coordinator/postPending");
 });
 
 router.get("/postPending/approvePost/:id", async (req, res) => {
@@ -128,141 +150,45 @@ router.get("/postApproved/unApprovePost/:id", async (req, res) => {
   res.redirect("/coordinator/postApproved");
 });
 
-router.get("/postApproved/deletePost/:id", async (req, res) => {
+router.get("/postApproved/showPost/:id", async (req, res) => {
   const postId = req.params.id;
-  await PostModel.findByIdAndDelete(postId).lean();
+  await PostModel.findByIdAndUpdate(
+    postId,
+    { isView: true },
+    { new: true }
+  ).lean();
   res.redirect("/coordinator/postApproved");
 });
 
-router.get("/reportPending", async function (req, res, next) {
-    const coordinator = await CoordinatorModel.findOne({
-      email: req.session.email,
-    }).lean();
-
-    const pendingReports = await ReportModel.find({ isPending: true }).lean();
-
-    const reportsWithDetails = await Promise.all(pendingReports.map(async (report) => {
-      const post = await PostModel.findById(report.postID).lean();
-      if (!post) return null;
-
-      const student = await StudentModel.findOne({ email: post.email }).lean();
-      if (!student || String(student.specializedID) !== String(coordinator.specializedID)) {
-        return null; 
-      }
-
-      return { ...report, post };
-    }));
-
-    const filteredReports = reportsWithDetails.filter(report => report !== null);
-
-    if (filteredReports.length === 0) {
-      
-    }
-
-    res.render("coordinator/reportPending", {
-      layout: "coordinator_layout",
-      data: filteredReports,
-      coordinator: req.session.email,
-    });
-});
-
-router.get("/reportPending/sendCommentReport/:id", async (req, res) => {
-  const reportId = req.params.id;
-  const comment = req.query.comment;
-  const deadline = await DeadlineModel.findOne({}).lean();
-
-  if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
-    await ReportModel.findByIdAndUpdate(
-      reportId,
-      { comment: comment },
-      { new: true }
-    ).lean();
-    res.redirect("/coordinator/reportPending");
-  } else {
-    res.redirect("/coordinator/reportPending");
-  }
-});
-
-router.get("/reportPending/approveReport/:id", async (req, res) => {
-  const reportId = req.params.id;
-
-  await ReportModel.findByIdAndUpdate(
-    reportId,
-    { isPending: false },
+router.get("/postApproved/unShowPost/:id", async (req, res) => {
+  const postId = req.params.id;
+  await PostModel.findByIdAndUpdate(
+    postId,
+    { isView: false },
     { new: true }
   ).lean();
-  res.redirect("/coordinator/reportPending");
+  res.redirect("/coordinator/postApproved");
 });
 
-router.get("/reportPending/deleteReport/:id", async (req, res) => {
-  const reportId = req.params.id;
+router.get("/postApproved/deletePost/:id", async (req, res) => {
+  const postId = req.params.id;
+  await PostModel.findByIdAndDelete(postId).lean();
 
-  await ReportModel.findByIdAndDelete(reportId).lean();
-  res.redirect("/coordinator/reportPending");
-});
-
-router.get("/reportApproved", async function (req, res, next) {
-  const coordinator = await CoordinatorModel.findOne({
-    email: req.session.email,
-  }).lean();
-
-  if (!coordinator) {
-    return res.status(404).send("Coordinator not found");
-  }
-
-  const specialized = await SpecializedModel.findById(
-    coordinator.specializedID
-  ).lean();
-
-  if (!specialized) {
-    return res.status(404).send("Specialized area not found");
-  }
-
-  const students = await StudentModel.find({
-    specializedID: specialized._id,
-  }).lean();
-
-  if (students.length === 0) {
-    return res
-      .status(404)
-      .send("No students found under this specialized area");
-  }
-
-  const report = await ReportModel.find({
-    email: { $in: students.map((student) => student.email) },
-    isPending: false,
-  }).lean();
-
-  const reportData = await Promise.all(
-    report.map(async (report) => {
-      const post = await PostModel.findById(report.postID).lean();
-      return { ...report, post: post };
-    })
+  const findFolder = path.join(
+    __dirname,
+    "../public/uploads/",
+    postId.toString()
   );
 
-  res.render("coordinator/reportApproved", {
-    layout: "coordinator_layout",
-    data: reportData,
-    coordinator: req.session.email,
+  fs.rmdir(findFolder, { recursive: true }, (err) => {
+    if (err) {
+      console.error(`Error removing folder ${findFolder}: ${err}`);
+    } else {
+      console.log(`Folder ${findFolder} successfully removed.`);
+    }
   });
-});
 
-router.get("/reportApproved/unApproveReport/:id", async (req, res) => {
-  const reportId = req.params.id;
-
-  await ReportModel.findByIdAndUpdate(
-    reportId,
-    { isPending: true, comment: null },
-    { new: true }
-  ).lean();
-  res.redirect("/coordinator/reportApproved");
-});
-
-router.get("/reportApproved/deleteReport/:id", async (req, res) => {
-  const reportId = req.params.id;
-
-  await ReportModel.findByIdAndDelete(reportId).lean();
-  res.redirect("/coordinator/reportApproved");
+  res.redirect("/coordinator/postApproved");
 });
 
 module.exports = router;

@@ -2,21 +2,26 @@ var express = require("express");
 var router = express.Router();
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
-const fs = require("fs");
+const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 var PostModel = require("../model/post");
+var RoleModel = require("../model/roles");
 var StudentModel = require("../model/student");
 var CoordinatorModel = require("../model/coordinator");
-var ReportModel = require("../model/report");
 var SpecializedModel = require("../model/specialized");
 var DeadlineModel = require("../model/deadline");
 const nodemailer = require("nodemailer");
 
 router.get("/", async function (req, res, next) {
-  const post = await PostModel.find({ isPending: false }).lean();
+  const post = await PostModel.find({ isView: true }).lean();
   const specialized = await SpecializedModel.find({}).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
   const user = await StudentModel.findOne({ email: req.session.email }).lean();
+
+  const role = await RoleModel.findOne({ roleName: "guest" });
+
+  const isGuest = role._id.toString() === user.roleID;
 
   res.render("home/home", {
     layout: "layout",
@@ -24,6 +29,7 @@ router.get("/", async function (req, res, next) {
     specialized: specialized,
     student: user.name,
     deadline: deadline,
+    isGuest: isGuest,
   });
 });
 
@@ -32,216 +38,221 @@ router.get("/postCreate", async function (req, res, next) {
   const user = await StudentModel.findOne({ email: req.session.email }).lean();
   if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
     //Logic code to let the hbs get that deadline is valid
-    const message = "Post submittion deadline is valid, please follow the rules ⚔";
+    const message =
+      "Post submittion deadline is valid, please follow the rules ⚔";
     res.render("student/postCreate", {
       layout: "layout",
       student: user.name,
       deadline: deadline,
-      message: message
+      message: message,
     });
-  } else {   
-    const message = "The submittion is closed, please visit post posted. Thank you 🎈";
+  } else {
+    const message =
+      "The submittion is closed, please visit post posted. Thank you 🎈";
     res.render("student/postCreate", {
       layout: "layout",
       student: user.name,
       deadline: deadline,
-      message: message
+      message: message,
     });
   }
 });
 
-router.post("/upload", multipartMiddleware, (req, res) => {
-  try {
-    let fileName = Date.now() + req.files.upload.name;
-    fs.readFile(req.files.upload.path, function (err, data) {
-      const newPath = path.join(__dirname, "../public/uploads/", fileName);
-      fs.writeFile(newPath, data, function (err) {
-        if (err) console.log({ err: err });
-        else {
-          console.log(req.files.upload.originalFilename);
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 
-          let url = "/uploads/" + fileName;
-          let msg = "Upload successfully";
-          let funcNum = req.query.CKEditorFuncNum;
-          console.log({ url, msg, funcNum });
+router.post(
+  "/upload",
+  upload.fields([
+    { name: "docs", maxCount: 10 },
+    { name: "images", maxCount: 10 },
+  ]),
+  async (req, res) => {
+    const description = req.body.description;
+    const deadline = await DeadlineModel.findOne({}).lean();
 
-          const script =
-            "<script>window.parent.CKEDITOR.tools.callFunction('" +
-            funcNum +
-            "','" +
-            url +
-            "','" +
-            msg +
-            "');</script>";
+    const student = await StudentModel.findOne({
+      email: req.session.email,
+    }).lean();
+    const coordinator = await CoordinatorModel.findOne({
+      specializedID: student.specializedID,
+    }).lean();
 
-          res.status(201).send(script);
-        }
+    if (student.specializedID == coordinator.specializedID) {
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        host: "smtp.example.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: "buiduccanh10@gmail.com",
+          pass: "aqeh djpx fsqv xpxp",
+        },
       });
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-});
 
-router.post("/post", async function (req, res) {
-  const { title, content } = req.body;
-  const deadline = await DeadlineModel.findOne({}).lean();
-
-  const student = await StudentModel.findOne({
-    email: req.session.email,
-  }).lean();
-  const coordinator = await CoordinatorModel.findOne({
-    specializedID: student.specializedID,
-  }).lean();
-
-  if (student.specializedID == coordinator.specializedID) {
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.example.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: "buiduccanh10@gmail.com",
-        pass: "aqeh djpx fsqv xpxp",
-      },
-    });
-
-    let mailOptions = {
-      from: '"Coordinator system notification" <buiduccanh10@gmail.com>', // Sender address
-      to: coordinator.email,
-      subject: "You have new post pending!!!",
-      text: "New post pending",
-      html: content,
-    };
-
-    if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
-      var post = {
-        title: title,
-        body: content,
-        dateCreate: Date.now(),
-        isPending: true,
-        email: req.session.email,
+      let mailOptions = {
+        from: '"Coordinator system notification" <buiduccanh10@gmail.com>', // Sender address
+        to: coordinator.email,
+        subject: "You have new post pending!!!",
+        text: "New post pending",
+        html: description,
       };
-      await PostModel.create(post);
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-      });
+      if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
+        const newPost = new PostModel({
+          description: description,
+          isPending: true,
+          isView: false,
+          email: req.session.email,
+          dateCreate: Date.now(),
+          message: "",
+          imagePath: "",
+          docPath: "",
+        });
 
-      res.redirect("/student/myPost");
-    } else {
-      res.redirect("/student");
+        const savedPost = await newPost.save();
+        const postFolderPath = path.join(
+          __dirname,
+          "../public/uploads/",
+          savedPost._id.toString()
+        );
+        const docxPath = path.join(postFolderPath, "docx");
+        const imagesPath = path.join(postFolderPath, "images");
+
+        createFolder(docxPath);
+        createFolder(imagesPath);
+
+        await savedPost.updateOne({ imagePath: imagesPath, docPath: docxPath });
+
+        await saveFilesFromMemory(req.files.docs, docxPath);
+        await saveFilesFromMemory(req.files.images, imagesPath);
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.log(error);
+          }
+        });
+
+        res.redirect("/student/myPost");
+      } else {
+        res.redirect("/student");
+      }
     }
   }
-});
+);
 
-router.get("/report/:id", async function (req, res, next) {
-  const post = await PostModel.findById(req.params.id);
-  const deadline = await DeadlineModel.findOne({}).lean();
-
-  if (post.email !== req.session.email) {
-    res.render("student/report", {
-      layout: "layout",
-      post: post,
-      student: req.session.email,
-      deadline: deadline,
-    });
-  } else {
-    res.redirect("/student");
-  }
-});
-
-router.post("/report/:id", async function (req, res, next) {
-  const contentrp = req.body.reporttext;
-
-  const deadline = await DeadlineModel.findOne({}).lean();
-
-  if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
-    const report = {
-      content: contentrp,
-      comment: null,
-      dateCreate: new Date(),
-      isPending: true,
-      email: req.session.email,
-      postID: req.params.id,
-    };
-
-    await ReportModel.create(report);
-
-    res.redirect("/student");
-  } else {
-    res.redirect("/student");
-  }
-});
-
-router.get("/editReport/:id", async function (req, res, next) {
-  const report = await ReportModel.findById(req.params.id).lean();
-  const post = await PostModel.findById(report.postID).lean();
-
-  res.render("student/editReport", {
-    layout: "layout",
-    post: post,
-    report: report,
-    student: req.session.email,
-  });
-});
-
-router.post("/editReport/:id", async function (req, res, next) {
-  const contentrp = req.body.reporttext;
-  const reportId = req.params.id;
-
-  const deadline = await DeadlineModel.findOne({}).lean();
-
-  if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
-    await ReportModel.findByIdAndUpdate(
-      reportId,
-      { content: contentrp, dateCreate: new Date() },
-      { new: true }
-    ).lean();
-
-    res.redirect("/student/reportedPost");
-  } else {
-    res.redirect("/student");
-  }
-});
-
-router.get("/reportedPost", async function (req, res, next) {
-  const report = await ReportModel.find({ email: req.session.email }).lean();
-  const deadline = await DeadlineModel.findOne({}).lean();
-
-  if (report) {
-    const reportWithPost = await Promise.all(
-      report.map(async (report) => {
-        const post = await PostModel.findById(report.postID).lean();
-        return { ...report, post: post };
-      })
-    );
-    res.render("student/reportedPost", {
-      layout: "layout",
-      report: reportWithPost,
-      student: req.session.email,
-      deadline: deadline,
+async function saveFilesFromMemory(files, destPath) {
+  if (files) {
+    files.forEach((file) => {
+      const destFilePath = path.join(destPath, file.originalname);
+      fs.writeFileSync(destFilePath, file.buffer); // Ghi file từ buffer vào đường dẫn đích
     });
   }
-});
+}
 
-router.get("/deleteReport/:id", async function (req, res, next) {
-  await ReportModel.findByIdAndDelete(req.params.id).lean();
-  res.redirect("/student/reportedPost");
-});
+function createFolder(folderPath) {
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true });
+  }
+}
 
 router.get("/myPost", async function (req, res, next) {
   const myPost = await PostModel.find({ email: req.session.email }).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
 
+  const postComment = myPost.map((post) => {
+    const empty = post.comment === "";
+    return { myPost: post, empty: empty };
+  });
+
   res.render("student/myPost", {
     layout: "layout",
-    post: myPost,
+    post: postComment,
     student: req.session.email,
     deadline: deadline,
   });
 });
+
+router.post("/myPost/message/:id", async function (req, res, next) {
+  const postId = req.params.id;
+  const message = req.body.message;
+  const time = new Date().toLocaleString();
+
+  const myPost = await PostModel.findById(postId);
+  const deadline = await DeadlineModel.findOne({}).lean();
+
+  if (myPost) {
+    myPost.message += `${req.session.email}\n${time}\n${message}\n\n`;
+    await myPost.save();
+  }
+
+  res.redirect("/student/myPost");
+});
+
+router.post("/readPost/deleteFile", async function (req, res, next) {
+  const postId = req.body.postId;
+  const fileUrl = req.body.fileUrl;
+
+  const filePath = path.join(__dirname, "../public", fileUrl);
+
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+
+    res.redirect(`/readPost/${postId}`);
+  } else {
+    console.error(`File ${filePath} does not exist.`);
+    res.sendStatus(404);
+  }
+});
+
+router.get("/readPost/updatePost/:id", async function (req, res, next) {
+  const deadline = await DeadlineModel.findOne({}).lean();
+  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+
+  const post = await PostModel.findById(req.params.id);
+
+  res.render("student/updatePost", {
+    post: post,
+    layout: "layout",
+    student: user.name,
+    deadline: deadline,
+  });
+});
+
+router.post(
+  "/updatePost/:id",
+  upload.fields([
+    { name: "docs", maxCount: 10 },
+    { name: "images", maxCount: 10 },
+  ]),
+  async (req, res) => {
+    const postId = req.params.id;
+    const description = req.body.description;
+    const deadline = await DeadlineModel.findOne({}).lean();
+
+    if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
+      await PostModel.findByIdAndUpdate(postId, {
+        description: description,
+      });
+
+      const postFolderPath = path.join(
+        __dirname,
+        "../public/uploads/",
+        postId.toString()
+      );
+
+      const docxPath = path.join(postFolderPath, "docx");
+      const imagesPath = path.join(postFolderPath, "images");
+
+      await saveFilesFromMemory(req.files.docs, docxPath);
+      await saveFilesFromMemory(req.files.images, imagesPath);
+
+      res.redirect(`/readPost/${postId}`);
+    } else {
+      res.redirect("/student");
+    }
+  }
+);
 
 module.exports = router;

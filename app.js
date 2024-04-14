@@ -1,6 +1,7 @@
 var createError = require("http-errors");
 var express = require("express");
-var path = require("path");
+const fs = require("fs");
+const path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var indexRouter = require("./routes/index");
@@ -11,34 +12,45 @@ var coordinatorRouter = require("./routes/coordinator");
 var managerRouter = require("./routes/manager");
 const cron = require("node-cron");
 var session = require("cookie-session");
-var ReportModel = require("./model/report");
+var PostModel = require("./model/post");
 
 var app = express();
 
-// Hàm này kiểm tra và cập nhật các report quá hạn
-async function checkAndUpdateOverdueReports() {
+async function checkAndDeletePost() {
   const fourteenDaysAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
 
-  // Tìm tất cả các report chưa được xử lý và quá 14 ngày
-  const overdueReports = await ReportModel.find({
+  const overduePosts = await PostModel.find({
     isPending: true,
     dateCreate: { $lte: fourteenDaysAgo },
   }).lean();
 
-  // Cập nhật trạng thái của các report quá hạn
-  const updatePromises = overdueReports.map((report) =>
-    ReportModel.updateOne({ _id: report._id }, { isPending: false })
-  );
+  overduePosts.forEach((postOver) => {
+    const findFolder = path.join(
+      __dirname,
+      "./public/uploads/",
+      postOver._id.toString()
+    );
 
-  await Promise.all(updatePromises);
+    fs.rm(findFolder, { recursive: true }, async (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        try {
+          await PostModel.deleteOne({ _id: postOver._id });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    });
+  });
 }
 
-// Lập lịch cron job để chạy mỗi ngày vào lúc 00:00 (nửa đêm)
+// Lập lịch cron job để chạy mỗi ngày vào lúc 00:00
 cron.schedule("0 0 * * *", () => {
   console.log(
     "Running a daily check for overdue reports at " + new Date().toString()
   );
-  checkAndUpdateOverdueReports();
+  checkAndDeletePost();
 });
 
 //set session timeout
@@ -67,6 +79,19 @@ app.listen(process.env.PORT || 8000);
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
+
+var hbs = require("hbs");
+
+//'extractFilename'
+hbs.registerHelper("extractFilename", function (path) {
+  return path.substring(path.lastIndexOf("/") + 1);
+});
+hbs.registerHelper("breaklines", function (text) {
+  text = hbs.Utils.escapeExpression(text);
+  text = text.replace(/(\r\n|\n|\r)/gm, "<br>");
+  return new hbs.SafeString(text);
+});
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -76,6 +101,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 //make session value can be accessible in view (hbs)
 //IMPORTANT: place this code before setting router url
@@ -86,13 +112,16 @@ app.use((req, res, next) => {
 
 //set user authorization for whole router
 //IMPORTANT: place this code before setting router url
-const { checkAdminSession } = require("./middlewares/auth");
+const {
+  checkAdminSession,
+  checkStudentSession,
+  checkCoordinatorSession,
+  checkManagerSession,
+} = require("./middlewares/auth");
+
 app.use("/admin", checkAdminSession);
-const { checkStudentSession } = require("./middlewares/auth");
 app.use("/student", checkStudentSession);
-const { checkCoordinatorSession } = require("./middlewares/auth");
 app.use("/coordinator", checkCoordinatorSession);
-const { checkManagerSession } = require("./middlewares/auth");
 app.use("/manager", checkManagerSession);
 
 app.use("/", indexRouter);

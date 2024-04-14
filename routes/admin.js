@@ -5,6 +5,7 @@ var ManagerModel = require("../model/manager");
 var CoordinatorModel = require("../model/coordinator");
 var SpecializedModel = require("../model/specialized");
 var StudentModel = require("../model/student");
+var GuestModel = require("../model/guest");
 var DeadlineModel = require("../model/deadline");
 
 router.get("/home", async function (req, res, next) {
@@ -197,6 +198,12 @@ router.post("/register-role", async (req, res) => {
     var coordinatorRole = await RolesModel.findOne({
       roleName: "coordinator",
     }).lean();
+    var studentRole = await RolesModel.findOne({
+      roleName: "student",
+    }).lean();
+    var guestRole = await RolesModel.findOne({
+      roleName: "guest",
+    }).lean();
     var managerRole = await RolesModel.findOne({ roleName: "manager" }).lean();
     let user = {
       name: controlRegistration.name,
@@ -212,6 +219,14 @@ router.post("/register-role", async (req, res) => {
       user.roleID = coordinatorRole._id;
       user.specializedID = specializedID;
       await CoordinatorModel.create(user);
+    } else if (roleType === "student") {
+      user.roleID = studentRole._id;
+      user.specializedID = specializedID;
+      await StudentModel.create(user);
+    } else if (roleType === "guest") {
+      user.roleID = guestRole._id;
+      user.specializedID = specializedID;
+      await GuestModel.create(user);
     } else if (roleType === "manager") {
       user.roleID = managerRole._id;
       await ManagerModel.create(user);

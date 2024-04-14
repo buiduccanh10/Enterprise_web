@@ -23,7 +23,53 @@
   {{/each}}
 </ul>
 -->
-<div class="pPendingBG">
+{{!-- home/readPost.hbs --}}
+<h1>Post: {{post.description}}</h1>
+
+<h2>Images:</h2>
+{{#if images}}
+  <div style="display: flex;">
+    {{#each images}}
+      <a href="{{this}}" target="_blank">
+        <figure>
+          <img src="{{this}}" alt="Preview" style="max-width: 100px; max-height: 100px;">
+          <figcaption>{{extractFilename this}}</figcaption>
+        </figure>
+      </a>
+      <form action="/student/readPost/deleteFile" method="POST">
+        <input type="hidden" name="postId" value="{{../post._id}}">
+        <input type="hidden" name="fileUrl" value="{{this}}">
+        <button type="submit">Delete</button>
+      </form>
+    {{/each}}
+  </div>
+{{else}}
+  <p>No images to display.</p>
+{{/if}}
+
+<h2>Documents:</h2>
+{{#if docxs}}
+  <ul>
+    {{#each docxs}}
+      <li>
+        <a href="{{this}}" target="_blank">{{extractFilename this}}</a>
+      </li>
+      <form action="/student/readPost/deleteFile" method="POST">
+        <input type="hidden" name="postId" value="{{../post._id}}">
+        <input type="hidden" name="fileUrl" value="{{this}}">
+        <button type="submit">Delete</button>
+      </form>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No documents to display.</p>
+{{/if}}
+<form action="/student/readPost/updatePost/{{post._id}}" method="get">
+  <button type="submit">Update</button>
+</form>
+
+
+{{!-- <div class="pPendingBG">
   {{#each post}}
     <div class="pPendingItems">
       <div class="pPendingItemsBox1">
@@ -86,7 +132,7 @@
 
 
   {{/each}}
-</div>
+</div> --}}
 
 
 

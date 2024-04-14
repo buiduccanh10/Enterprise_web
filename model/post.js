@@ -1,10 +1,13 @@
 var mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  title: String,
-  body: String,
+  description: String,
   dateCreate: Date,
   isPending: Boolean,
+  isView: Boolean,
+  message:String,
+  imagePath: String,
+  docPath: String,
   email: String,
 });
 

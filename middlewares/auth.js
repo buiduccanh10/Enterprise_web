@@ -1,6 +1,7 @@
 var AdminModel = require("../model/admin");
 var RolesModel = require("../model/roles");
 var StudentModel = require("../model/student");
+var GuestModel = require("../model/guest");
 var ManagerModel = require("../model/manager");
 var CoordinatorModel = require("../model/coordinator");
 //check login only
@@ -9,6 +10,7 @@ const checkLoginSession = (req, res, next) => {
     next();
   } else {
     res.redirect("/auth/login");
+    return;
   }
 };
 
@@ -39,7 +41,9 @@ const checkStudentSession = async (req, res, next) => {
 };
 
 const checkCoordinatorSession = async (req, res, next) => {
-  var coordinator = await CoordinatorModel.findOne({ email: req.session.email });
+  var coordinator = await CoordinatorModel.findOne({
+    email: req.session.email,
+  });
   if (coordinator) {
     var role = await RolesModel.findById(coordinator.roleID);
     if (req.session.email && role && role.roleName == "coordinator") {
