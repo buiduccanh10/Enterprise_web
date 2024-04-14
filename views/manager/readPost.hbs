@@ -96,6 +96,41 @@ ul, li, h1, h3, h5, button, form {
   </style>
 </head>
 <body>
+  <h1>Post: {{post.description}}</h1>
+
+<h2>Images:</h2>
+{{#if images}}
+  <div style="display: flex;">
+    {{#each images}}
+      <a href="{{this}}" target="_blank">
+        <figure>
+          <img src="{{this}}" alt="Preview" style="max-width: 100px; max-height: 100px;">
+          <figcaption>{{extractFilename this}}</figcaption>
+        </figure>
+      </a>
+    {{/each}}
+  </div>
+{{else}}
+  <p>No images to display.</p>
+{{/if}}
+
+<h2>Documents:</h2>
+{{#if docxs}}
+  <ul>
+    {{#each docxs}}
+      <li>
+        <a href="{{this}}" target="_blank">{{extractFilename this}}</a>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No documents to display.</p>
+{{/if}}
+<form action="/manager/readPost/downloadPost/{{post._id}}" method="post">
+  <button type="submit">Download</button>
+</form>
+
+
   <ul class="ulposts">
   {{#each post}}
     <li class="liposts">

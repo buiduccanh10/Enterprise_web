@@ -15,6 +15,10 @@ router.get("/", checkLoginSession, async function (req, res, next) {
   const deadline = await DeadlineModel.findOne({}).lean();
   const user = await GuestModel.findOne({ email: req.session.email }).lean();
 
+  if (!user) {
+    return res.redirect("/auth/login"); 
+  }
+
   const matchedPosts = (
     await Promise.all(
       post.map(async (post) => {
