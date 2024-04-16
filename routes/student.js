@@ -38,13 +38,15 @@ router.get("/postCreate", async function (req, res, next) {
   const user = await StudentModel.findOne({ email: req.session.email }).lean();
   if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
     //Logic code to let the hbs get that deadline is valid
+    const boolean = true
     const message =
-      "Post submittion deadline is valid, please follow the rules ⚔";
+      'Post submittion deadline is valid, please follow the terms ⚔';
     res.render("student/postCreate", {
       layout: "layout",
       student: user.name,
       deadline: deadline,
       message: message,
+      boolean: boolean
     });
   } else {
     const message =
@@ -163,7 +165,7 @@ function createFolder(folderPath) {
 router.get("/myPost", async function (req, res, next) {
   const myPost = await PostModel.find({ email: req.session.email }).lean();
   const deadline = await DeadlineModel.findOne({}).lean();
-
+  const user = await StudentModel.findOne({ email: req.session.email }).lean();
   const postComment = myPost.map((post) => {
     const empty = post.comment === "";
     return { myPost: post, empty: empty };
@@ -172,7 +174,7 @@ router.get("/myPost", async function (req, res, next) {
   res.render("student/myPost", {
     layout: "layout",
     post: postComment,
-    student: req.session.email,
+    student: user.name,
     deadline: deadline,
   });
 });
