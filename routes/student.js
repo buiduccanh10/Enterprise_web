@@ -123,7 +123,10 @@ router.post(
         createFolder(docxPath);
         createFolder(imagesPath);
 
-        await savedPost.updateOne({ imagePath: imagesPath, docPath: docxPath });
+        await savedPost.updateOne({
+          imagePath: `../public/uploads/${savedPost._id.toString()}/images`,
+          docPath: `../public/uploads/${savedPost._id.toString()}/docx`,
+        });
 
         await saveFilesFromMemory(req.files.docs, docxPath);
         await saveFilesFromMemory(req.files.images, imagesPath);
@@ -146,7 +149,7 @@ async function saveFilesFromMemory(files, destPath) {
   if (files) {
     files.forEach((file) => {
       const destFilePath = path.join(destPath, file.originalname);
-      fs.writeFileSync(destFilePath, file.buffer); // Ghi file từ buffer vào đường dẫn đích
+      fs.writeFileSync(destFilePath, file.buffer);
     });
   }
 }

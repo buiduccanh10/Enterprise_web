@@ -146,30 +146,24 @@ router.post("/readPost/downloadPost/:id", async (req, res) => {
 
   archive.pipe(output);
 
-  // Append all files from the folder to the archive
   archive.directory(folderPath, postId);
 
-  // Listen for the 'close' event of the output stream
   output.on("close", () => {
-    // Set the Content-Disposition header to force download as a zip file
     res.setHeader(
       "Content-Disposition",
       `attachment; filename="${zipFileName}"`
     );
 
-    // Send the zip file as a response
     res.sendFile(zipFilePath, (err) => {
       if (err) {
         console.error("Error sending zip file:", err);
         res.status(500).send("Internal Server Error");
       }
 
-      // Delete the temporary zip file after sending
       fs.unlinkSync(zipFilePath);
     });
   });
 
-  // Finalize the archive and close the output stream
   archive.finalize();
 });
 

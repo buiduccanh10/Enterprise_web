@@ -16,7 +16,7 @@ router.get("/", checkLoginSession, async function (req, res, next) {
   const user = await GuestModel.findOne({ email: req.session.email }).lean();
 
   if (!user) {
-    return res.redirect("/auth/login"); 
+    return res.redirect("/auth/login");
   }
 
   const matchedPosts = (
@@ -72,13 +72,12 @@ router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
   const post = await PostModel.findById(postId).lean();
 
-  // const imagesDirectory = path.join(__dirname, '..', 'public', 'uploads', postId, 'images');
-  // const docxDirectory = path.join(__dirname, '..', 'public', 'uploads', postId, 'docx');
+  const imagesDirectory = path.join(__dirname, post.imagePath);
+  const docxDirectory = path.join(__dirname, post.docPath);
 
-  const imageFiles = getImageFiles(post.imagePath);
-  const docxFiles = getDocxFiles(post.docPath);
+  const imageFiles = getImageFiles(imagesDirectory);
+  const docxFiles = getDocxFiles(docxDirectory);
 
-  // Tạo danh sách file với địa chỉ URL đầy đủ
   const imagesWithUrls = imageFiles.map(
     (file) => `/uploads/${postId}/images/${file}`
   );
