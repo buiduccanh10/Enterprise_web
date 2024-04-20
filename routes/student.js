@@ -151,7 +151,8 @@ router.post(
 async function saveFilesFromMemory(files, destPath) {
   if (files) {
     files.forEach((file) => {
-      const destFilePath = path.join(destPath, file.originalname);
+      const sanitizedFileName = file.originalname.replace(/\s+/g, "_");
+      const destFilePath = path.join(destPath, sanitizedFileName);
       fs.writeFileSync(destFilePath, file.buffer);
     });
   }

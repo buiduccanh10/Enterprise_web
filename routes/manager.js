@@ -110,11 +110,11 @@ router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
   const post = await PostModel.findById(postId).lean();
 
-  // const imagesDirectory = path.join(__dirname, '..', 'public', 'uploads', postId, 'images');
-  // const docxDirectory = path.join(__dirname, '..', 'public', 'uploads', postId, 'docx');
+  const imagesDirectory = path.join(__dirname, post.imagePath);
+  const docxDirectory = path.join(__dirname, post.docPath);
 
-  const imageFiles = getImageFiles(post.imagePath);
-  const docxFiles = getDocxFiles(post.docPath);
+  const imageFiles = getImageFiles(imagesDirectory);
+  const docxFiles = getDocxFiles(docxDirectory);
 
   const imagesWithUrls = imageFiles.map(
     (file) => `/uploads/${postId}/images/${file}`
@@ -137,7 +137,7 @@ router.post("/readPost/downloadPost/:id", async (req, res) => {
   const post = await PostModel.findById(postId);
   const folderPath = path.join(__dirname, "../public/uploads/", postId);
 
-  const zipFileName = post.description.trim() + ".zip";
+  const zipFileName = post.description + ".zip";
   const zipFilePath = path.join(__dirname, "../public/", zipFileName);
   const output = fs.createWriteStream(zipFilePath);
   const archive = archiver("zip", {
@@ -146,7 +146,7 @@ router.post("/readPost/downloadPost/:id", async (req, res) => {
 
   archive.pipe(output);
 
-  archive.directory(folderPath, postId);
+  archive.directory(folderPath, post.description);
 
   output.on("close", () => {
     res.setHeader(
@@ -164,6 +164,46 @@ router.post("/readPost/downloadPost/:id", async (req, res) => {
     });
   });
 
+  archive.finalize();
+});
+
+router.post("/downloadAllPosts", async (req, res) => {
+  const post = await PostModel.find({ isPending: false }).lean();
+  const zipFileName = `all_post_${new Date().getDate()}` + ".zip";
+  const zipFilePath = path.join(__dirname, "../public/", zipFileName);
+  const output = fs.createWriteStream(zipFilePath);
+  const archive = archiver("zip", {
+    zlib: { level: 9 },
+  });
+
+  archive.pipe(output);
+
+  for (let item of post) {
+    const folderPath = path.join(
+      __dirname,
+      "../public/uploads/",
+      item._id.toString()
+    );
+    if (fs.existsSync(folderPath)) {
+      archive.directory(folderPath, item.description);
+    }
+  }
+
+  output.on("close", () => {
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${zipFileName}"`
+    );
+
+    res.sendFile(zipFilePath, (err) => {
+      if (err) {
+        console.error("Error sending zip file:", err);
+        res.status(500).send("Internal Server Error");
+      }
+
+      fs.unlinkSync(zipFilePath);
+    });
+  });
   archive.finalize();
 });
 

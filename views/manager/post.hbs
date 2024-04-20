@@ -98,6 +98,9 @@ body{
     </style>
 </head>
 <body>
+  <form action="/manager/downloadAllPosts" method="post">
+          <button class="btn btn-success" type="submit" class="btn">Download all</button>
+  </form>
   <ul class="ulposts">
   {{#each data}}
   <li class="liposts">

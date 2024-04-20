@@ -15,13 +15,52 @@ router.get("/", async function (req, res, next) {
   });
 });
 
+const imagesExtensions = /.(png|jpg|jpeg)$/i;
+const docxExtension = /.docx$/i;
+
+const getImageFiles = (directory) => {
+  try {
+    return fs
+      .readdirSync(directory)
+      .filter((file) => imagesExtensions.test(file));
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+};
+
+const getDocxFiles = (directory) => {
+  try {
+    return fs.readdirSync(directory).filter((file) => docxExtension.test(file));
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+};
+
 router.get("/readPost/:id", async (req, res) => {
   const postId = req.params.id;
-  const post = await PostModel.find({ _id: postId }).lean();
-  res.render("coordinator/readPost", {
+  const post = await PostModel.findById(postId).lean();
+
+  const imagesDirectory = path.join(__dirname, post.imagePath);
+  const docxDirectory = path.join(__dirname, post.docPath);
+
+  const imageFiles = getImageFiles(imagesDirectory);
+  const docxFiles = getDocxFiles(docxDirectory);
+
+  const imagesWithUrls = imageFiles.map(
+    (file) => `/uploads/${postId}/images/${file}`
+  );
+  const docxsWithUrls = docxFiles.map(
+    (file) => `/uploads/${postId}/docx/${file}`
+  );
+
+  res.render("manager/readPost", {
     layout: "coordinator_layout",
-    post: post,
     coordinator: req.session.email,
+    post: post,
+    images: imagesWithUrls,
+    docxs: docxsWithUrls,
   });
 });
 
