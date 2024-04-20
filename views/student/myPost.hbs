@@ -14,28 +14,15 @@
             </div>
            
             <div class="actions">
-                <a class="pPendingRead" href="/readPost/{{myPost._id}}">Read more</a>
+                <a class="pPendingRead" href="/student/readPost/{{myPost._id}}">Read more</a>
             </div>
           <div class="status">
             {{#if myPost.isPending}}
-              <h5>Approve status: Pending</h5>
+              Approve status: <h5 style="color: red;">Pending</h5>
             {{else}}
-              <h5>Approve status: Approved</h5>
+              Approve status: <h5 style="color: green;">Approved</h5>
             {{/if}}
           </div>
-         {{#if empty}}
-          <div class="comment">
-            <h1>No message</h1>
-          </div>
-         {{else}}
-          <div class="comment">
-              {{{breaklines myPost.message}}}
-          </div>
-          {{/if}}
-          <form action="/student/myPost/message/{{myPost._id}}" method="POST">
-              <input name="message" type="text" placeholder="Write message">
-              <button type="submit">Send</button>
-         </form>
         </div>
          
         {{/each}}

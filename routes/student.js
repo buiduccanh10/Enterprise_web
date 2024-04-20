@@ -179,7 +179,7 @@ router.get("/myPost", async function (req, res, next) {
   });
 });
 
-router.post("/myPost/message/:id", async function (req, res, next) {
+router.post("/readPost/message/:id", async function (req, res, next) {
   const postId = req.params.id;
   const message = req.body.message;
   const time = new Date().toLocaleString();
@@ -191,8 +191,7 @@ router.post("/myPost/message/:id", async function (req, res, next) {
     myPost.message += `${req.session.email}\n${time}\n${message}\n\n`;
     await myPost.save();
   }
-
-  res.redirect("/student/myPost");
+  res.redirect(`/student/readPost/${postId}`);
 });
 
 router.post("/readPost/deleteFile", async function (req, res, next) {
@@ -204,10 +203,82 @@ router.post("/readPost/deleteFile", async function (req, res, next) {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
 
-    res.redirect(`/readPost/${postId}`);
+    res.redirect(`/student/readPost/${postId}`);
   } else {
     console.error(`File ${filePath} does not exist.`);
     res.sendStatus(404);
+  }
+});
+const imagesExtensions = /.(png|jpg|jpeg)$/i;
+const docxExtension = /.docx$/i;
+
+const getImageFiles = (directory) => {
+  try {
+    return fs
+      .readdirSync(directory)
+      .filter((file) => imagesExtensions.test(file));
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+};
+
+const getDocxFiles = (directory) => {
+  try {
+    return fs.readdirSync(directory).filter((file) => docxExtension.test(file));
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+};
+router.get("/readPost/:id", async function (req, res, next) {
+  const postId = req.params.id;
+  const post = await PostModel.findById(postId).lean();
+  
+  const imagesDirectory = path.join(__dirname, post.imagePath);
+  const docxDirectory = path.join(__dirname, post.docPath);
+  
+  const imageFiles = getImageFiles(imagesDirectory);
+  const docxFiles = getDocxFiles(docxDirectory);
+
+  const imagesWithUrls = imageFiles.map(
+    (file) => `/uploads/${postId}/images/${file}`
+  );
+  const docxsWithUrls = docxFiles.map(
+    (file) => `/uploads/${postId}/docx/${file}`
+  );
+
+  const deadline = await DeadlineModel.findOne({}).lean();
+  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+  try {
+    const post = await PostModel.findById(postId).lean();
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    const messages = post.message.split("\n\n");
+    const extractedData = messages.map(message => {
+      const lines = message.split("\n").filter(line => line.trim() !== "");
+      if (lines.length < 3) {
+        console.error("Invalid message format:", message);
+        return null;
+      }
+      const email = lines[0].trim(); 
+      const datetime = lines[1].trim(); 
+      const comment = lines.slice(2).join("\n").trim(); 
+      return { email, datetime, comment };
+    }).filter(data => data !== null); 
+    res.render("student/readPost", {
+      layout: "layout",
+      post: post,
+      deadline: deadline,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      student: user.name,
+      messages: extractedData,
+    });
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -253,7 +324,7 @@ router.post(
       await saveFilesFromMemory(req.files.docs, docxPath);
       await saveFilesFromMemory(req.files.images, imagesPath);
 
-      res.redirect(`/readPost/${postId}`);
+      res.redirect(`/student/readPost/${postId}`);
     } else {
       res.redirect("/student");
     }

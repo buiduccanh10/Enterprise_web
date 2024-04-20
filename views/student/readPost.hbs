@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read Post</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+    <style>
+    .file_manager .file a:hover .hover,
+    .file_manager .file .file-name small{
+        display: block
+    }
+    .file_manager .file {
+        padding: 0 !important
+    }
+
+    .file_manager .file .icon{
+        text-align: center
+    }
+
+
+    .file_manager .file {
+        position: relative;
+        border-radius: .55rem;
+        overflow: hidden
+    }
+
+    .file_manager .file .image,
+    .file_manager .file .icon {
+        max-height: 180px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: top
+    }
+
+    .file_manager .file .hover {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        display: none;
+        transition: all 0.2s ease-in-out
+    }
+
+    .file_manager .file a:hover .hover {
+        transition: all 0.2s ease-in-out
+    }
+
+    .file_manager .file .icon {
+        padding: 15px 10px;
+        display: table;
+        width: 100%
+    }
+
+    .file_manager .file .icon i {
+        display: table-cell;
+        font-size: 30px;
+        vertical-align: middle;
+        color: #777;
+        line-height: 100px
+    }
+
+    .file_manager .file .file-name {
+        padding: 10px;
+        border-top: 1px solid #f7f7f7
+    }
+
+    .file_manager .file .file-name small .date {
+        float: right
+    }
+
+    .folder {
+        padding: 20px;
+        display: block;
+        color: #777
+    }
+
+    @media only screen and (max-width: 992px) {
+        .file_manager .nav-tabs {
+            padding-left: 0;
+            padding-right: 0
+        }
+        .file_manager .nav-tabs .nav-item {
+            display: inline-block
+        }
+    }
+
+    .card {
+        background: #fff;
+        transition: .5s;
+        border: 0;
+        margin-bottom: 30px;
+        border-radius: .55rem;
+        position: relative;
+        width: 100%;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+    {{!-- .container {
+      max-height: 500px;
+      overflow: scroll; 
+      border: 1px solid #ccc; 
+      padding: 10px; 
+    } --}}
+    .message {
+      margin-bottom: 20px; /* Add some spacing between messages */
+    }
+    .link-grey { color: #aaa; } .link-grey:hover { color: #00913b; }
+    h5 {
+    font-size: 15px;
+    } 
+    .text-overflow {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 150px;
+    }
+    #image1 {
+        width: 100px;
+        height: 750px;
+    }
+    </style>
+<body>
+<div class="container pb50" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-9 mb40">
+            <article>
+                {{!-- Image --}}
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                {{#if images}}
+                {{#each images}}  
+                <div class="carousel-item {{#if @first}}active{{/if}}">
+                  <img id="image1" class="d-block w-100" src="{{this}}" alt="test">
+                </div>
+                {{/each}}
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+              {{else}}
+                  <img class="d-block w-100" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="noimage">
+              {{/if}}
+            </div>
+            {{!-- End image --}}
+            <div class="post-content">
+                    <h3>{{post.description}}</h3>
+                    <ul class="post-meta list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-user-circle-o"></i> <a><i>{{this.email}}</i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-calendar-o"></i> <a>{{post.dateCreate}}</a>
+                        </li>
+                    </ul>
+
+                {{!-- Update --}}
+                <div class="mb40">
+                    <form action="/student/readPost/updatePost/{{post._id}}" method="get">
+                    <button type="submit" class="btn btn-info">Update</button>
+                    </form>
+                </div>
+                {{!-- End update --}}
+                    <hr class="mb40">
+                   {{!-- Doc File --}}
+                    <h4 class="mb40 text-uppercase font500">Document</h4>
+                    <div id="main-content" class="file_manager">
+                    <div class="container">            
+                      <div class="row clearfix">
+                    {{#if docxs}}
+                    {{#each docxs}}
+                     <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="card">
+                            <div class="file">
+                                <a href="javascript:void(0);">
+                                    <div class="hover">
+                                        <form action="/student/readPost/deleteFile" method="POST">
+                                          <input type="hidden" name="postId" value="{{../post._id}}">
+                                          <input type="hidden" name="fileUrl" value="{{this}}">
+                                          <button type="submit" class="btn btn-icon btn-danger"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-file text-info"></i>
+                                    </div>
+                                    <div class="file-name">
+                                      <p class="m-b-5 text-muted"><a href="{{this}}" target="_blank">{{extractFilename this}}</a></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{else}}
+                      <h5 class="blockquote-footer">No document display</h5>
+                    {{/if}} 
+                    </div>
+                    </div>
+                    </div>
+                    {{!-- End Doc File --}}
+                    <hr class="mb40">
+                    <h4 class="mb40 text-uppercase font500">Comments</h4>
+                    {{#if messages}}
+                    {{#each messages}}
+                    <div class="card ">
+                    <div class="media mb40">
+                        <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
+                        <div class="media-body">
+                            <h5 class="mt-0 font400 clearfix">
+                              <a class="float-right">{{this.datetime}}</a>
+                              {{this.email}}</h5>{{this.comment}}</div>
+                    </div>
+                    </div>
+                    {{/each}}
+                    {{else}}
+                    <h5 class="blockquote-footer">No commnet display</h5>
+                    {{/if}}
+                    <hr class="mb40">
+                    <h4 class="mb40 text-uppercase font500">Post a comment</h4>
+                    <form role="form" action="/student/readPost/message/{{post._id}}" method="POST">
+                        <div class="form-group">
+                            <textarea name="message" class="form-control" rows="5" placeholder="Comment"></textarea>
+                        </div>
+                        <div class="clearfix float-right">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </article>
+            </div>
+        <div class="col-md-3 mb40">
+            {{!-- Action image --}}
+            <div class="mb40">
+                <h4 class="sidebar-title">Action Image</h4>
+                <ul class="list-unstyled">
+                    {{#if images}}
+                    {{#each images}}
+                    <div class="card">
+                    <li class="media">
+                      <img class="d-flex mr-3 img-fluid" width="64" src="{{this}}" alt="Generic placeholder image">
+                      <div class="media-body">
+                            <h5 class="mb-0 text-overflow text-overflow"><a href="#">{{extractFilename this}}</a></h5>
+                        <div class="hover">
+                            <form action="/student/readPost/deleteFile" method="POST">
+                              <input type="hidden" name="postId" value="{{../post._id}}">
+                              <input type="hidden" name="fileUrl" value="{{this}}">
+                              <button type="submit" class="btn btn-icon btn-danger"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
+                      </div>
+                    </li>
+                    </div>
+                    {{/each}}
+                    {{else}}
+                    <h5 class="blockquote-footer">No image display</h5>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+        {{!-- End action image --}}
+    </div>
+</div>
+</body>
+</html>
