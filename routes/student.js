@@ -12,6 +12,7 @@ var CoordinatorModel = require("../model/coordinator");
 var SpecializedModel = require("../model/specialized");
 var DeadlineModel = require("../model/deadline");
 const nodemailer = require("nodemailer");
+const moment = require('moment');
 
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isView: true }).lean();
@@ -265,8 +266,30 @@ router.get("/readPost/:id", async function (req, res, next) {
       const email = lines[0].trim(); 
       const datetime = lines[1].trim(); 
       const comment = lines.slice(2).join("\n").trim(); 
-      return { email, datetime, comment };
+
+      const timeDifference = moment().diff(moment(datetime), 'hours');
+      let timeAgo;
+      if (timeDifference < 24) {
+        timeAgo = moment(datetime).fromNow(); // Less than a day
+      } else {
+        timeAgo = moment(datetime).fromNow(true); // More than a day
+      }
+      
+      return { email, datetime: timeAgo, comment };
     }).filter(data => data !== null); 
+    if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
+      const boolean = true;
+      res.render("student/readPost", {
+      layout: "layout",
+      post: post,
+      deadline: deadline,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      student: user.name,
+      messages: extractedData,
+      boolean: boolean
+    });
+  } else {
     res.render("student/readPost", {
       layout: "layout",
       post: post,
@@ -276,6 +299,7 @@ router.get("/readPost/:id", async function (req, res, next) {
       student: user.name,
       messages: extractedData,
     });
+  }
   } catch (error) {
     console.error("Error fetching post:", error);
     res.status(500).send("Internal Server Error");
@@ -288,12 +312,29 @@ router.get("/readPost/updatePost/:id", async function (req, res, next) {
 
   const post = await PostModel.findById(req.params.id);
 
-  res.render("student/updatePost", {
+  if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
+    const boolean = true;
+    
+    const message = "";
+    res.render("student/updatePost", {
     post: post,
     layout: "layout",
     student: user.name,
+    boolean: boolean,
+    message: message,
     deadline: deadline,
   });
+  } else {
+    const message =
+      "Out of update because the final deadline is over, please visit homepage 🎈";
+    res.render("student/updatePost", {
+      post: post,
+      layout: "layout",
+      student: user.name,
+      message: message,
+      deadline: deadline,
+    });
+  }
 });
 
 router.post(
@@ -307,7 +348,7 @@ router.post(
     const description = req.body.description;
     const deadline = await DeadlineModel.findOne({}).lean();
 
-    if (deadline && new Date() <= new Date(deadline.firstDeadLine)) {
+    if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
       await PostModel.findByIdAndUpdate(postId, {
         description: description,
       });
@@ -326,7 +367,7 @@ router.post(
 
       res.redirect(`/student/readPost/${postId}`);
     } else {
-      res.redirect("/student");
+      res.redirect(`/student/readPost/${postId}`);
     }
   }
 );

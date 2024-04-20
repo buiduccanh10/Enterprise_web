@@ -1,16 +1,121 @@
-<form action="/student/updatePost/{{post._id}}" method="post" enctype="multipart/form-data">
-  <input value="{{post.description}}" type="text" name="description" placeholder="Description..." required />
-  <label for="">File Docx</label>
-  <input type="file" name="docs" multiple accept=".doc,.docx" />
-  <label for="">File Image</label>
-  <input type="file" name="images" multiple accept="image/*" />
-  <div class="action" id="actionButton">
-    <button type="submit" id="postButton" class="btn btn-primary">Update</button>
-    <button
-      type="button"
-      id="cancelButton"
-      class="btn btn-danger"
-      onclick="window.location.href='/';"
-    >Cancel</button>
-  </div>
-</form>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post create</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        #postForm {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #postForm input[type=text] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #postForm button {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        #postForm button:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .text-success {
+            margin-bottom: 20px;
+        }
+        .ck-editor__editable {
+            min-height: 400px;
+        }
+        #postButton{
+            width: 49%;
+        }
+        #cancelButton{
+            margin-left: 2%;
+            width: 49%;
+        }
+        #actionButton{
+            margin-top: 15px;
+            display: flex;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-success">Update Post</h1>
+            <form id="postForm" action="/student/updatePost/{{post._id}}" method="post" enctype="multipart/form-data">
+                <input id="inputDes" value="{{post.description}}" type="text" name="description" placeholder="Description..." required disabled/>
+                <div class="mb-3">
+                    <label for="docxFile" class="form-label">File Docx</label>
+                    <input type="file" name="docs" id="docxFile" class="form-control-file" accept=".doc,.docx" multiple required disabled>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="imageFile" class="form-label">File Image</label>
+                    <input type="file" name="images" id="imageFile" class="form-control-file" accept="image/*" multiple disabled>
+                </div>
+                {{#if boolean}}
+                <h6 style="color: green;">{{message}}</h6>
+                {{else}}
+                <h6 style="color: red;">{{message}}</h6>
+                {{/if}}
+                {{!-- Button group --}}
+                <div class="btn-toolbar d-flex" role="toolbar" aria-label="Toolbar with button groups">
+                {{#if boolean}}
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                    <button id="postButton" type="submit" class="btn btn-primary" >Post</button>
+                </div>
+                {{/if}}
+                <div class="btn-group" role="group" aria-label="Second group">
+                    <button id="cancelButton" type="button" class="btn btn-danger" onclick="window.location.href='/student/readPost/{{post._id}}';">Cancel</button>
+                </div>
+            </div>
+       </form>
+    </div>     
+    <script>
+            document.getElementById('agreeCheckbox').addEventListener('change', function () {
+              var agreeButton = document.getElementById('agreeButton');
+              agreeButton.disabled = !this.checked;
+            });
+    </script>
+
+    <script>
+        document.getElementById('postButton').addEventListener('click', function() {
+                if (document.getElementById('postForm').checkValidity()) {
+                    $('#confirmationModal').modal('show');
+                } else {
+                    document.getElementById('inputDes').reportValidity();
+                    document.getElementById('docxFile').reportValidity();
+                }
+            }); 
+    </script>
+    {{#if boolean}}
+    <script>
+        document.getElementById('docxFile').disabled = false
+        document.getElementById('imageFile').disabled = false
+        document.getElementById('inputDes').disabled = false
+    </script>
+    {{/if}}
+</body>
+</html>
