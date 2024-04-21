@@ -6,6 +6,7 @@ var StudentModel = require("../model/student");
 var SpecializedModel = require("../model/specialized");
 const path = require("path");
 const fs = require("fs");
+const iconv = require('iconv-lite');
 
 router.get("/", async function (req, res, next) {
   const totalStudents = await StudentModel.countDocuments();
@@ -97,9 +98,19 @@ const getImageFiles = (directory) => {
   }
 };
 
+const decodeFileName = (fileName) => {
+  try {
+    return iconv.decode(Buffer.from(fileName, 'binary'), 'utf-8');
+  } catch (error) {
+    console.error('Error decoding file name:', error);
+    return fileName; // return the original file name if decoding fails
+  }
+};
 const getDocxFiles = (directory) => {
   try {
-    return fs.readdirSync(directory).filter((file) => docxExtension.test(file));
+    return fs.readdirSync(directory)
+      .filter((file) => docxExtension.test(file))
+      .map((file) => decodeFileName(file));
   } catch (error) {
     console.error(error.message);
     return [];

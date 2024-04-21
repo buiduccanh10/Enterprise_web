@@ -98,9 +98,15 @@ body{
     </style>
 </head>
 <body>
-  <form action="/manager/downloadAllPosts" method="post">
-          <button class="btn btn-success" type="submit" class="btn">Download all</button>
-  </form>
+  {{#if data.length}}
+  <ul>
+      </ul>
+      <form action="/manager/downloadAllPosts" method="post">
+        <button class="btn btn-success" type="submit" class="btn">Download all</button>
+      </form>
+    {{else}}
+      <p>No posts available for download.</p>
+  {{/if}}
   <ul class="ulposts">
   {{#each data}}
   <li class="liposts">

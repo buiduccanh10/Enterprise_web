@@ -13,6 +13,7 @@ var SpecializedModel = require("../model/specialized");
 var DeadlineModel = require("../model/deadline");
 const nodemailer = require("nodemailer");
 const moment = require('moment');
+const iconv = require('iconv-lite');
 
 router.get("/", async function (req, res, next) {
   const post = await PostModel.find({ isView: true }).lean();
@@ -130,7 +131,6 @@ router.post(
           imagePath: `../public/uploads/${savedPost._id.toString()}/images`,
           docPath: `../public/uploads/${savedPost._id.toString()}/docx`,
         });
-
         await saveFilesFromMemory(req.files.docs, docxPath);
         await saveFilesFromMemory(req.files.images, imagesPath);
 
@@ -151,7 +151,7 @@ router.post(
 async function saveFilesFromMemory(files, destPath) {
   if (files) {
     files.forEach((file) => {
-      const sanitizedFileName = file.originalname.replace(/\s+/g, "_");
+      const sanitizedFileName = file.originalname.replace(/\s+/g, '_');
       const destFilePath = path.join(destPath, sanitizedFileName);
       fs.writeFileSync(destFilePath, file.buffer);
     });
@@ -225,9 +225,20 @@ const getImageFiles = (directory) => {
   }
 };
 
+
+const decodeFileName = (fileName) => {
+  try {
+    return iconv.decode(Buffer.from(fileName, 'binary'), 'utf-8');
+  } catch (error) {
+    console.error('Error decoding file name:', error);
+    return fileName; // return the original file name if decoding fails
+  }
+};
 const getDocxFiles = (directory) => {
   try {
-    return fs.readdirSync(directory).filter((file) => docxExtension.test(file));
+    return fs.readdirSync(directory)
+      .filter((file) => docxExtension.test(file))
+      .map((file) => decodeFileName(file));
   } catch (error) {
     console.error(error.message);
     return [];
