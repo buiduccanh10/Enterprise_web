@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Read post</title>
   <style>
     /* Reset một số styles cơ bản */
@@ -93,41 +94,69 @@ ul, li, h1, h3, h5, button, form {
     font-size: 1.2em;
   }
 }
-  </style>
+</style>
 </head>
-<body>
-  <h1>Post: {{post.description}}</h1>
 
-<h2>Images:</h2>
+
+<body>
+
+<div class="rpPendingBG">
+<div class="rpPendingContainer">
+
+<h1 class="titlePost">Post: {{post.description}}</h1>
+<h2 class="titleItem">Images:</h2>
 {{#if images}}
-  <div style="display: flex;">
+  <div class="imgReadBox" style="display: flex;">
+    
     {{#each images}}
-      <a href="{{this}}" target="_blank">
-        <figure>
-          <img src="{{this}}" alt="Preview" style="max-width: 100px; max-height: 100px;">
-          <figcaption>{{extractFilename this}}</figcaption>
+    <div class="imgReadItem">
+      <a  href="{{this}}" target="_blank">
+        <figure class="imgReadItem1">
+          <img class="imgImg" src="{{this}}" alt="Preview" style="">
+          <figcaption class="imgLink">{{extractFilename this}}</figcaption>
         </figure>
       </a>
-    {{/each}}
+    </div>
+    {{/each}} 
+
   </div>
 {{else}}
   <p>No images to display.</p>
 {{/if}}
-
-<h2>Documents:</h2>
+<h2 class="titleItem">Documents:</h2>
 {{#if docxs}}
-  <ul>
+  <ul style="width: 100%;">
+    <div class="imgReadBox" style="display: flex;">
     {{#each docxs}}
+    <div class="fileReadItem">
+    <a href="javascript:void(0);">
+      <div class="icon">
+        <i class="fa fa-file text-info"></i>
+      </div>
+      <div class="file-name">
+        <p class="m-b-5 text-muted"><a href="{{this}}" target="_blank">{{extractFilename this}}</a></p>
+      </div>
+    </a>
+    </div>
+<!--
       <li>
         <a href="{{this}}" target="_blank">{{extractFilename this}}</a>
-      </li>
+      </li>-->
     {{/each}}
+    </div>
   </ul>
+
+
+  
 {{else}}
   <p>No documents to display.</p>
 {{/if}}
-<form action="/manager/readPost/downloadPost/{{post._id}}" method="post">
+
+
+{{#if manager}}
+<form class="downRead" action="/manager/readPost/downloadPost/{{post._id}}" method="post">
   <button type="submit">Download</button>
 </form>
-
-
+{{/if}}
+</div>
+</div>

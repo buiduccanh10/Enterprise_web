@@ -112,12 +112,83 @@ router.get("/postPending", async function (req, res, next) {
     const empty = postItem.comment === "";
     return { post: postItem, empty: empty };
   });
+  
 
+  const deadline = await DeadlineModel.findOne({}).lean();
+  const user = await StudentModel.findOne({ email: req.session.email }).lean();
+  try {
+    const post = await PostModel.findById(postId).lean();
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    const messages = post.message.split("\n\n");
+    const extractedData = messages.map(message => {
+      const lines = message.split("\n").filter(line => line.trim() !== "");
+      if (lines.length < 3) {
+        console.error("Invalid message format:", message);
+        return null;
+      }
+      const email = lines[0].trim(); 
+      const datetime = lines[1].trim(); 
+      const comment = lines.slice(2).join("\n").trim(); 
+
+      const timeDifference = moment().diff(moment(datetime), 'hours');
+      let timeAgo;
+      if (timeDifference < 24) {
+        timeAgo = moment(datetime).fromNow(); // Less than a day
+      } else {
+        timeAgo = moment(datetime).fromNow(true); // More than a day
+      }
+      
+      return { email, datetime: timeAgo, comment };
+    }).filter(data => data !== null); 
+    if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
+      const boolean = true;
+      res.render("coordinator/postPending", {
+      layout: "coordinator_layout",
+      post: post,
+      deadline: deadline,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      student: user.name,
+      messages: extractedData,
+      boolean: boolean
+    });
+  } else {
+    res.render("coordinator/postPending", {
+      layout: "coordinator_layout",
+      post: post,
+      deadline: deadline,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      student: user.name,
+      messages: extractedData,
+    });
+  }
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    res.status(500).send("Internal Server Error");
+  }
+
+
+
+
+/*
   res.render("coordinator/postPending", {
     layout: "coordinator_layout",
     data: postWithComment,
     coordinator: req.session.email,
   });
+*/
+
+
+
+
+
+
+
+
+
 });
 
 router.post("/postPending/message/:id", async (req, res) => {

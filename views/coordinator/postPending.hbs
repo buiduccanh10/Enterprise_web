@@ -23,25 +23,40 @@
                 {{post.dateCreate}}
               </div>
             </div>
+            
             <div class="pPendingContent">
             </div>
+
             <div class="pPendingItemsBox3">
               <a class="pPendingRead" href="/coordinator/readPost/{{post._id}}">Read more</a>
             </div>
 
             {{#if empty}}
-          <div class="comment">
-            <h1>No message</h1>
-          </div>
-         {{else}}
-          <div class="comment">
-              {{{breaklines post.message}}}
-          </div>
+              <div class="comment">
+                <h1>No message</h1>
+              </div>
+            {{else}}
+            <!--
+                    <div class="card ">
+                    <div class="media mb40">
+                        <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
+                        <div class="media-body">
+                            <h5 class="mt-0 font400 clearfix">
+                              <a class="float-right">{{this.datetime}}</a>
+                              {{this.email}}</h5>{{this.comment}}</div>
+                    </div>
+                    </div>
+            -->
+  
 
-          {{/if}}
-          <form action="/coordinator/postPending/message/{{post._id}}" method="post">
-              <input name="message" type="text" placeholder="Write message">
-              <button type="submit">Send</button>
+
+              <div class="comment">
+                  {{{breaklines post.message}}}
+              </div>
+            {{/if}}
+          <form class="messageBox" action="/coordinator/postPending/message/{{post._id}}" method="post">
+              <input class="messText" name="message" type="text" placeholder="Write message">
+              <button class="messButton" type="submit">Send</button>
          </form>
             
             <div class="pPendingItemsBox2">
