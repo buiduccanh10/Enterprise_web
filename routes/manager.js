@@ -4,6 +4,7 @@ var PostModel = require("../model/post");
 const archiver = require("archiver");
 var StudentModel = require("../model/student");
 var SpecializedModel = require("../model/specialized");
+var DeadlineModel = require("../model/deadline");
 const path = require("path");
 const fs = require("fs");
 const iconv = require('iconv-lite');
@@ -77,11 +78,53 @@ router.get("/post", async function (req, res, next) {
     isPending: false,
   }).lean();
 
+  const deadline = await DeadlineModel.findOne({}).lean();
+  const deadNow =  new Date();
+  if(deadNow <= deadline.finalDeadLine){
+    const boolean = true;
+    res.render("manager/post", {
+      layout: "manager_layout",
+      manager: req.session.email,
+      data: post,
+      deadNow: deadNow,
+      deadline:deadline.finalDeadLine,
+      boolean: boolean,
+    });    
+  }
+  else{
+    const boolean = false;
+    res.render("manager/post", {
+      layout: "manager_layout",
+      manager: req.session.email,
+      data: post,
+      deadNow: deadNow,
+      deadline:deadline.finalDeadLine,
+      boolean: boolean,
+    });
+  }
+
+/*
+if (deadline && new Date() <= new Date(deadline.finalDeadLine)) {
+    const boolean = true;
+    res.render("manager/post", {
+      layout: "manager_layout",
+      manager: req.session.email,
+      data: post,
+      deadline: deadline,
+      boolean: boolean,
+    });
+} else {
+  const boolean = false;
   res.render("manager/post", {
     layout: "manager_layout",
     manager: req.session.email,
     data: post,
+    deadline:deadline,
+    boolean: boolean,
   });
+}
+
+*/
 });
 
 const imagesExtensions = /.(png|jpg|jpeg)$/i;
@@ -134,13 +177,34 @@ router.get("/readPost/:id", async (req, res) => {
     (file) => `/uploads/${postId}/docx/${file}`
   );
 
-  res.render("manager/readPost", {
-    layout: "manager_layout",
-    manager: req.session.email,
-    post: post,
-    images: imagesWithUrls,
-    docxs: docxsWithUrls,
-  });
+  const deadline = await DeadlineModel.findOne({}).lean();
+  const deadNow =  new Date();
+  if(deadNow <= deadline.finalDeadLine){
+    const boolean = true;
+    res.render("manager/readPost", {
+      layout: "manager_layout",
+      manager: req.session.email,
+      post: post,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      deadNow: deadNow,
+      deadline:deadline.finalDeadLine,
+      boolean: boolean,
+    });
+  }
+  else{
+    const boolean = false;
+    res.render("manager/readPost", {
+      layout: "manager_layout",
+      manager: req.session.email,
+      post: post,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      deadNow: deadNow,
+      deadline:deadline.finalDeadLine,
+      boolean: boolean,
+    });
+  }
 });
 
 router.post("/readPost/downloadPost/:id", async (req, res) => {

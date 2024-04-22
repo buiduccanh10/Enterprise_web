@@ -63,7 +63,7 @@ ul, li, h1, h3, h5, button, form {
   display: flex;
   justify-content: space-between; /* Căn chỉnh nút bên trái và bên phải */
 }
-
+/*
 .btn {
   background-color: #f0ad4e;
   border: none;
@@ -76,7 +76,13 @@ ul, li, h1, h3, h5, button, form {
 }
 
 .btn:hover {
-  background-color: #ec971f; /* Màu khi hover */
+  background-color: #ec971f; /* Màu khi hover 
+}
+*/
+.comment {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 /* Responsive styles */
@@ -100,63 +106,122 @@ ul, li, h1, h3, h5, button, form {
 
 <body>
 
-<div class="rpPendingBG">
-<div class="rpPendingContainer">
+  <div class="rpPendingBG">
+  <div class="rpPendingContainer">
 
-<h1 class="titlePost">Post: {{post.description}}</h1>
-<h2 class="titleItem">Images:</h2>
-{{#if images}}
-  <div class="imgReadBox" style="display: flex;">
-    
-    {{#each images}}
-    <div class="imgReadItem">
-      <a  href="{{this}}" target="_blank">
-        <figure class="imgReadItem1">
-          <img class="imgImg" src="{{this}}" alt="Preview" style="">
-          <figcaption class="imgLink">{{extractFilename this}}</figcaption>
-        </figure>
-      </a>
-    </div>
-    {{/each}} 
-
-  </div>
-{{else}}
-  <p>No images to display.</p>
-{{/if}}
-<h2 class="titleItem">Documents:</h2>
-{{#if docxs}}
-  <ul style="width: 100%;">
+  <h1 class="titlePost">Post: {{post.description}}</h1>
+  <h2 class="titleItem">Images:</h2>
+  {{#if images}}
     <div class="imgReadBox" style="display: flex;">
-    {{#each docxs}}
-    <div class="fileReadItem">
-    <a href="javascript:void(0);">
-      <div class="icon">
-        <i class="fa fa-file text-info"></i>
+      
+      {{#each images}}
+      <div class="imgReadItem">
+        <a  href="{{this}}" target="_blank">
+          <figure class="imgReadItem1">
+            <img class="imgImg" src="{{this}}" alt="Preview" style="">
+            <figcaption class="imgLink">{{extractFilename this}}</figcaption>
+          </figure>
+        </a>
       </div>
-      <div class="file-name">
-        <p class="m-b-5 text-muted"><a href="{{this}}" target="_blank">{{extractFilename this}}</a></p>
+      {{/each}} 
+
+    </div>
+  {{else}}
+    <p>No images to display.</p>
+  {{/if}}
+  <h2 class="titleItem">Documents:</h2>
+  {{#if docxs}}
+    <ul style="width: 100%;">
+      <div class="imgReadBox" style="display: flex;">
+      {{#each docxs}}
+      <div class="fileReadItem">
+      <a href="javascript:void(0);">
+        <div class="icon">
+          <i class="fa fa-file text-info"></i>
+        </div>
+        <div class="file-name">
+          <p class="m-b-5 text-muted"><a href="{{this}}" target="_blank">{{extractFilename this}}</a></p>
+        </div>
+      </a>
       </div>
-    </a>
-    </div>
-<!--
-      <li>
-        <a href="{{this}}" target="_blank">{{extractFilename this}}</a>
-      </li>-->
-    {{/each}}
-    </div>
-  </ul>
+  <!--
+        <li>
+          <a href="{{this}}" target="_blank">{{extractFilename this}}</a>
+        </li>-->
+      {{/each}}
+      </div>
+    </ul>
 
 
+    
+  {{else}}
+    <p>No documents to display.</p>
+  {{/if}}
+
+  <h2 class="titleItem">Comments:</h2>
+
+
+
+            {{#if empty}}
+              <div class="comment">
+                <h1>No message</h1>
+              </div>
+            {{else}}
+            <!--
+                    <div class="card ">
+                    <div class="media mb40">
+                        <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
+                        <div class="media-body">
+                            <h5 class="mt-0 font400 clearfix">
+                              <a class="float-right">{{this.datetime}}</a>
+                              {{this.email}}</h5>{{this.comment}}</div>
+                    </div>
+                    </div>
+            -->
   
-{{else}}
-  <p>No documents to display.</p>
-{{/if}}
 
 
-{{#if manager}}
-<form class="downRead" action="/manager/readPost/downloadPost/{{post._id}}" method="post">
-  <button type="submit">Download</button>
-</form>
-{{/if}}
-</div>
-</div>
+              <div class="comment">
+                  {{{breaklines post.message}}}
+              </div>
+            {{/if}}
+  {{#if coordinator}}
+    {{#if boolean}}
+          <form class="messageBox" action="/coordinator/readPost/message/{{post._id}}" method="post">
+              <input class="messText" name="message" type="text" placeholder="Write message">
+              <button class="messButton" type="submit">Send</button>
+         </form>
+         
+            <div class="pPendingItemsBox2">
+              <form class="pPendingItemsForm1" action="/coordinator/postPending/approvePost/{{post._id}}" method="get">
+                <button type="submit" class="pPendingItemsButton1 btn btn-success">Accept</button>
+              </form>
+              <form class="pPendingItemsForm1" action="/coordinator/postPending/deletePost/{{post._id}}">
+                <button type="submit" class="pPendingItemsButton1 btn btn-danger">Refuse</button>
+              </form>
+            </div>
+          </div>
+    {{else}}  
+        <h5 class="outdateLog"> The time for interaction and edit is over </h5>
+    {{/if}}
+  {{/if}}
+
+  {{#if manager}}
+  <script>
+    console.log({{deadNow}});
+    console.log({{boolean}});
+    console.log({{deadline}});
+    console.log('ok')
+  </script>
+  <form class="downRead" action="/manager/readPost/downloadPost/{{post._id}}" method="post">
+    {{#if boolean}}
+    <button type="submit" disabled>Download</button>
+    {{else}}
+    <button type="submit" >Download</button>
+    {{/if}}
+  </form>
+  {{/if}}
+  </div>
+  </div>
+</body>
+

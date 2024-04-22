@@ -1,15 +1,145 @@
 <html>
   <head>
     <title>Post pending</title>
-  </head>
-  <body>
     <style>
     .pPendingContainer {
       width: 100%; /* Adjust as needed */
     }
     /* Add any other CSS styles you need */
-  </style>
+body{
+  background-color: #f4f4f4;
+}
 
+.ulposts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+}
+
+.liposts {
+  background: #fff;
+  border: 1px solid #e1e4e8;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+}
+
+.liposts:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.body-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 10; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.titlepost .namepost {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.datepost {
+  font-size: 14px;
+  color: #666;
+}
+
+.authorpost {
+  font-size: 14px;
+}
+
+.content, .action {
+  padding: 15px 15px 15px;
+}
+
+.action {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action .btn {
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.action .btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 767px) {
+  .ulposts {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+
+
+
+    </style>
+
+
+
+  </head>
+
+
+  <body>
+<ul class="ulposts">
+  {{#each data}}
+  <li class="liposts">
+    <div class="post">
+      <div class="titlepost">
+        <h1 class="namepost">{{post.description}}</h1>
+        <h3 class="datepost">{{post.dateCreate}}</h3>
+      </div>
+      <div class="authorpost">
+        <h6>By: {{post.email}}</h6>
+      </div>
+      <div class="action">
+        <form action="/coordinator/readPost/{{post._id}}">
+          <button type="submit" class="btn">Read</button>
+        </form>
+      </div>
+    </div>
+  </li>
+  {{/each}}
+</ul>
+
+
+
+
+
+
+
+
+    <!--
     <div class="pPendingBG">
       <div class="pPendingContainer">
         {{#each data}}
@@ -36,7 +166,7 @@
                 <h1>No message</h1>
               </div>
             {{else}}
-            <!--
+            
                     <div class="card ">
                     <div class="media mb40">
                         <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
@@ -46,7 +176,7 @@
                               {{this.email}}</h5>{{this.comment}}</div>
                     </div>
                     </div>
-            -->
+            
   
 
 
@@ -71,6 +201,6 @@
           </div>
         {{/each}}
       </div>
-    </div>
+    </div>-->
   </body>
 </html>

@@ -127,8 +127,22 @@
 
 
 
+.namepost {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-self: start;
+}
+.datepost{
+  margin: 10px 0px 0px 0px;
+}
+.authorpost{
+  margin: 10px 0px 0px 0px;
+}
 
-
+.outdateLog{
+  color: #8a0303;
+}
 
 
 
@@ -869,6 +883,7 @@
   }
   
   .pPendingItemsBox2 {
+    width: 100%;
     margin-top: 30px;
     height: max-content;
     display: flex;
@@ -876,10 +891,14 @@
     gap: 8%;
   }
   .pPendingItemsForm1 {
-    width: 46%;
+    width: 100%;
+    height: 40px;
     padding: 10px;
   }
   .pPendingItemsButton1 {
+    font-size: 40px;
+    height: 40px;
+
     width: 100%;
     padding: 10px;
   }

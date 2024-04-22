@@ -67,14 +67,116 @@ router.get("/readPost/:id", async (req, res) => {
     (file) => `/uploads/${postId}/docx/${file}`
   );
 
-  res.render("manager/readPost", {
-    layout: "coordinator_layout",
-    coordinator: req.session.email,
-    post: post,
-    images: imagesWithUrls,
-    docxs: docxsWithUrls,
-  });
+
+  const deadline = await DeadlineModel.findOne({}).lean();
+  const deadNow =  new Date();
+  if(deadNow <= deadline.finalDeadLine){
+    const boolean = true;
+    res.render("manager/readPost", {
+      layout: "coordinator_layout",
+      coordinator: req.session.email,
+      post: post,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      deadNow: deadNow,
+      deadline:deadline.finalDeadLine,
+      boolean: boolean,
+    });
+  }
+  else{
+    const boolean = false;
+    res.render("manager/readPost", {
+      layout: "coordinator_layout",
+      coordinator: req.session.email,
+      post: post,
+      images: imagesWithUrls,
+      docxs: docxsWithUrls,
+      deadNow: deadNow,
+      deadline:deadline.finalDeadLine,
+      boolean: boolean,
+    });
+  }
 });
+
+
+router.post("/readPost/message/:id", async function (req, res, next) {
+  const postId = req.params.id;
+  const message = req.body.message;
+  const time = new Date().toLocaleString();
+
+  const myPost = await PostModel.findById(postId);
+  const deadline = await DeadlineModel.findOne({}).lean();
+
+  if (myPost) {
+    myPost.message += `${req.session.email}\n${time}\n${message}\n\n`;
+    await myPost.save();
+  }
+  res.redirect(`/coordinator/readPost/${postId}`);
+});
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//test//
+router.post("/readPost/:id/message/:id", async (req, res) => {
+  const postId = req.params.id;
+  const message = req.body.message;
+  const time = new Date().toLocaleString();
+
+  const myPost = await PostModel.findById(postId);
+  const deadline = await DeadlineModel.findOne({}).lean();
+
+  if (myPost) {
+    myPost.message += `${req.session.email}\n${time}\n${message}\n\n`;
+    await myPost.save();
+  }
+
+  res.redirect("/coordinator/postPending");
+});
+
+router.get("/readPost/:id/approvePost/:id", async (req, res) => {
+  const postId = req.params.id;
+  await PostModel.findByIdAndUpdate(
+    postId,
+    { isPending: false },
+    { new: true }
+  ).lean();
+  res.redirect("/coordinator/postPending");
+});
+
+router.get("/readPost/:id/deletePost/:id", async (req, res) => {
+  const postId = req.params.id;
+  await PostModel.findByIdAndDelete(postId).lean();
+  res.redirect("/coordinator/postPending");
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.get("/postPending", async function (req, res, next) {
   const coordinator = await CoordinatorModel.findOne({
@@ -96,7 +198,6 @@ router.get("/postPending", async function (req, res, next) {
   const students = await StudentModel.find({
     specializedID: specialized._id,
   }).lean();
-
   if (students.length === 0) {
     return res
       .status(404)
@@ -114,28 +215,17 @@ router.get("/postPending", async function (req, res, next) {
   });
   
 
-  
-
-
-
-
-
   res.render("coordinator/postPending", {
     layout: "coordinator_layout",
     data: postWithComment,
     coordinator: req.session.email,
   });
-
-
-
-
-
-
-
-
-
-
 });
+
+
+
+
+
 
 router.post("/postPending/message/:id", async (req, res) => {
   const postId = req.params.id;

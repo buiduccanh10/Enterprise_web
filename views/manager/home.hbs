@@ -95,49 +95,7 @@
         </div>
 
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                  >
-                    Total Reports
-                  </div>
-                  <div
-                    class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalReports}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                  >
-                    Total Reports Pending
-                  </div>
-                  <div
-                    class="h5 mb-0 font-weight-bold text-gray-800"
-                  >{{totalReportsPending}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
               
 
@@ -152,15 +110,27 @@
     </div>
     <!-- Other HTML content can go here -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="../../routes/manager.js"></script>
 
     <script>
-        var post = [];
+        var postCount = [];
+        var postPercent = [];
+        var postCountAll = 0;
           {{#each totalPostSpecialized}}
-            post.push({{this.totalPosts}});
-            
+            postCount.push({{this.totalPosts}});
+            postCountAll += {{this.totalPosts}}
           {{/each}}
-          console.log(post)
+
+          {{#each totalPostSpecialized}}
+            var p = (100/postCountAll) * {{this.totalPosts}}
+            console.log(p)
+            postPercent.push(p)
+          {{/each}}
+          
+          console.log("batdaucheck")
+          console.log(postCount)
+          console.log("postCount.length()",postCount.length)
+          console.log(postPercent)
+
         /*
         var nameSpec =  [''];
           {{#each totalPostSpecialized}}
@@ -187,15 +157,6 @@
         pXP = 100-pXA;
         console.log(pXA+'%',pXP+'%');
 
-        var y = {{totalPosts}};
-        var yP = {{totalPostsPending}};
-        var yA;
-        yA = y - yP;
-        var pYPA, pYP;
-        pYA = (100/y)*yA;
-        pYP = 100-pYA;
-        console.log(pYA+'%',pYP+'%');
-
 
 
 
@@ -203,7 +164,7 @@
         var options = {
           series: [{
           name: 'Servings',
-          data: post//[44, 55, 41]
+          data: postCount//[44, 55, 41]
         }],
           annotations: {
           points: [{
@@ -277,7 +238,7 @@
 
         //////////////////////////////////////////////////////
          var percentPostOptions = {
-          series: [29, 57, 14],
+          series: postPercent,
           chart: {
           type: 'donut',
         },

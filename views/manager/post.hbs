@@ -9,7 +9,7 @@ body{
   background-color: #f4f4f4;
 }
 
-      .ulposts {
+.ulposts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 20px;
@@ -24,6 +24,7 @@ body{
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
 }
 
 .liposts:hover {
@@ -56,13 +57,10 @@ body{
 .datepost {
   font-size: 14px;
   color: #666;
-  padding: 0px 15px 15px;
 }
 
 .authorpost {
   font-size: 14px;
-  padding: 0 15px;
-  margin: 10px 0;
 }
 
 .content, .action {
@@ -97,32 +95,32 @@ body{
 }
     </style>
 </head>
+
 <body>
   {{#if data.length}}
-  <ul>
-      </ul>
+
       <form action="/manager/downloadAllPosts" method="post">
-        <button class="btn btn-success" type="submit" class="btn">Download all</button>
+      {{#if boolean}}
+        <button style="margin-top: 20px; margin-left: 20px;" class="btn btn-success"  type="submit" class="btn" disabled>Download all</button>
+      {{else}}
+        <button style="margin-top: 20px; margin-left: 20px;" class="btn btn-success" type="submit" class="btn"  >Download all</button>
+      {{/if}}
+
       </form>
-    {{else}}
+  {{else}}
       <p>No posts available for download.</p>
   {{/if}}
+
   <ul class="ulposts">
   {{#each data}}
   <li class="liposts">
     <div class="post">
       <div class="titlepost">
-        <h1 class="namepost">{{title}}</h1>
+        <h1 class="namepost">{{description}}</h1>
         <h3 class="datepost">{{dateCreate}}</h3>
       </div>
       <div class="authorpost">
         <h6>By: {{email}}</h6>
-      </div>
-      <div class="body-content">
-
-        <p>{{{body}}}</p>
-        
-
       </div>
       
       <div class="action">
@@ -134,7 +132,12 @@ body{
   </li>
   {{/each}}
 </ul>
-
+<script>
+  console.log({{deadNow}});
+  console.log({{boolean}});
+  console.log({{deadline}});
+  console.log('ok')
+</script>
 
 </body>
 </html>
