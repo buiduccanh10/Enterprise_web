@@ -2,8 +2,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Login</title>
-  </head>
+    </head>
 
   <!--
   <body class="bodylogin">
@@ -79,8 +87,6 @@
     </div>
   </body>
   -->
-
-
   <body class="bodylogin">
     <img class="imgLoginBg" src="../images/loginbg.jpg" alt="">
     <div class="blurLoginBg">
@@ -88,7 +94,6 @@
         <div class="loginImgLeft">
           <img class="loginImgLeftItem" src="../images/Designer.png" alt="">
         </div>
-        
         <div class="loginForm">
           <form class="" action="/auth/login" method="post">
           <h1 class="loginTitle">Login</h2>
@@ -139,17 +144,34 @@
             
             <input type="password" name="password" id="" placeholder="" required/>
           </div>
+          <br>
           <div class="signUp">
-            <h5>Don't you have account ?</h5>
-            <a href="/auth/register">Sign up</a>
+            <b style="font-size: 15px;">Don't you have account ?</b>
+            <a href="/auth/register" style="font-size: 15px;">Sign up</a>
           </div>
           <div class="loginBtn">
             <button type="submit">Login</button>
           </div>
+          {{#if message}}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {{else if message_success}} 
+          <div class="alert alert-primary" role="alert">
+            {{message_success}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          {{/if}}
         </form>
         </div>
-
       </div>
     </div>
   </body>
 </html>
+<script>
+</script>

@@ -77,10 +77,16 @@ router.post("/login", async (req, res) => {
         return res.redirect("/");
       }
     }
-
-    res.redirect("/auth/login");
+    res.render("auth/login", { 
+      layout: "auth_layout" ,
+      message: "Invalid email or password" 
+    });
   } catch (err) {
-    res.redirect("/auth/login");
+    console.error(err);
+    res.render("auth/login", {
+      layout: "auth_layout", 
+      message: "Internal Server Error" 
+    });
   }
 });
 
@@ -94,6 +100,7 @@ router.get("/register", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   try {
+    const specialized = await SpecializedModel.find({}).lean();
     var userRegistration = req.body;
     var specializedID = userRegistration.specializedName;
     var studentRole = await RolesModel.findOne({ roleName: "student" }).lean();
@@ -102,8 +109,12 @@ router.post("/register", async (req, res) => {
       email: userRegistration.email,
     });
     if (existingStudent) {
-      console.log("Duplicate user");
-      return res.redirect("/auth/register");
+
+      return res.render("auth/register", { 
+        layout: "auth_layout" ,
+        message: "Duplicate email",
+        data: specialized,
+      });
     }
 
     var user = {
@@ -116,7 +127,10 @@ router.post("/register", async (req, res) => {
       specializedID: specializedID,
     };
     await StudentModel.create(user);
-    res.redirect("/auth/login");
+    res.render("auth/login", {
+      layout: "auth_layout",
+      message_success: "Login successful"
+    });
   } catch (err) {
     res.send(err);
   }

@@ -65,10 +65,10 @@
     <div class="container">
         <h1 class="text-success">Update Post</h1>
             <form id="postForm" action="/student/updatePost/{{post._id}}" method="post" enctype="multipart/form-data">
-                <input id="inputDes" value="{{post.description}}" type="text" name="description" placeholder="Description..." required disabled/>
+                <input id="inputDes" value="{{post.description}}" type="text" name="description" placeholder="Description..."  disabled/>
                 <div class="mb-3">
                     <label for="docxFile" class="form-label">File Docx</label>
-                    <input type="file" name="docs" id="docxFile" class="form-control-file" accept=".doc,.docx" multiple required disabled>
+                    <input type="file" name="docs" id="docxFile" class="form-control-file" accept=".doc,.docx" multiple disabled>
                 </div>
                 
                 <div class="mb-3">
