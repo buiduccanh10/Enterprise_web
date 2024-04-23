@@ -99,11 +99,14 @@ router.get("/editStudent/:id", async (req, res) => {
   const studentId = req.params.id;
   const editStudent = await StudentModel.findById(studentId).lean();
   const specialized = await SpecializedModel.find({}).lean();
-
+  const editspecialized = await SpecializedModel.findById(
+    editStudent.specializedID
+  ).lean();
   res.render("admin/editStudent", {
     layout: "admin_layout",
     editStudent: editStudent,
     specialized: specialized,
+    editspecialized: editspecialized,
     admin: req.session.email,
   });
 });

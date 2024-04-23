@@ -100,6 +100,8 @@
   <div>
     <label for="specializedID">Specialized Name:</label>
     <select id="specializedID" name="specializedID" required>
+      <option
+        value="{{editspecialized._id}}" selected disabled hidden>{{editspecialized.specializedName}}</option>
       {{#each specialized}}
         <option value="{{this._id}}">{{this.specializedName}}</option>
       {{/each}}

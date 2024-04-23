@@ -89,11 +89,19 @@ router.get("/readPost/:id", async (req, res) => {
 
   // Check if the user is logged in
   if (req.session.email) {
-    const user = await GuestModel.findOne({ email: req.session.email }).lean();
-    if (user) {
+    const guestUser = await GuestModel.findOne({ email: req.session.email }).lean();
+    if (guestUser) {
       const role = await RoleModel.findOne({ roleName: "guest" });
-      isGuest = role && role._id.toString() === user.roleID;
-      studentName = user.name;
+      isGuest = role && role._id.toString() === guestUser.roleID;
+      studentName = guestUser.name;
+    } else {
+      // If user is not found in GuestModel, check StudentModel
+      const studentUser = await StudentModel.findOne({ email: req.session.email }).lean();
+      if (studentUser) {
+        // If user is found in StudentModel, they are a student
+        isGuest = false;
+        studentName = studentUser.name;
+      }
     }
   }
 
