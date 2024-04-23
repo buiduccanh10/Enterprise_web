@@ -105,7 +105,7 @@
         <div class="deadlinebox">
         <div class="deadline">Start at: {{deadline.firstDeadLine}}</div>
         <div div class="deadline">Deadline: {{deadline.finalDeadLine}}</div>
-        </div>
+           </div>
       {{/if}}
     </div>
     {{#if student}}
@@ -131,9 +131,10 @@
 
       {{#if student}}
         <a class="logoutbtn" href="/auth/logout">LogOut</a>
-      {{else}}
+      {{else if isGuest}}
         <a class="loginbtn" href="/auth/login">LogIn</a>
       {{/if}}
+      
     </div>
   </header>
   <body>
