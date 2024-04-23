@@ -109,27 +109,6 @@ router.get("/readPost/:id", async (req, res) => {
   const docxsWithUrls = docxFiles.map(
     (file) => `/uploads/${postId}/docx/${file}`
   );
-  const messages = post.message.split("\n\n");
-  const extractedData = messages.map(message => {
-    const lines = message.split("\n").filter(line => line.trim() !== "");
-    if (lines.length < 3) {
-      console.error("Invalid message format:", message);
-      return null;
-    }
-    const email = lines[0].trim(); 
-    const datetime = lines[1].trim(); 
-    const comment = lines.slice(2).join("\n").trim(); 
-
-    const timeDifference = moment().diff(moment(datetime), 'hours');
-    let timeAgo;
-    if (timeDifference < 24) {
-      timeAgo = moment(datetime).fromNow(); // Less than a day
-    } else {
-      timeAgo = moment(datetime).fromNow(true); // More than a day
-    }
-    
-    return { email, datetime: timeAgo, comment };
-  }).filter(data => data !== null);
 
   const deadline = await DeadlineModel.findOne({}).lean();
   res.render("home/readPost", {
@@ -137,7 +116,6 @@ router.get("/readPost/:id", async (req, res) => {
     post: post,
     isGuest: isGuest,
     images: imagesWithUrls,
-    messages: extractedData,
     docxs: docxsWithUrls,
     student: studentName,
     deadline: deadline,

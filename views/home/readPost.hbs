@@ -199,22 +199,6 @@
                     </div>
                     {{!-- End Doc File --}}
                     <hr class="mb40">
-                    <h4 class="mb40 text-uppercase font500">Messages</h4>
-                    {{#if messages}}
-                    {{#each messages}}
-                    <div class="card ">
-                    <div class="media mb40">
-                        <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
-                        <div class="media-body">
-                            <h5 class="mt-0 font400 clearfix">
-                              <a class="float-right">{{this.datetime}}</a>
-                              {{this.email}}</h5>{{this.comment}}</div>
-                    </div>
-                    </div>
-                    {{/each}}
-                    {{else}}
-                    <h5 class="blockquote-footer">No message display</h5>
-                    {{/if}}
                 </div>
             </article>
             </div>
