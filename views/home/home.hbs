@@ -6,7 +6,17 @@
   <title>Home page</title>
 </head>
 <body>
-  
+<style>
+  .noPost {
+  display: flex;
+  justify-content: center;
+}
+.noPostImage {
+  width: 30%;
+  height: auto;
+}
+</style>
+{{#if data.length}}
 <div class="container" style="margin-top: 20px;">
     <div class="grid">
         {{#each data}}
@@ -24,6 +34,11 @@
         {{/each}}
     </div>
 </div>
+{{else}}
+<div class="noPost">
+<img class="noPostImage" 
+src="https://cdn.discordapp.com/attachments/1146127098503762031/1232291405074923630/You_have_no_post._5.png?ex=6628ec4d&is=66279acd&hm=99c7f56b65c95638e41fe9256bca46461dc3e583dcef53ebde465fd199192e1f&" alt="">
+{{/if}}
 
 
 
