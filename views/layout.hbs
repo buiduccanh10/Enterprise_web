@@ -87,13 +87,19 @@
             grid-template-columns: 1fr;
         }
     }
-  
+  .logo {
+    width: 62%;
+    height: 100px;
+    display: flex;
+  }
     </style>
   </head>
   <header class="headercss">
     <div class="headercssbox1">
       {{#if student}}
-        <a href="/student"><h1 class="logo">Logo</h1></a>
+        <a href="/student">
+          <img class="logo" src="https://iili.io/JUd4yPt.png" alt="">
+        </a>
         {{else}}
         <a href="/"><h1 class="logo">Logo</h1></a>
       {{/if}}
