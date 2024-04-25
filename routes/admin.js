@@ -94,7 +94,47 @@ router.get("/studentPending/approve/:id", async (req, res) => {
   ).lean();
   res.redirect("/admin/studentPending");
 });
+router.get("/guestAccount", async (req, res) => {
+  const guest = await GuestModel.find({}).lean();
+  if (guest) {
+    const guestsWithSpecialized = await Promise.all(
+      guest.map(async (guest) => {
+        const specialized = await SpecializedModel.findById(
+          guest.specializedID
+        ).lean();
+        return { ...guest, specialized: specialized };
+      })
+    );
+    res.render("admin/guestAccount", {
+      layout: "admin_layout",
+      data: guestsWithSpecialized,
+      admin: req.session.email,
+    });
+  }
+});
+router.get("/editGuest/:id", async (req, res) => {
+  const guestId = req.params.id;
+  const editGuest = await GuestModel.findById(guestId).lean();
+  const specialized = await SpecializedModel.find({}).lean();
+  const editspecialized = await SpecializedModel.findById(
+    editGuest.specializedID
+  ).lean();
+  res.render("admin/editGuest", {
+    layout: "admin_layout",
+    editGuest: editGuest,
+    specialized: specialized,
+    editspecialized: editspecialized,
+    admin: req.session.email,
+  });
+});
 
+router.post("/editGuest/:id", async (req, res) => {
+  const guestId = req.params.id;
+  const data = req.body;
+  await GuestModel.findByIdAndUpdate(guestId, data).lean();
+
+  res.redirect("/admin/guestAccount");
+});
 router.get("/editStudent/:id", async (req, res) => {
   const studentId = req.params.id;
   const editStudent = await StudentModel.findById(studentId).lean();
@@ -110,7 +150,6 @@ router.get("/editStudent/:id", async (req, res) => {
     admin: req.session.email,
   });
 });
-
 router.post("/editStudent/:id", async (req, res) => {
   const studentId = req.params.id;
   const data = req.body;
@@ -169,7 +208,12 @@ router.get("/deleteStudent/:id", async (req, res) => {
 
   res.redirect("/admin/studentAccount");
 });
+router.get("/deleteGuest/:id", async (req, res) => {
+  const guestId = req.params.id;
+  await GuestModel.findByIdAndDelete(guestId).lean();
 
+  res.redirect("/admin/guestAccount");
+});
 router.get("/deleteManager/:id", async (req, res) => {
   const managerId = req.params.id;
   await ManagerModel.findByIdAndDelete(managerId).lean();

@@ -93,6 +93,14 @@ body{
     grid-template-columns: 1fr;
   }
 }
+  .noPost {
+  display: flex;
+  justify-content: center;
+}
+.noPostImage {
+  width: 30%;
+  height: auto;
+}
     </style>
 </head>
 
@@ -108,7 +116,9 @@ body{
 
       </form>
   {{else}}
-      <p>No posts available for download.</p>
+      <div class="noPost">
+      <img class="noPostImage" 
+      src="https://iili.io/JUdzhrB.png" alt="">
   {{/if}}
 
   <ul class="ulposts">

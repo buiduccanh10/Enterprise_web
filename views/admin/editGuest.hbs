@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest edit</title>
+  <style>
+    form {
+    max-width: 500px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin: 50px auto;
+  }
+
+  form h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="text"],
+  form select {
+    width: calc(100% - 20px);
+    font-size: 1rem;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  form input[type="email"]:focus,
+  form input[type="password"]:focus,
+  form input[type="text"]:focus,
+  form select:focus {
+    border-color: #7d3cff;
+    outline: none;
+  }
+
+  form .specializedID label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  form select {
+    cursor: pointer;
+  }
+
+  form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #7d3cff;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  form button:hover {
+    background-color: #652dc1;
+  }
+
+  @media (max-width: 768px) {
+    form {
+      width: calc(100% - 40px);
+      margin: 30px;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <form action="" method="post">
+  <h1>Edit guest</h1>
+  Email:
+  <input type="email" name="email" required value="{{editGuest.email}}" />
+  <br /><br />
+  Password:
+  <input
+    type="password"
+    name="password"
+    required
+    value="{{editGuest.password}}"
+  />
+  <br /><br />
+  Name:
+  <input type="text" name="name" required value="{{editGuest.name}}" />
+  <br /><br />
+  <div>
+    <label for="specializedID">Specialized Name:</label>
+    <select id="specializedID" name="specializedID" required>
+      <option
+        value="{{editspecialized._id}}" selected disabled hidden>{{editspecialized.specializedName}}</option>
+      {{#each specialized}}
+        <option value="{{this._id}}">{{this.specializedName}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <br /><br />
+  <button type="submit">Edit</button>
+</form>
+</body>
+</html>
